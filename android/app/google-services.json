@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "814724542743",
+    "project_id": "signin-8f641",
+    "storage_bucket": "signin-8f641.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814724542743:android:92254010b29405c215c752",
+        "android_client_info": {
+          "package_name": "com.example.weshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814724542743-sm92nfm7of38d9c5ko5kop3nppjjoflv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCM1J8PUXkbV_QFeKX0zdxRBR449nmtha4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814724542743-sm92nfm7of38d9c5ko5kop3nppjjoflv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
