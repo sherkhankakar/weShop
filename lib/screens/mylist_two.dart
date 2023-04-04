@@ -82,7 +82,7 @@ class _mylistState extends State<mylist2> {
                   height: height*0.05,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.green,
+                      backgroundColor: Colors.green,
                     ),
                     onPressed: (){
                       // Navigator.of(context).push(MaterialPageRoute(builder: (context) => mylist()));

@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:weshop/screens/Sign_In.dart';
@@ -6,7 +7,11 @@ import 'package:weshop/screens/getstarted.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(DevicePreview(
+    enabled: true,
+    builder: (context) => const MyApp(),
+  ),
+  );
 }
 
 //  void main() {
@@ -27,6 +32,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      useInheritedMediaQuery: false,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(),
       home: MyappSTF(),
@@ -57,10 +65,7 @@ class _MyappSTFState extends State<MyappSTF> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding:  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/4),
-              child: Image.asset("assets/images/Frame.png"),
-            ),
+            Center(child: Image.asset("assets/images/Frame.png")),
             SizedBox(
               height: 60,
             ),
@@ -92,7 +97,7 @@ class _MyappSTFState extends State<MyappSTF> {
             SizedBox(height: 30),
 
             Text(
-              'Simple Shopping list app for pantry check \nand quick shopping. Make list in seconds\nand share it and see changes live.',
+              'Simple Shopping list app for pantry check and quick shopping. Make list in seconds and share it and see changes live.',
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontWeight: FontWeight.w400,
@@ -106,7 +111,7 @@ class _MyappSTFState extends State<MyappSTF> {
 
             ///5th row
             Container(
-              width: MediaQuery.of(context).size.width * 0.9,
+              width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.05,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -131,7 +136,7 @@ class _MyappSTFState extends State<MyappSTF> {
               height: 7.5,
             ),
             Container(
-              width: width * 0.9,
+              width: width ,
               height: height * 0.05,
               child: OutlinedButton(
                   style: OutlinedButton.styleFrom(

@@ -186,55 +186,46 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
 
 
     return SafeArea(
-      child: Container(
+      child: SingleChildScrollView(
         child: Column(
           children: [
             ///1St row icon
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(),
-                    child: IconButton(
-                      onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp()));
-                      },
-                      icon:Icon( Icons.arrow_back_outlined,size: 25.0, color: Color.fromRGBO(52,107,33,1), ),
-                    ),
-                  ),
-                ],
+            Align(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => MyApp()));
+                },
+                icon: Icon(
+                  Icons.arrow_back_outlined,
+                  size: 25.0,
+                  color: Color.fromRGBO(52, 107, 33, 1),
+                ),
               ),
             ),
-            ///2nd row text
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                InkWell(
-                  onTap: (){
-                    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => GetStarted2()));
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(top: 17.0,left:15.0,),
-                    child: Text('Get Started',
-                      style: TextStyle(
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromRGBO(20,20,20,1),
-                        fontFamily: 'Montserrat',
-                      ),
-                    ),
+            SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Get Started',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.w600,
+                    color: Color.fromRGBO(20, 20, 20, 1),
                   ),
                 ),
-              ],
+              ),
             ),
             ///full name input field
             SizedBox(
               height: 36.0,
             ),
             Container(
-              margin: EdgeInsets.only(top: 17.0,),
-              width: MediaQuery.of(context).size.width*0.93,
+              margin: EdgeInsets.only(top: 17.0,left: 20,right: 20),
+              width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height*0.053,
               child: TextFormField(
                 controller: nameController,
@@ -262,8 +253,8 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
               height: 1,
             ),
             Container(
-              margin: EdgeInsets.only(top: 17.0,),
-              width: MediaQuery.of(context).size.width*0.93,
+              margin: EdgeInsets.only(top: 17.0,left: 20,right: 20),
+              width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height*0.053,
               child: TextFormField(
                 controller: emailController,
@@ -289,8 +280,8 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
             ),
             ///password input fields
             Container(
-              margin: EdgeInsets.only(top: 17.0,),
-              width: MediaQuery.of(context).size.width*0.93,
+              margin: EdgeInsets.only(top: 17.0,left: 20,right: 20),
+              width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height*0.053,
               child: TextFormField(
                 controller: passwordController,
@@ -339,8 +330,8 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
             ),
             ///5th row confirm password field
             Container(
-              margin: EdgeInsets.only(top: 17.0,),
-              width: MediaQuery.of(context).size.width*0.93,
+              margin: EdgeInsets.only(top: 17.0,left: 20,right: 20),
+              width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height*0.053,
               child: TextFormField(
                 // autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -391,12 +382,12 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
               height: 15.0,
             ),
             Container(
-              margin: EdgeInsets.only(),
-              width: MediaQuery.of(context).size.width*0.93,
+              margin: EdgeInsets.only(top: 17.0,left: 20,right: 20),
+              width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height*0.053,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Color.fromRGBO(0,173,25,1),
+                  backgroundColor: Color.fromRGBO(0,173,25,1),
                 ),
                 onPressed:() async{
                   registerUser();
@@ -412,115 +403,100 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                 ),
               ),
             ),
-            ///horizontal row
-            Container(
-              margin: EdgeInsets.only(top: 20.0,),
+            SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(
+                    left: 19.0,
+                  ),
+                  width: MediaQuery.of(context).size.width / 2.5,
+                  child: Divider(
+                    color: Colors.black45,
+                    height: 5,
+                    thickness: 1,
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    'Or',
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromRGBO(100, 100, 100, 1),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    right: 20.0,
+                  ),
+                  width: MediaQuery.of(context).size.width / 2.5,
+                  child: Divider(
+                    color: Colors.black45,
+                    height: 5,
+                    thickness: 1,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 30),
+            ///btns row
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 19.0,),
-                    width: width*0.38,
-                    child: Divider(
-                      color: Color.fromRGBO(210,209,209,1),
-                      height: 5,
-                      thickness: 1,
-                      indent: 1,
-                      endIndent: 3,
-                    ),
-                  ),
-                  Container(
-                    child: Text('Or',
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(100,100,100,1),
+                  OutlinedButton(
+                    onPressed: () {
+                      _googleSignIn.signIn().then((value) {
+                        String userName = value!.displayName!;
+                        String profilePicture = value!.photoUrl!;
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Image.asset('assets/images/google.png'),
+                          SizedBox(width: 30),
+                          Text(
+                            'Google',
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromRGBO(20, 20, 20, 1),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(right:20.0,),
-                    width: width*0.38,
-                    child: Divider(
-                      color: Color.fromRGBO(210,209,209,1),
-                      height: 5,
-                      thickness: 1,
-                      indent: 1,
-                      endIndent: 3,
+                  SizedBox(width: 20),
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
                     ),
-                  ),
-
-                ],
-              ),
-            ),
-            ///btns row
-            Container(
-              margin: EdgeInsets.only(top: 20.0,),
-              child: Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 19.0,),
-                    width: MediaQuery.of(context).size.width*0.43,
-                    height: MediaQuery.of(context).size.height*0.05,
-                    child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: Color.fromRGBO(234,234,234,1) ),
+                    onPressed: () async {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => LoginWithFacebook()));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Image.asset('assets/images/facebook-alt.png'),
+                        SizedBox(width: 10),
+                        Text(
+                          'Facebook',
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromRGBO(20, 20, 20, 1),
+                          ),
                         ),
-                        onPressed: (){
-                          _googleSignIn.signIn().then((value){
-                            String userName = value!.displayName!;
-                            String profilePicture = value!.photoUrl!;
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Container(
-                              child: Image.asset('assets/images/google.png'),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 25.0,),
-                              child: Text('Google',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromRGBO(20,20,20,1),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 9.0,),
-                    width: MediaQuery.of(context).size.width*0.43,
-                    height: MediaQuery.of(context).size.height*0.05,
-                    child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: Color.fromRGBO(234,234,234,1) ),
-                        ),
-                        onPressed: () async{
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginWithFacebook()));
-                          // final LoginResult result = await FacebookAuth.instance.login();
-                        },
-                        child: Row(
-                          children: [
-                            Container(
-                              child: Image.asset('assets/images/facebook-alt.png'),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 25.0,),
-                              child: Text('Facebook',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromRGBO(20,20,20,1),
-
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
+                      ],
                     ),
                   ),
                 ],
@@ -530,22 +506,16 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
             SizedBox(
               height: 16.0,
             ),
-            InkWell(
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => signin1()));
-              },
-              child: Container(
-                child: Center(
-                  child: Text('Already have an account?',
-                    style: TextStyle(
-                      color:Color.fromRGBO(20,20,20,1),
-                      fontSize:  14.0,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
+            TextButton(onPressed: (){
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => signin1()));
+            }, child: Text('Already have an account?',
+              style: TextStyle(
+                color:Color.fromRGBO(20,20,20,1),
+                fontSize:  14.0,
+                fontWeight: FontWeight.w400,
               ),
-            ),
+            ),),
+
           ],
         ),
       ),

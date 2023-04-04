@@ -59,7 +59,7 @@ class _VerifyCodeSTFState extends State<VerifyCodeSTF> {
                     margin: EdgeInsets.only(),
                     child: IconButton(
                       onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => forgotpassword()));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ForgotPassword()));
                       },
                       icon:Icon( Icons.arrow_back_outlined,size: 25.0,color: Color.fromRGBO(52,107,33,1), ),
                     ),
