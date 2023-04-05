@@ -1,16 +1,22 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weshop/screens/Sign_In.dart';
+import 'package:weshop/screens/bottom_bar.dart';
 import 'package:weshop/screens/getstarted.dart';
+
+import 'providers/logincontroller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(DevicePreview(
-    enabled: true,
-    builder: (context) => const MyApp(),
-  ),
+  runApp(
+    DevicePreview(
+      enabled: true,
+      builder: (context) => const MyApp(),
+    ),
   );
 }
 
@@ -29,15 +35,43 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool isLoggedIn = false;
+
+  void checkLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    print(prefs.getString('user_id'));
+    if (prefs.getString('user_id') != null) {
+      setState(() {
+        isLoggedIn = true;
+      });
+    } else {
+      setState(() {
+        isLoggedIn = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    checkLogin();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      useInheritedMediaQuery: false,
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(),
-      home: MyappSTF(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<loginController>(
+            create: (context) => loginController())
+      ],
+      child: MaterialApp(
+        useInheritedMediaQuery: false,
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(),
+        home: isLoggedIn == true ? BottomBar() : MyappSTF(),
+      ),
     );
   }
 }
@@ -100,10 +134,9 @@ class _MyappSTFState extends State<MyappSTF> {
               'Simple Shopping list app for pantry check and quick shopping. Make list in seconds and share it and see changes live.',
               textAlign: TextAlign.start,
               style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 16.0,
-                color: Colors.black45
-              ),
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16.0,
+                  color: Colors.black45),
             ),
             SizedBox(
               height: 20.0,
@@ -136,7 +169,7 @@ class _MyappSTFState extends State<MyappSTF> {
               height: 7.5,
             ),
             Container(
-              width: width ,
+              width: width,
               height: height * 0.05,
               child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
@@ -147,8 +180,8 @@ class _MyappSTFState extends State<MyappSTF> {
                     backgroundColor: Colors.transparent,
                   ),
                   onPressed: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => signin1()));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => signin1()));
                   },
                   child: Text(
                     'I\'m already a member',

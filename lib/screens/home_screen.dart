@@ -630,7 +630,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ///Delete button
 
           Visibility(
-            visible: _isVisible6,
+            visible: true,
             child: Container(
               margin: EdgeInsets.only(top: 150.0, left: 20, right: 20),
               width: width,
@@ -672,8 +672,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Visibility(
             visible: _isVisible13,
             child: Container(
-              margin: EdgeInsets.only(top: 140.0,left: 20,right: 20),
-              width: width ,
+              margin: EdgeInsets.only(top: 140.0, left: 20, right: 20),
+              width: width,
               height: height * 0.05,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -787,7 +787,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text(
                             datatochange,
                             style: TextStyle(
-
                               color: Color.fromRGBO(255, 255, 255, 1),
                             ),
                           ),

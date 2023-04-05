@@ -1,11 +1,10 @@
-import 'package:weshop/screens/verifycode.dart';
+import 'package:provider/provider.dart';
+import 'package:weshop/providers/logincontroller.dart';
 import 'package:email_otp/email_otp.dart';
 
 // import 'package:emailotp/otp_screen.dart';
 import 'Sign_In.dart';
 import 'package:flutter/material.dart';
-
-import 'otp_screen.dart';
 
 ///stl
 class ForgotPassword extends StatelessWidget {
@@ -107,7 +106,7 @@ class _forgotSTFState extends State<forgotSTF> {
                   if (value!.isEmpty) {
                     return 'Please enter your email address';
                   } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                      .hasMatch(value!)) {
+                      .hasMatch(value)) {
                     return 'Please enter a valid email address';
                   }
                   return null;
@@ -132,35 +131,49 @@ class _forgotSTFState extends State<forgotSTF> {
                   backgroundColor: Color.fromRGBO(0, 173, 25, 1),
                 ),
                 onPressed: () async {
-                  myauth.setConfig(
-                      appEmail: "hamzaconzummate29@gmail.com",
-                      appName: "Email OTP",
-                      userEmail: emailcontroller.text,
-                      otpLength: 6,
-                      otpType: OTPType.digitsOnly);
-
-                  if (await myauth.sendOTP() == true) {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text("OTP has been sent"),
-                    ));
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => VerifyCode()));
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => Otp(otpController: )));
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text("Oops, OTP send failed"),
-                    ));
-                  }
+                  // myauth.setConfig(
+                  //     appEmail: "hamzaconzummate29@gmail.com",
+                  //     appName: "Email OTP",
+                  //     userEmail: emailcontroller.text,
+                  //     otpLength: 6,
+                  //     otpType: OTPType.digitsOnly);
+                  // if (await myauth.sendOTP() == true) {
+                  //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  //     content: Text("OTP has been sent"),
+                  //   ));
+                  //   Navigator.of(context).push(
+                  //       MaterialPageRoute(builder: (context) => VerifyCode()));
+                  //   // Navigator.of(context).push(MaterialPageRoute(
+                  //   //     builder: (context) => Otp(otpController: )));
+                  // } else {
+                  //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  //     content: Text("Oops, OTP send failed"),
+                  //   ));
+                  // }
+                  emailcontroller.text.isNotEmpty
+                      ? Provider.of<loginController>(context, listen: false)
+                          .forgotPassword(emailcontroller.text)
+                      : ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Please enter your email'),
+                          ),
+                        );
                 },
-                child: Text(
-                  'Continue',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w700,
-                    color: Color.fromRGBO(255, 255, 255, 1),
-                  ),
+                child: Selector<loginController, bool>(
+                  selector: (_, ctr) => ctr.isLoading,
+                  builder: (context, isLoading, child) {
+                    return isLoading == true
+                        ? CircularProgressIndicator()
+                        : Text(
+                            'Continue',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w700,
+                              color: Color.fromRGBO(255, 255, 255, 1),
+                            ),
+                          );
+                  },
                 ),
               ),
             ),

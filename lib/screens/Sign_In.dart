@@ -1,19 +1,17 @@
-import 'dart:convert';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart';
 import 'package:provider/provider.dart';
-import 'package:weshop/screens/bottom_bar.dart';
+
+import '../screens/bottom_bar.dart';
 import '../main.dart';
-import '../models/datamodel.dart';
 import 'forgotpassword.dart';
 import 'getstarted.dart';
-import 'logincontroller.dart';
+import '../providers/logincontroller.dart';
+
 import 'loginwithfacebook.dart';
-import 'package:flutter/material.dart';
 
 // import 'package:form_field_validator/form_field_validator.dart';
 class signin1 extends StatelessWidget {
@@ -155,8 +153,7 @@ class _signin1STFState extends State<signin1STF> {
     return null;
   }
 
-  late DataModel _datamodel;
-
+  loginController? provider;
   TextEditingController email = new TextEditingController();
   TextEditingController password = new TextEditingController();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -172,14 +169,14 @@ class _signin1STFState extends State<signin1STF> {
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    provider = Provider.of<loginController>(context, listen: false);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // String token;
-
-    // width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-
-    var obscureText = true;
-
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
@@ -229,7 +226,7 @@ class _signin1STFState extends State<signin1STF> {
                           onPressed: () {
                             _googleSignIn.signIn().then((value) {
                               String userName = value!.displayName!;
-                              String profilePicture = value!.photoUrl!;
+                              String profilePicture = value.photoUrl!;
                             });
                           },
                           child: Padding(
@@ -320,20 +317,19 @@ class _signin1STFState extends State<signin1STF> {
 
                   ///Email input field
                   Container(
-                    key: _formKey,
                     child: Column(
                       children: [
                         Container(
                           margin:
                               EdgeInsets.only(top: 17.0, left: 20, right: 20),
-
                           height: height * 0.053,
                           child: TextFormField(
                             controller: email,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                // return 'Please enter your email';
+                                return 'Please enter your email';
                               }
+                              return null;
                             },
                             // autovalidateMode: AutovalidateMode.onUserInteraction,
                             cursorColor: Color.fromRGBO(100, 100, 100, 1),
@@ -355,11 +351,6 @@ class _signin1STFState extends State<signin1STF> {
                               hintText: 'Email',
                             ),
                           ),
-                          // validator: (password) {
-                          //   if (isPasswordValid(password)) return null;
-                          //   else
-                          //     return 'Enter a valid password';
-                          // },
                         ),
 
                         ///password
@@ -372,6 +363,12 @@ class _signin1STFState extends State<signin1STF> {
                             // autovalidateMode: AutovalidateMode.onUserInteraction,
                             obscureText: _obscureText,
                             cursorColor: Color.fromRGBO(100, 100, 100, 1),
+                            validator: (password) {
+                              if (password != null || password!.isNotEmpty)
+                                return null;
+                              else
+                                return 'Enter a valid password';
+                            },
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.only(
                                   left: 15.0,
@@ -440,26 +437,31 @@ class _signin1STFState extends State<signin1STF> {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.053,
                     child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-                      ),
-                      onPressed: () async {
-                        // loginUser;
-                        // _handleLogin();
-                        loginUser();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => BottomBar()));
-                      },
-                      child: Text(
-                        'Sign In',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w700,
-                          color: Color.fromRGBO(255, 255, 255, 1),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromRGBO(0, 173, 25, 1),
                         ),
-                      ),
-                    ),
+                        onPressed: () {
+                          loginUser();
+
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => BottomBar()));
+                        },
+                        child: Selector<loginController, bool>(
+                          selector: (_, ctr) => ctr.isLoading,
+                          builder: (context, isLoading, child) {
+                            return provider!.isLoading == true
+                                ? CircularProgressIndicator()
+                                : Text(
+                                    'Sign In',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color.fromRGBO(255, 255, 255, 1),
+                                    ),
+                                  );
+                          },
+                        )),
                   ),
 
                   ///account text container
@@ -492,20 +494,21 @@ class _signin1STFState extends State<signin1STF> {
   ///Login user correct api
   void loginUser() async {
     ///ye login ki api ka link ha
-    var url = "http://192.168.18.60/admindashboard/weshop/public/api/login";
-    var data = {
-      "email": email.text,
-      "password": password.text,
-    };
-    var bodyy = json.encode(data);
-    var urlParse = Uri.parse(url);
-    Response response = await http.post(urlParse, body: bodyy, headers: {
-      "Content-Type": "application/json",
-    });
-
-    var dataa = jsonDecode(response.body);
-    print(dataa);
-    print(response.body);
+    if (email.text.isEmpty || password.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please proivde the above details'),
+        ),
+      );
+    } else {
+      await provider!.login(email.text, password.text).whenComplete(
+            () => Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => BottomBar(),
+                ),
+                (route) => false),
+          );
+    }
   }
 }
 
