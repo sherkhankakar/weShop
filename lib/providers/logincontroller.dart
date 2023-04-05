@@ -51,11 +51,14 @@ class loginController with ChangeNotifier {
 
   Future<void> registerNewUser(
       String email, String password, String name) async {
+    final prefs = await SharedPreferences.getInstance();
     final result = await AuthenticationServices.baseFunction(
       Apiserviceconstant.register,
       {'name': name, 'email': email, 'password': password},
     );
 
+    prefs.setString('user_id', result['user']['id'].toString());
+    prefs.setString('token', result['token']);
     print(result);
   }
 

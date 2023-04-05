@@ -1,3 +1,6 @@
+import 'package:provider/provider.dart';
+import 'package:weshop/providers/logincontroller.dart';
+
 import 'forgotpassword.dart';
 import 'package:flutter/material.dart';
 
@@ -5,7 +8,8 @@ import 'newpassword.dart';
 
 ///stl
 class VerifyCode extends StatefulWidget {
-  const VerifyCode({Key? key}) : super(key: key);
+  const VerifyCode({Key? key, required this.email}) : super(key: key);
+  final String email;
 
   @override
   State<VerifyCode> createState() => _VerifyCodeState();
@@ -15,14 +19,15 @@ class _VerifyCodeState extends State<VerifyCode> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: VerifyCodeSTF(),
+      body: VerifyCodeSTF(email: widget.email),
     );
   }
 }
 
 ///stf
 class VerifyCodeSTF extends StatefulWidget {
-  const VerifyCodeSTF({Key? key}) : super(key: key);
+  const VerifyCodeSTF({Key? key, required this.email}) : super(key: key);
+  final String email;
 
   @override
   State<VerifyCodeSTF> createState() => _VerifyCodeSTFState();
@@ -32,7 +37,7 @@ class _VerifyCodeSTFState extends State<VerifyCodeSTF> {
   late double width;
   late double height;
 
-  var otpController = List.generate(6, (index) => TextEditingController());
+  final otpController = TextEditingController();
 
   ///variables
   var isOtpSent = false;
@@ -152,7 +157,7 @@ class _VerifyCodeSTFState extends State<VerifyCodeSTF> {
                             // margin: EdgeInsets.only(left: 10.0,),
                             child: TextField(
                               keyboardType: TextInputType.number,
-                              controller: otpController[index],
+                              controller: otpController,
                               cursorColor: Colors.black54,
                               onChanged: (value) {
                                 if (value.length == 1 && index <= 5) {
@@ -197,8 +202,17 @@ class _VerifyCodeSTFState extends State<VerifyCodeSTF> {
                   backgroundColor: Color.fromRGBO(0, 173, 25, 1),
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => NewPassword()));
+                  Provider.of<loginController>(context, listen: false)
+                      .verifyResetPassword(widget.email, otpController.text)
+                      .whenComplete(
+                        () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => NewPassword(
+                              email: widget.email,
+                            ),
+                          ),
+                        ),
+                      );
                 },
                 child: Text(
                   'Confirm',

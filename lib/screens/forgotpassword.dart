@@ -6,6 +6,8 @@ import 'package:email_otp/email_otp.dart';
 import 'Sign_In.dart';
 import 'package:flutter/material.dart';
 
+import 'verifycode.dart';
+
 ///stl
 class ForgotPassword extends StatelessWidget {
   const ForgotPassword({Key? key}) : super(key: key);
@@ -153,6 +155,15 @@ class _forgotSTFState extends State<forgotSTF> {
                   emailcontroller.text.isNotEmpty
                       ? Provider.of<loginController>(context, listen: false)
                           .forgotPassword(emailcontroller.text)
+                          .whenComplete(
+                            () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (ctx) => VerifyCode(
+                                  email: emailcontroller.text,
+                                ),
+                              ),
+                            ),
+                          )
                       : ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Please enter your email'),
