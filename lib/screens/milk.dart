@@ -1,4 +1,3 @@
-import 'list_label.dart';
 import 'package:flutter/material.dart';
 
 ///stf
@@ -25,8 +24,8 @@ class _milkscreenState extends State<milkscreen> {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => ListLabel()));
+                  // Navigator.of(context).push(
+                  //     MaterialPageRoute(builder: (context) => ListLabel()));
                 },
                 child: Container(
                   child: Icon(Icons.arrow_back_ios_new,

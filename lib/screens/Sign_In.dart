@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
+import '../constant/widget_constants.dart';
 import '../screens/bottom_bar.dart';
 import '../main.dart';
 import 'forgotpassword.dart';
@@ -495,19 +496,22 @@ class _signin1STFState extends State<signin1STF> {
   void loginUser() async {
     ///ye login ki api ka link ha
     if (email.text.isEmpty || password.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Please proivde the above details'),
-        ),
-      );
+      WidgetConstants.showSnackBar(context, 'Please proivde the above details');
     } else {
       await provider!.login(email.text, password.text).whenComplete(
-            () => Navigator.of(context).pushAndRemoveUntil(
+        () {
+          if (provider!.msg == 'Successful') {
+            Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                   builder: (context) => BottomBar(),
                 ),
-                (route) => false),
-          );
+                (route) => false);
+          } else {
+            WidgetConstants.hideSnackBar(context);
+            WidgetConstants.showSnackBar(context, provider!.msg);
+          }
+        },
+      );
     }
   }
 }

@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,6 +36,9 @@ class loginController with ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  String _msg = '';
+  String get msg => _msg;
+
   Future<void> login(String email, String password) async {
     final prefs = await SharedPreferences.getInstance();
     _isLoading = true;
@@ -44,8 +50,17 @@ class loginController with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     });
-    prefs.setString('user_id', result['user']['id'].toString());
-    prefs.setString('token', result['token']);
+    log(result.statusCode.toString());
+    final data = jsonDecode(result.body) as Map<String, dynamic>;
+    if (result.statusCode == 200) {
+      prefs.setString('user_id', data['user']['id'].toString());
+      prefs.setString('token', data['token']);
+      _msg = 'Successful';
+      notifyListeners();
+    } else {
+      _msg = data['message'];
+      notifyListeners();
+    }
     print(result);
   }
 
@@ -57,9 +72,17 @@ class loginController with ChangeNotifier {
       {'name': name, 'email': email, 'password': password},
     );
 
-    prefs.setString('user_id', result['user']['id'].toString());
-    prefs.setString('token', result['token']);
-    print(result);
+    log(result.statusCode.toString());
+    final data = jsonDecode(result.body) as Map<String, dynamic>;
+    if (result.statusCode == 200) {
+      prefs.setString('user_id', data['user']['id'].toString());
+      prefs.setString('token', data['token']);
+      _msg = 'Successful';
+      notifyListeners();
+    } else {
+      _msg = data['message'];
+      notifyListeners();
+    }
   }
 
   Future<void> forgotPassword(String email) async {
@@ -72,7 +95,15 @@ class loginController with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     });
-
+    log(result.statusCode.toString());
+    final data = jsonDecode(result.body) as Map<String, dynamic>;
+    if (result.statusCode == 200) {
+      _msg = 'Successful';
+      notifyListeners();
+    } else {
+      _msg = data['errors']['email'][0];
+      notifyListeners();
+    }
     print(result);
   }
 
@@ -86,7 +117,16 @@ class loginController with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     });
+    final data = jsonDecode(result.body) as Map<String, dynamic>;
+    log(result.statusCode.toString());
 
+    if (result.statusCode == 200) {
+      _msg = 'Successful';
+      notifyListeners();
+    } else {
+      _msg = data['message'];
+      notifyListeners();
+    }
     print(result);
   }
 
@@ -100,7 +140,15 @@ class loginController with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     });
-
+    log(result.statusCode.toString());
+    final data = jsonDecode(result.body) as Map<String, dynamic>;
+    if (result.statusCode == 200) {
+      _msg = 'Successful';
+      notifyListeners();
+    } else {
+      _msg = data['message'];
+      notifyListeners();
+    }
     print(result);
   }
 }

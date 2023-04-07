@@ -1,6 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:weshop/providers/logincontroller.dart';
 
+import '../constant/widget_constants.dart';
 import 'forgotpassword.dart';
 import 'package:flutter/material.dart';
 
@@ -37,10 +38,17 @@ class _VerifyCodeSTFState extends State<VerifyCodeSTF> {
   late double width;
   late double height;
 
-  final otpController = TextEditingController();
+  var otpController = List.generate(6, (index) => TextEditingController());
+  loginController? provider;
 
   ///variables
   var isOtpSent = false;
+
+  @override
+  void initState() {
+    provider = Provider.of<loginController>(context, listen: false);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +165,7 @@ class _VerifyCodeSTFState extends State<VerifyCodeSTF> {
                             // margin: EdgeInsets.only(left: 10.0,),
                             child: TextField(
                               keyboardType: TextInputType.number,
-                              controller: otpController,
+                              controller: otpController[index],
                               cursorColor: Colors.black54,
                               onChanged: (value) {
                                 if (value.length == 1 && index <= 5) {
@@ -198,32 +206,45 @@ class _VerifyCodeSTFState extends State<VerifyCodeSTF> {
               width: width * 0.93,
               height: height * 0.053,
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-                ),
-                onPressed: () {
-                  Provider.of<loginController>(context, listen: false)
-                      .verifyResetPassword(widget.email, otpController.text)
-                      .whenComplete(
-                        () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (ctx) => NewPassword(
-                              email: widget.email,
-                            ),
-                          ),
-                        ),
-                      );
-                },
-                child: Text(
-                  'Confirm',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w700,
-                    color: Color.fromRGBO(255, 255, 255, 1),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(0, 173, 25, 1),
                   ),
-                ),
-              ),
+                  onPressed: () {
+                    provider!
+                        .verifyResetPassword(widget.email,
+                            '${otpController[0].text}${otpController[1].text}${otpController[2].text}${otpController[3].text}${otpController[4].text}${otpController[5].text}')
+                        .whenComplete(
+                      () {
+                        if (provider!.msg == 'Successful') {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (ctx) => NewPassword(
+                                email: widget.email,
+                              ),
+                            ),
+                          );
+                        } else {
+                          WidgetConstants.showSnackBar(context, provider!.msg);
+                        }
+                      },
+                    );
+                  },
+                  child: Selector<loginController, bool>(
+                    selector: (_, loginController) => provider!.isLoading,
+                    builder: (context, isLoading, child) {
+                      return isLoading == true
+                          ? CircularProgressIndicator()
+                          : Text(
+                              'Confirm',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w700,
+                                color: Color.fromRGBO(255, 255, 255, 1),
+                              ),
+                            );
+                    },
+                  )),
             ),
 
             ///last text

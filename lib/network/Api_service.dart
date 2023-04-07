@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 
 class AuthenticationServices {
@@ -7,8 +5,24 @@ class AuthenticationServices {
       Uri url, Map<String, dynamic> data) async {
     try {
       final response = await http.post(url, body: data);
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        return response;
+      }
+    } catch (e) {
+      throw Exception('error occured while dealing with the api');
+    }
+  }
 
-      return jsonDecode(response.body) as Map<String, dynamic>;
+  static Future<dynamic> getBaseFunction(Uri url) async {
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        return response;
+      }
     } catch (e) {
       throw Exception('error occured while dealing with the api');
     }

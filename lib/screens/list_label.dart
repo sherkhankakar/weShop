@@ -3,11 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:weshop/screens/qr_code.dart';
 import 'add_item.dart';
-import 'home_screen.dart';
-import 'milk.dart';
 
 class ListLabel extends StatefulWidget {
-  const ListLabel({Key? key}) : super(key: key);
+  const ListLabel({Key? key, required this.listId}) : super(key: key);
+  final String listId;
 
   @override
   State<ListLabel> createState() => _ListLabelState();
@@ -308,8 +307,8 @@ class _ListLabelState extends State<ListLabel> {
                                         style: TextStyle(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w400,
-                                          color: Color.fromRGBO(
-                                              100, 100, 100, 1),
+                                          color:
+                                              Color.fromRGBO(100, 100, 100, 1),
                                         ),
                                       ),
                                     ),
@@ -333,8 +332,7 @@ class _ListLabelState extends State<ListLabel> {
                                         style: TextStyle(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w400,
-                                          color:
-                                              Color.fromRGBO(20, 20, 20, 1),
+                                          color: Color.fromRGBO(20, 20, 20, 1),
                                         ),
                                       ),
                                     ),
@@ -371,8 +369,7 @@ class _ListLabelState extends State<ListLabel> {
                                         style: TextStyle(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w400,
-                                          color:
-                                              Color.fromRGBO(20, 20, 20, 1),
+                                          color: Color.fromRGBO(20, 20, 20, 1),
                                         ),
                                       ),
                                     ),
@@ -409,8 +406,7 @@ class _ListLabelState extends State<ListLabel> {
                                         style: TextStyle(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w400,
-                                          color:
-                                              Color.fromRGBO(20, 20, 20, 1),
+                                          color: Color.fromRGBO(20, 20, 20, 1),
                                         ),
                                       ),
                                     ),
@@ -447,8 +443,7 @@ class _ListLabelState extends State<ListLabel> {
                                         style: TextStyle(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w400,
-                                          color:
-                                              Color.fromRGBO(20, 20, 20, 1),
+                                          color: Color.fromRGBO(20, 20, 20, 1),
                                         ),
                                       ),
                                     ),
@@ -485,8 +480,7 @@ class _ListLabelState extends State<ListLabel> {
                                         style: TextStyle(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w400,
-                                          color:
-                                              Color.fromRGBO(20, 20, 20, 1),
+                                          color: Color.fromRGBO(20, 20, 20, 1),
                                         ),
                                       ),
                                     ),
@@ -1028,7 +1022,7 @@ class _ListLabelState extends State<ListLabel> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-
+    print(widget.listId);
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -1079,21 +1073,26 @@ class _ListLabelState extends State<ListLabel> {
         // ),
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-          leading: IconButton(onPressed: (){
-            Navigator.of(context).pop();
-          },icon: Icon(Icons.arrow_back_ios_rounded),),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(Icons.arrow_back_ios_rounded),
+          ),
           title: Row(
             children: [
-              Expanded(child: Text(
-                'List Label',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
+              Expanded(
+                child: Text(
+                  'List Label',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
                 ),
-              ),),
+              ),
               InkWell(
-                  onTap: (){
+                  onTap: () {
                     setState(() {
                       if (_isVisible4 = false) {}
                       if (_isVisible5 = true) {}
@@ -1113,122 +1112,26 @@ class _ListLabelState extends State<ListLabel> {
             ],
           ),
         ),
+
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => AddItem(
+                      isVisible: _isVisible1,
+                      isVisible2: _isVisible2,
+                      isVisible3: _isVisible3,
+                      isVisible4: _isVisible4,
+                      isVisible5: _isVisible5,
+                      listId: widget.listId,
+                    )));
+            // _showPopupMenu3();
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+        ),
         body: (Container(
           child: Column(
             children: [
-              Container(
-                child: Stack(
-                  children: [
-                    Container(
-                      child: Positioned(
-                          child: AppBar(
-                        backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-                        title: Row(
-                          children: [
-                            Container(
-                              child: InkWell(
-                                  onTap: () {
-                                    setState(() {});
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HomeScreen()));
-                                  },
-                                  child: Icon(Icons.arrow_back_ios_new)),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                left: 25.0,
-                              ),
-                              child: const Text(
-                                'List Label',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                left: 127.0,
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    if (_isVisible4 = false) {}
-                                    if (_isVisible5 = true) {}
-                                  });
-                                  _showPopupMenu3();
-                                },
-                                child: ImageIcon(
-                                  AssetImage('assets/images/Vector (1).png'),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(),
-                              child: IconButton(
-                                onPressed: () {
-                                  _showPopupMenu1();
-                                },
-                                icon: Icon(
-                                  Icons.more_vert_sharp,
-                                  size: 23.0,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        automaticallyImplyLeading: false,
-                      )),
-                    ),
-                    Visibility(
-                      visible: _isVisible5,
-                      child: AppBar(
-                        backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-                        title: Row(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                left: 10.0,
-                              ),
-                              child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      if (_isVisible4 = true) {}
-                                      if (_isVisible5 = false) {}
-                                    });
-                                  },
-                                  child: Icon(
-                                    Icons.close,
-                                    color: Colors.white,
-                                  )),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                left: 30.0,
-                              ),
-                              child: const Text(
-                                'Add Contributor',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        automaticallyImplyLeading: false,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-
-
               Visibility(
                 visible: _isVisible2,
                 child: Container(
@@ -2159,392 +2062,365 @@ class _ListLabelState extends State<ListLabel> {
               SizedBox(
                 height: 240.0,
               ),
-              Container(
-                margin: EdgeInsets.only(right: 15.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(15),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => AddItem(
-                                  isVisible: _isVisible1,
-                                  isVisible2: _isVisible2,
-                                  isVisible3: _isVisible3,
-                                  isVisible4: _isVisible4,
-                                  isVisible5: _isVisible5,
-                                )));
-                        // _showPopupMenu3();
-                      },
-                      child: Icon(Icons.add),
-                    ),
-                  ],
-                ),
-              ),
 
-              ///Bottom Sheet
-              SizedBox(
-                height: height * 0.02,
-              ),
-              Visibility(
-                visible: _isVisible3,
-                child: Container(
-                  margin: EdgeInsets.only(),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  child: Card(
-                    elevation: 15.0,
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: 18.0,
-                            top: 3.0,
-                          ),
-                          child: Image.asset('assets/images/Group 13.png'),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: 6.0,
-                          ),
-                          child: Text(
-                            'Item Prices In',
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(0, 0, 0, 1),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: 3.0,
-                          ),
-                          child: Text(
-                            'Lahore',
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(0, 173, 25, 1),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: 84.0,
-                          ),
-                          child: IconButton(
-                            onPressed: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return SizedBox(
-                                      height: 220,
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              top: 30.0,
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                    left: 18.0,
-                                                  ),
-                                                  child: Image.asset(
-                                                      'assets/images/Group 13.png'),
-                                                ),
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                    left: 6.0,
-                                                  ),
-                                                  child: Text(
-                                                    'Item Prices In',
-                                                    style: TextStyle(
-                                                      fontSize: 18.0,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: Color.fromRGBO(
-                                                          0, 0, 0, 1),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                    left: 3.0,
-                                                  ),
-                                                  child: Text(
-                                                    'Lahore',
-                                                    style: TextStyle(
-                                                      fontSize: 18.0,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: Color.fromRGBO(
-                                                          0, 173, 25, 1),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                    left: 100.0,
-                                                  ),
-                                                  child: InkWell(
-                                                      onTap: () {
-                                                        Navigator.of(context).push(
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        ListLabel()));
-                                                      },
-                                                      child: const Icon(
-                                                        Icons.close,
-                                                        color: Color.fromRGBO(
-                                                            52, 107, 33, 1),
-                                                      )),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+              // ///Bottom Sheet
+              // SizedBox(
+              //   height: height * 0.02,
+              // ),
+              // Visibility(
+              //   visible: _isVisible3,
+              //   child: Container(
+              //     margin: EdgeInsets.only(),
+              //     width: MediaQuery.of(context).size.width,
+              //     height: MediaQuery.of(context).size.height * 0.1,
+              //     child: Card(
+              //       elevation: 15.0,
+              //       child: Row(
+              //         children: [
+              //           Container(
+              //             margin: EdgeInsets.only(
+              //               left: 18.0,
+              //               top: 3.0,
+              //             ),
+              //             child: Image.asset('assets/images/Group 13.png'),
+              //           ),
+              //           Container(
+              //             margin: EdgeInsets.only(
+              //               left: 6.0,
+              //             ),
+              //             child: Text(
+              //               'Item Prices In',
+              //               style: TextStyle(
+              //                 fontSize: 18.0,
+              //                 fontWeight: FontWeight.w600,
+              //                 color: Color.fromRGBO(0, 0, 0, 1),
+              //               ),
+              //             ),
+              //           ),
+              //           Container(
+              //             margin: EdgeInsets.only(
+              //               left: 3.0,
+              //             ),
+              //             child: Text(
+              //               'Lahore',
+              //               style: TextStyle(
+              //                 fontSize: 18.0,
+              //                 fontWeight: FontWeight.w600,
+              //                 color: Color.fromRGBO(0, 173, 25, 1),
+              //               ),
+              //             ),
+              //           ),
+              //           Container(
+              //             margin: EdgeInsets.only(
+              //               left: 84.0,
+              //             ),
+              //             child: IconButton(
+              //               onPressed: () {
+              //                 showModalBottomSheet(
+              //                     context: context,
+              //                     builder: (BuildContext context) {
+              //                       return SizedBox(
+              //                         height: 220,
+              //                         child: Column(
+              //                           children: [
+              //                             Container(
+              //                               margin: EdgeInsets.only(
+              //                                 top: 30.0,
+              //                               ),
+              //                               child: Row(
+              //                                 children: [
+              //                                   Container(
+              //                                     margin: EdgeInsets.only(
+              //                                       left: 18.0,
+              //                                     ),
+              //                                     child: Image.asset(
+              //                                         'assets/images/Group 13.png'),
+              //                                   ),
+              //                                   Container(
+              //                                     margin: EdgeInsets.only(
+              //                                       left: 6.0,
+              //                                     ),
+              //                                     child: Text(
+              //                                       'Item Prices In',
+              //                                       style: TextStyle(
+              //                                         fontSize: 18.0,
+              //                                         fontWeight:
+              //                                             FontWeight.w600,
+              //                                         color: Color.fromRGBO(
+              //                                             0, 0, 0, 1),
+              //                                       ),
+              //                                     ),
+              //                                   ),
+              //                                   Container(
+              //                                     margin: EdgeInsets.only(
+              //                                       left: 3.0,
+              //                                     ),
+              //                                     child: Text(
+              //                                       'Lahore',
+              //                                       style: TextStyle(
+              //                                         fontSize: 18.0,
+              //                                         fontWeight:
+              //                                             FontWeight.w600,
+              //                                         color: Color.fromRGBO(
+              //                                             0, 173, 25, 1),
+              //                                       ),
+              //                                     ),
+              //                                   ),
+              //                                   Container(
+              //                                     margin: EdgeInsets.only(
+              //                                       left: 100.0,
+              //                                     ),
+              //                                     child: InkWell(
+              //                                         onTap: () {
+              //                                           Navigator.of(context).push(
+              //                                               MaterialPageRoute(
+              //                                                   builder:
+              //                                                       (context) =>
+              //                                                           ListLabel()));
+              //                                         },
+              //                                         child: const Icon(
+              //                                           Icons.close,
+              //                                           color: Color.fromRGBO(
+              //                                               52, 107, 33, 1),
+              //                                         )),
+              //                                   ),
+              //                                 ],
+              //                               ),
+              //                             ),
 
-                                          ///milk text card
-                                          InkWell(
-                                            onTap: () {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          milkscreen()));
-                                            },
-                                            child: Container(
-                                              margin: EdgeInsets.only(
-                                                top: 20.0,
-                                              ),
-                                              width: width * 0.93,
-                                              height: height * 0.081,
-                                              child: Card(
-                                                elevation: 10.0,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Column(
-                                                      children: [
-                                                        Container(
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                            right: 92.0,
-                                                            top: 10.0,
-                                                          ),
-                                                          child: Text(
-                                                            'Milk',
-                                                            style: TextStyle(
-                                                              fontSize: 16.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: Color
-                                                                  .fromRGBO(
-                                                                      20,
-                                                                      20,
-                                                                      20,
-                                                                      1),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                            top: 4.0,
-                                                            left: 10.0,
-                                                          ),
-                                                          child: Row(
-                                                            children: [
-                                                              Container(
-                                                                child: Text(
-                                                                  'Starting From:',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        12.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            0,
-                                                                            173,
-                                                                            25,
-                                                                            1),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Container(
-                                                                margin:
-                                                                    EdgeInsets
-                                                                        .only(
-                                                                  left: 3.0,
-                                                                ),
-                                                                child: Text(
-                                                                  'PKR 60-80',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        12.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            20,
-                                                                            20,
-                                                                            20,
-                                                                            1),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                        right: 10.0,
-                                                      ),
-                                                      child: Icon(
-                                                        Icons.close,
-                                                        size: 20.0,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+              //                             ///milk text card
+              //                             InkWell(
+              //                               onTap: () {
+              //                                 Navigator.of(context).push(
+              //                                     MaterialPageRoute(
+              //                                         builder: (context) =>
+              //                                             milkscreen()));
+              //                               },
+              //                               child: Container(
+              //                                 margin: EdgeInsets.only(
+              //                                   top: 20.0,
+              //                                 ),
+              //                                 width: width * 0.93,
+              //                                 height: height * 0.081,
+              //                                 child: Card(
+              //                                   elevation: 10.0,
+              //                                   child: Row(
+              //                                     mainAxisAlignment:
+              //                                         MainAxisAlignment
+              //                                             .spaceBetween,
+              //                                     children: [
+              //                                       Column(
+              //                                         children: [
+              //                                           Container(
+              //                                             margin:
+              //                                                 EdgeInsets.only(
+              //                                               right: 92.0,
+              //                                               top: 10.0,
+              //                                             ),
+              //                                             child: Text(
+              //                                               'Milk',
+              //                                               style: TextStyle(
+              //                                                 fontSize: 16.0,
+              //                                                 fontWeight:
+              //                                                     FontWeight
+              //                                                         .w400,
+              //                                                 color: Color
+              //                                                     .fromRGBO(
+              //                                                         20,
+              //                                                         20,
+              //                                                         20,
+              //                                                         1),
+              //                                               ),
+              //                                             ),
+              //                                           ),
+              //                                           Container(
+              //                                             margin:
+              //                                                 EdgeInsets.only(
+              //                                               top: 4.0,
+              //                                               left: 10.0,
+              //                                             ),
+              //                                             child: Row(
+              //                                               children: [
+              //                                                 Container(
+              //                                                   child: Text(
+              //                                                     'Starting From:',
+              //                                                     style:
+              //                                                         TextStyle(
+              //                                                       fontSize:
+              //                                                           12.0,
+              //                                                       fontWeight:
+              //                                                           FontWeight
+              //                                                               .w400,
+              //                                                       color: Color
+              //                                                           .fromRGBO(
+              //                                                               0,
+              //                                                               173,
+              //                                                               25,
+              //                                                               1),
+              //                                                     ),
+              //                                                   ),
+              //                                                 ),
+              //                                                 Container(
+              //                                                   margin:
+              //                                                       EdgeInsets
+              //                                                           .only(
+              //                                                     left: 3.0,
+              //                                                   ),
+              //                                                   child: Text(
+              //                                                     'PKR 60-80',
+              //                                                     style:
+              //                                                         TextStyle(
+              //                                                       fontSize:
+              //                                                           12.0,
+              //                                                       fontWeight:
+              //                                                           FontWeight
+              //                                                               .w400,
+              //                                                       color: Color
+              //                                                           .fromRGBO(
+              //                                                               20,
+              //                                                               20,
+              //                                                               20,
+              //                                                               1),
+              //                                                     ),
+              //                                                   ),
+              //                                                 ),
+              //                                               ],
+              //                                             ),
+              //                                           ),
+              //                                         ],
+              //                                       ),
+              //                                       Container(
+              //                                         margin: EdgeInsets.only(
+              //                                           right: 10.0,
+              //                                         ),
+              //                                         child: Icon(
+              //                                           Icons.close,
+              //                                           size: 20.0,
+              //                                         ),
+              //                                       ),
+              //                                     ],
+              //                                   ),
+              //                                 ),
+              //                               ),
+              //                             ),
 
-                                          ///Juice text card
-                                          Container(
-                                            width: width * 0.93,
-                                            height: height * 0.081,
-                                            child: Card(
-                                              elevation: 10.0,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Column(
-                                                    children: [
-                                                      Container(
-                                                        margin: EdgeInsets.only(
-                                                          right: 92.0,
-                                                          top: 10.0,
-                                                        ),
-                                                        child: Text(
-                                                          'Juice',
-                                                          style: TextStyle(
-                                                            fontSize: 16.0,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color:
-                                                                Color.fromRGBO(
-                                                                    20,
-                                                                    20,
-                                                                    20,
-                                                                    1),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        margin: EdgeInsets.only(
-                                                          top: 4.0,
-                                                          left: 10.0,
-                                                        ),
-                                                        child: Row(
-                                                          children: [
-                                                            Container(
-                                                              child: Text(
-                                                                'Starting From:',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize:
-                                                                      12.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: Color
-                                                                      .fromRGBO(
-                                                                          0,
-                                                                          173,
-                                                                          25,
-                                                                          1),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                left: 3.0,
-                                                              ),
-                                                              child: Text(
-                                                                'PKR 35-280',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize:
-                                                                      12.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: Color
-                                                                      .fromRGBO(
-                                                                          20,
-                                                                          20,
-                                                                          20,
-                                                                          1),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                      right: 10.0,
-                                                    ),
-                                                    child: Icon(
-                                                      Icons.close,
-                                                      size: 20.0,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  });
-                            },
-                            icon: Icon(
-                              Icons.chevron_right_outlined,
-                              color: Color.fromRGBO(52, 107, 33, 1),
-                              size: 30.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              //                             ///Juice text card
+              //                             Container(
+              //                               width: width * 0.93,
+              //                               height: height * 0.081,
+              //                               child: Card(
+              //                                 elevation: 10.0,
+              //                                 child: Row(
+              //                                   mainAxisAlignment:
+              //                                       MainAxisAlignment
+              //                                           .spaceBetween,
+              //                                   children: [
+              //                                     Column(
+              //                                       children: [
+              //                                         Container(
+              //                                           margin: EdgeInsets.only(
+              //                                             right: 92.0,
+              //                                             top: 10.0,
+              //                                           ),
+              //                                           child: Text(
+              //                                             'Juice',
+              //                                             style: TextStyle(
+              //                                               fontSize: 16.0,
+              //                                               fontWeight:
+              //                                                   FontWeight.w400,
+              //                                               color:
+              //                                                   Color.fromRGBO(
+              //                                                       20,
+              //                                                       20,
+              //                                                       20,
+              //                                                       1),
+              //                                             ),
+              //                                           ),
+              //                                         ),
+              //                                         Container(
+              //                                           margin: EdgeInsets.only(
+              //                                             top: 4.0,
+              //                                             left: 10.0,
+              //                                           ),
+              //                                           child: Row(
+              //                                             children: [
+              //                                               Container(
+              //                                                 child: Text(
+              //                                                   'Starting From:',
+              //                                                   style:
+              //                                                       TextStyle(
+              //                                                     fontSize:
+              //                                                         12.0,
+              //                                                     fontWeight:
+              //                                                         FontWeight
+              //                                                             .w400,
+              //                                                     color: Color
+              //                                                         .fromRGBO(
+              //                                                             0,
+              //                                                             173,
+              //                                                             25,
+              //                                                             1),
+              //                                                   ),
+              //                                                 ),
+              //                                               ),
+              //                                               Container(
+              //                                                 margin: EdgeInsets
+              //                                                     .only(
+              //                                                   left: 3.0,
+              //                                                 ),
+              //                                                 child: Text(
+              //                                                   'PKR 35-280',
+              //                                                   style:
+              //                                                       TextStyle(
+              //                                                     fontSize:
+              //                                                         12.0,
+              //                                                     fontWeight:
+              //                                                         FontWeight
+              //                                                             .w400,
+              //                                                     color: Color
+              //                                                         .fromRGBO(
+              //                                                             20,
+              //                                                             20,
+              //                                                             20,
+              //                                                             1),
+              //                                                   ),
+              //                                                 ),
+              //                                               ),
+              //                                             ],
+              //                                           ),
+              //                                         ),
+              //                                       ],
+              //                                     ),
+              //                                     Container(
+              //                                       margin: EdgeInsets.only(
+              //                                         right: 10.0,
+              //                                       ),
+              //                                       child: Icon(
+              //                                         Icons.close,
+              //                                         size: 20.0,
+              //                                       ),
+              //                                     ),
+              //                                   ],
+              //                                 ),
+              //                               ),
+              //                             ),
+              //                           ],
+              //                         ),
+              //                       );
+              //                     });
+              //               },
+              //               icon: Icon(
+              //                 Icons.chevron_right_outlined,
+              //                 color: Color.fromRGBO(52, 107, 33, 1),
+              //                 size: 30.0,
+              //               ),
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
 
               ///Expanded card
               // Container(
