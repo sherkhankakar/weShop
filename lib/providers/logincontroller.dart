@@ -74,13 +74,12 @@ class loginController with ChangeNotifier {
 
     log(result.statusCode.toString());
     final data = jsonDecode(result.body) as Map<String, dynamic>;
-    if (result.statusCode == 200) {
-      prefs.setString('user_id', data['user']['id'].toString());
+    if (result.statusCode == 201) {
       prefs.setString('token', data['token']);
-      _msg = 'Successful';
+      _msg = 'Successfully registered';
       notifyListeners();
     } else {
-      _msg = data['message'];
+      _msg = data['errors']['email'];
       notifyListeners();
     }
   }

@@ -5,7 +5,7 @@ class AuthenticationServices {
       Uri url, Map<String, dynamic> data) async {
     try {
       final response = await http.post(url, body: data);
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return response;
       } else {
         return response;

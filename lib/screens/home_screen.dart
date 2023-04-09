@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String deletepost = "";
 
   ///popup menu 1
-  void _showPopupMenu3() async {
+  void _showPopupMenu3({bool? isEditing = false, String? listId}) async {
     await showMenu(
       context: context,
       position: RelativeRect.fromLTRB(60, 300, 170, 150),
@@ -122,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: Center(
                         child: Text(
-                      "New Lists",
+                      isEditing == true ? "Update List" : "New List",
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w600,
@@ -208,21 +208,39 @@ class _HomeScreenState extends State<HomeScreen> {
                         //   if (_isVisible = false) {
                         //   } else if (_isVisible2 = true) {}
                         // });
-
-                        provider!
-                            .addNewList(_textController.text)
-                            .whenComplete(() {
-                          if (provider!.msg == 'List added successfully') {
-                            Navigator.of(context).pop();
-                            setState(() {});
-                            WidgetConstants.showSnackBar(
-                                context, provider!.msg);
-                          } else {
-                            Navigator.of(context).pop();
-                            WidgetConstants.showSnackBar(
-                                context, provider!.msg);
-                          }
-                        });
+                        isEditing == false
+                            ? provider!
+                                .addNewList(_textController.text)
+                                .whenComplete(() {
+                                if (provider!.msg ==
+                                    'List added successfully') {
+                                  Navigator.of(context).pop();
+                                  setState(() {});
+                                  WidgetConstants.showSnackBar(
+                                      context, provider!.msg);
+                                } else {
+                                  Navigator.of(context).pop();
+                                  WidgetConstants.showSnackBar(
+                                      context, provider!.msg);
+                                }
+                                _textController.clear();
+                              })
+                            : provider!
+                                .updateListName(_textController.text, listId!)
+                                .whenComplete(() {
+                                if (provider!.msg ==
+                                    'List updated successfully') {
+                                  Navigator.of(context).pop();
+                                  setState(() {});
+                                  WidgetConstants.showSnackBar(
+                                      context, provider!.msg);
+                                } else {
+                                  Navigator.of(context).pop();
+                                  WidgetConstants.showSnackBar(
+                                      context, provider!.msg);
+                                }
+                                _textController.clear();
+                              });
                       },
                       child: Text(
                         'Continue',
@@ -535,13 +553,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //           margin: EdgeInsets.only(top: 150.0, left: 20, right: 20),
     //           width: width,
     //           height: height * 0.05,
-    //           child: ElevatedButton(
-    //               style: ElevatedButton.styleFrom(
-    //                 backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-    //               ),
-    //               onPressed: () {},
-    //               child: Text('Delete')),
-    //         ),
+    //           child:
     //       ),
     //       ///Share Button
     //       Visibility(
@@ -808,6 +820,36 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ),
+            ValueListenableBuilder(
+              valueListenable: title,
+              builder: (BuildContext context, dynamic value, Widget? child) {
+                return value == 'Delete'
+                    ? ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+                        ),
+                        onPressed: () {
+                          WidgetConstants.showSnackBar(
+                              context, 'Deleting selected lists');
+                          provider!
+                              .deleteList(provider!.idsList)
+                              .whenComplete(() {
+                            if (provider!.msg == 'List deleted successfully') {
+                              WidgetConstants.hideSnackBar(context);
+                              setState(() {});
+                              WidgetConstants.showSnackBar(
+                                  context, provider!.msg);
+                            } else {
+                              WidgetConstants.hideSnackBar(context);
+                              WidgetConstants.showSnackBar(
+                                  context, provider!.msg);
+                            }
+                          });
+                        },
+                        child: Text('Delete'))
+                    : SizedBox();
+              },
+            ),
           ],
         ),
       ),
@@ -826,24 +868,20 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Card(
         elevation: 3.0,
         child: ListTile(
-          leading: ValueListenableBuilder(
-            valueListenable: title,
-            builder: (BuildContext context, dynamic value, Widget? child) {
-              return value == 'Delete'
-                  ? Selector<ListProvider, bool>(
-                      selector: (_, myType) => provider!.isChecked,
-                      builder: (context, isChecked, child) {
-                        return Checkbox(
-                            value: isChecked,
-                            onChanged: (value) {
-                              provider!.currentIndex = index;
-                              debugPrint(provider!.currentIndex.toString());
-                              if (provider!.currentIndex == index)
-                                provider!.isChecked = value!;
-                            });
-                      },
-                    )
-                  : SizedBox();
+          leading: Consumer<ListProvider>(
+            builder: (context, myType, child) {
+              return ValueListenableBuilder(
+                valueListenable: title,
+                builder: (BuildContext context, dynamic value, Widget? child) {
+                  return title.value == 'Delete'
+                      ? Checkbox(
+                          value: myType.myDataList[index].isChecked,
+                          onChanged: (value) {
+                            myType.toggleItem(data['id']);
+                          })
+                      : SizedBox();
+                },
+              );
             },
           ),
           minLeadingWidth: 0,
@@ -863,15 +901,44 @@ class _HomeScreenState extends State<HomeScreen> {
               fontSize: 13.0,
             ),
           ),
-          trailing: Text(
-            'PKR 0.00',
-            style: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 14.0,
-            ),
+          trailing: Column(
+            children: [
+              Text(
+                'PKR 0.00',
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14.0,
+                ),
+              ),
+              Expanded(
+                child: IconButton(
+                  onPressed: () {
+                    _showPopupMenu3(
+                        isEditing: true, listId: data['id'].toString());
+                  },
+                  icon: Icon(Icons.edit),
+                ),
+              )
+            ],
           ),
         ),
       ),
     );
   }
 }
+
+/*
+ValueListenableBuilder(
+            valueListenable: title,
+            builder: (BuildContext context, dynamic value, Widget? child) {
+              return value == 'Delete'
+                  ? Selector<ListProvider, bool>(
+                      selector: (_, myType) => provider!.isChecked,
+                      builder: (context, isChecked, child) {
+                        return 
+                      },
+                    )
+                  : SizedBox();
+            },
+          ),
+ */

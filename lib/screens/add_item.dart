@@ -269,6 +269,7 @@ class _AddItemState extends State<AddItem> {
                           context, 'Item added to the list successfully');
                       Navigator.of(context).pop();
                     } else {
+                      WidgetConstants.hideSnackBar(context);
                       WidgetConstants.showSnackBar(context, provider.msg);
                     }
                   });

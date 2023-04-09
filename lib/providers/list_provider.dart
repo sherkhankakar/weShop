@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../network/Api_service.dart';
+import '../models/glist_model.dart';
 import '../network/Api_service_constant.dart';
 
 class ListProvider with ChangeNotifier {
@@ -36,6 +37,8 @@ class ListProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  List<GlistModel> myDataList = [];
+
   Stream<dynamic> getLists() async* {
     final prefs = await SharedPreferences.getInstance();
 
@@ -45,10 +48,43 @@ class ListProvider with ChangeNotifier {
     );
     final data = jsonDecode(result.body) as Map<String, dynamic>;
     if (result.statusCode == 200) {
+      List<GlistModel> myData = [];
+      for (var d in data['data']['glists']) {
+        myData.add(GlistModel.fromJson(d));
+      }
+
+      myDataList = myData;
+      notifyListeners();
       yield data;
     } else {
       yield data;
     }
+  }
+
+  List<String> _idsList = [];
+  List<String> get idsList => _idsList;
+
+  void toggleItem(int itemId) {
+    final index = myDataList.indexWhere((item) => item.id == itemId);
+    List<String> ids = [];
+    if (index != -1) {
+      myDataList[index].isChecked = !myDataList[index].isChecked;
+      for (var i in myDataList) {
+        if (i.isChecked == true) {
+          ids.add(i.id.toString());
+        }
+      }
+      _idsList = ids;
+      notifyListeners();
+      print(_idsList);
+    }
+  }
+
+  // method to delete checked items
+  void deleteCheckedItems() {
+    myDataList.removeWhere((item) => item.isChecked);
+
+    notifyListeners();
   }
 
   Future<void> addNewList(String listName) async {
@@ -84,6 +120,27 @@ class ListProvider with ChangeNotifier {
     }
   }
 
+  Future<void> updateListName(String listName, String listId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final result = await AuthenticationServices.baseFunction(
+      Apiserviceconstant.updateList,
+      {
+        'list_id': listId,
+        'user_id': prefs.getString('user_id'),
+        'name': listName,
+      },
+    );
+    final data = jsonDecode(result.body) as Map<String, dynamic>;
+    log(result.statusCode.toString());
+    if (result.statusCode == 200) {
+      _msg = 'List updated successfully';
+      notifyListeners();
+    } else {
+      _msg = data['errors']['name'][0];
+      notifyListeners();
+    }
+  }
+
   Future<dynamic> getAllItems() async {
     final result = await AuthenticationServices.getBaseFunction(
       Apiserviceconstant.getAllItems,
@@ -92,5 +149,66 @@ class ListProvider with ChangeNotifier {
     final data = jsonDecode(result.body) as Map<String, dynamic>;
     log(result.body);
     return data;
+  }
+
+  //delete list
+  Future<void> deleteList(List<String> listId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final result = await AuthenticationServices.baseFunction(
+      Apiserviceconstant.deleteList,
+      {
+        'list_id': listId,
+        'user_id': prefs.getString('user_id'),
+      },
+    );
+    final data = jsonDecode(result.body) as Map<String, dynamic>;
+    log(result.statusCode.toString());
+    if (result.statusCode == 200) {
+      _msg = 'List deleted successfully';
+      notifyListeners();
+    } else {
+      _msg = data['errors']['name'][0];
+      notifyListeners();
+    }
+  }
+
+  Future<dynamic> fetchListedItems(String listId) async {
+    final result = await AuthenticationServices.baseFunction(
+      Apiserviceconstant.getListedItems,
+      {
+        'gros_list_id': listId,
+      },
+    );
+    final data = jsonDecode(result.body) as Map<String, dynamic>;
+    log(result.statusCode.toString());
+    if (result.statusCode == 200) {
+      _msg = 'List fetched successfully';
+      notifyListeners();
+      return data;
+    } else {
+      _msg = data['errors']['name'][0];
+      notifyListeners();
+      return data;
+    }
+  }
+
+  Future<String> getSingleItem(String itemId) async {
+    final result = await AuthenticationServices.baseFunction(
+      Apiserviceconstant.getItem,
+      {
+        'id': itemId,
+      },
+    );
+    final data = jsonDecode(result.body) as Map<String, dynamic>;
+    log(result.statusCode.toString());
+    if (result.statusCode == 200) {
+      _msg = 'List fetched successfully';
+      notifyListeners();
+      return data['data']['name'];
+    } else {
+      _msg = data['errors']['name'][0];
+      notifyListeners();
+      throw Exception(data['errors']['name'][0]);
+    }
   }
 }

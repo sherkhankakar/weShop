@@ -19,4 +19,5 @@ class Apiserviceconstant {
 
   //get items apis
   static final getAllItems = Uri.parse(baseUrl + 'getalltitems');
+  static final getListedItems = Uri.parse(baseUrl + 'getlistitems');
 }
