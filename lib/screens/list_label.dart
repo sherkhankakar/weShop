@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../screens/qr_code.dart';
+import '../constant/widget_constants.dart';
 import '../providers/list_provider.dart';
 import 'add_item.dart';
 
@@ -19,8 +20,8 @@ class _ListLabelState extends State<ListLabel> {
   ListProvider? provider;
 
   ///popup menu1
-  void _showPopupMenu1() async {
-    await showMenu(
+  void _showPopupMenu1() {
+    showMenu(
       context: context,
       position: RelativeRect.fromLTRB(180, 80, 600, 500),
       items: [
@@ -40,7 +41,7 @@ class _ListLabelState extends State<ListLabel> {
                 ),
                 child: InkWell(
                   onTap: () {
-                    setState(() {});
+                    title.value = true;
                   },
                   child: Text(
                     'Delete',
@@ -1000,7 +1001,7 @@ class _ListLabelState extends State<ListLabel> {
 
   ///changing text 1
   var displayText = "Select Access Type ";
-
+  ValueNotifier<bool> title = ValueNotifier(false);
   // var String = ['Need approval to make changes'];
 
   // void changeText() {
@@ -1193,7 +1194,7 @@ class _ListLabelState extends State<ListLabel> {
                     return ListView.builder(
                         itemCount: snapshot.data['data'].length,
                         itemBuilder: (context, index) {
-                          return tileCard(snapshot.data['data'][index]);
+                          return tileCard(snapshot.data['data'][index], index);
                         });
                   } else {
                     return Center(
@@ -1203,6 +1204,39 @@ class _ListLabelState extends State<ListLabel> {
                 },
               ),
             ),
+            ValueListenableBuilder(
+              valueListenable: title,
+              builder: (BuildContext context, dynamic value, Widget? child) {
+                return value == true
+                    ? ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+                        ),
+                        onPressed: () {
+                          WidgetConstants.showSnackBar(
+                              context, 'Deleting selected lists');
+                          provider!.deleteItems({
+                            'gros_list_id': provider!.listIdForItems,
+                            'item_id': provider!.idsList[0],
+                          }).whenComplete(() {
+                            if (provider!.msg == 'item deleted successfully') {
+                              WidgetConstants.hideSnackBar(context);
+                              setState(() {});
+                              WidgetConstants.showSnackBar(
+                                  context, provider!.msg);
+                              title.value = false;
+                            } else {
+                              WidgetConstants.hideSnackBar(context);
+                              WidgetConstants.showSnackBar(
+                                  context, provider!.msg);
+                            }
+                          });
+                        },
+                        child: Text('Delete'))
+                    : SizedBox();
+              },
+            ),
+            SizedBox(height: kBottomNavigationBarHeight),
 
             ///Expanded card
             // Container(
@@ -1392,24 +1426,26 @@ class _ListLabelState extends State<ListLabel> {
     );
   }
 
-  Widget tileCard(dynamic data) {
+  Widget tileCard(dynamic data, int index) {
     return Card(
       elevation: 3.0,
       child: Row(
         children: [
-          Container(
-            margin: EdgeInsets.only(top: 5),
-            child: InkWell(
-              // onLongPress: changedata,
-              child: Checkbox(
-                side: BorderSide(
-                  color: Color.fromRGBO(0, 173, 25, 1),
-                ),
-                value: isChecked,
-                activeColor: Color.fromRGBO(0, 173, 25, 1),
-                onChanged: (newBool) {},
-              ),
-            ),
+          Consumer<ListProvider>(
+            builder: (context, myType, child) {
+              return ValueListenableBuilder(
+                valueListenable: title,
+                builder: (BuildContext context, dynamic value, Widget? child) {
+                  return title.value == true
+                      ? Checkbox(
+                          value: myType.myDataList[index].isChecked,
+                          onChanged: (value) {
+                            myType.toggleItem(data['id'], isListedItem: true);
+                          })
+                      : SizedBox(width: 20);
+                },
+              );
+            },
           ),
           Container(
               margin: EdgeInsets.only(

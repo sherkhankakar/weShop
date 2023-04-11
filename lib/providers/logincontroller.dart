@@ -132,6 +132,7 @@ class loginController with ChangeNotifier {
   Future<void> verifyResetPassword(String email, String otp) async {
     _isLoading = true;
     notifyListeners();
+
     final result = await AuthenticationServices.baseFunction(
       Apiserviceconstant.verifyPassword,
       {'email': email, 'otp': otp},
@@ -141,11 +142,36 @@ class loginController with ChangeNotifier {
     });
     log(result.statusCode.toString());
     final data = jsonDecode(result.body) as Map<String, dynamic>;
+    print(data);
     if (result.statusCode == 200) {
       _msg = 'Successful';
       notifyListeners();
     } else {
       _msg = data['message'];
+      notifyListeners();
+    }
+    print(result);
+  }
+
+  Future<void> confirmPassword(String email, String password) async {
+    _isLoading = true;
+    notifyListeners();
+
+    final result = await AuthenticationServices.baseFunction(
+      Apiserviceconstant.resetPassword,
+      {'email': email, 'new_password': password},
+    ).whenComplete(() {
+      _isLoading = false;
+      notifyListeners();
+    });
+    log(result.statusCode.toString());
+    final data = jsonDecode(result.body) as Map<String, dynamic>;
+    print(data);
+    if (result.statusCode == 200) {
+      _msg = 'Password Changed Successfully';
+      notifyListeners();
+    } else {
+      _msg = data['errors']['email'][0] ?? data['errors']['new_password'][0];
       notifyListeners();
     }
     print(result);

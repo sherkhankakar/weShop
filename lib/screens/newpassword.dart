@@ -2,6 +2,7 @@ import 'package:provider/provider.dart';
 import 'package:weshop/providers/logincontroller.dart';
 import 'package:weshop/screens/bottom_bar.dart';
 
+import '../constant/widget_constants.dart';
 import 'Sign_In.dart';
 import 'package:flutter/material.dart';
 
@@ -331,9 +332,23 @@ class _NewPasswordSTFState extends State<NewPasswordSTF> {
                   backgroundColor: Color.fromRGBO(0, 173, 25, 1),
                 ),
                 onPressed: () {
-                  resetUser();
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => signin1()));
+                  final provider =
+                      Provider.of<loginController>(context, listen: false);
+                  provider
+                      .confirmPassword(widget.email, password.text)
+                      .whenComplete(
+                    () {
+                      if (provider.msg == 'Password Changed Successfully') {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => signin1(),
+                          ),
+                        );
+                      } else {
+                        WidgetConstants.showSnackBar(context, provider.msg);
+                      }
+                    },
+                  );
                 },
                 child: Text(
                   'Confirm',

@@ -13,3 +13,26 @@ class GlistModel {
     );
   }
 }
+
+class AddedItemsModel {
+  final int id;
+  final String itemId;
+  final String grosListId;
+  bool isChecked;
+
+  AddedItemsModel({
+    required this.id,
+    required this.itemId,
+    required this.isChecked,
+    required this.grosListId,
+  });
+
+  factory AddedItemsModel.fromJson(Map<String, dynamic> json) {
+    return AddedItemsModel(
+      id: json['id'],
+      itemId: json['item_id'],
+      grosListId: json['gros_list_id'],
+      isChecked: false,
+    );
+  }
+}

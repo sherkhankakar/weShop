@@ -37,7 +37,7 @@ class ListProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<GlistModel> myDataList = [];
+  List<dynamic> myDataList = [];
 
   Stream<dynamic> getLists() async* {
     final prefs = await SharedPreferences.getInstance();
@@ -64,15 +64,28 @@ class ListProvider with ChangeNotifier {
   List<String> _idsList = [];
   List<String> get idsList => _idsList;
 
-  void toggleItem(int itemId) {
+  String? _listIdForItems;
+  String get listIdForItems => _listIdForItems!;
+
+  void toggleItem(int itemId, {bool? isListedItem = false}) {
     final index = myDataList.indexWhere((item) => item.id == itemId);
     List<String> ids = [];
     if (index != -1) {
       myDataList[index].isChecked = !myDataList[index].isChecked;
-      for (var i in myDataList) {
-        if (i.isChecked == true) {
-          ids.add(i.id.toString());
+      if (isListedItem == false) {
+        for (var i in myDataList) {
+          if (i.isChecked == true) {
+            ids.add(i.id.toString());
+          }
         }
+      }
+      if (isListedItem == true) {
+        for (var i in myDataList) {
+          if (i.isChecked == true) {
+            ids.add(i.itemId.toString());
+          }
+        }
+        _listIdForItems = myDataList[0].grosListId;
       }
       _idsList = ids;
       notifyListeners();
@@ -172,6 +185,22 @@ class ListProvider with ChangeNotifier {
     }
   }
 
+  Future<void> deleteItems(Map<String, dynamic>? itemAndListIds) async {
+    final result = await AuthenticationServices.baseFunction(
+      Apiserviceconstant.deleteListItem,
+      itemAndListIds!,
+    );
+    final data = jsonDecode(result.body) as Map<String, dynamic>;
+    log(result.statusCode.toString());
+    if (result.statusCode == 200) {
+      _msg = 'item deleted successfully';
+      notifyListeners();
+    } else {
+      _msg = data['errors']['name'][0];
+      notifyListeners();
+    }
+  }
+
   Future<dynamic> fetchListedItems(String listId) async {
     final result = await AuthenticationServices.baseFunction(
       Apiserviceconstant.getListedItems,
@@ -183,6 +212,14 @@ class ListProvider with ChangeNotifier {
     log(result.statusCode.toString());
     if (result.statusCode == 200) {
       _msg = 'List fetched successfully';
+
+      List<AddedItemsModel> myData = [];
+      for (var d in data['data']) {
+        myData.add(AddedItemsModel.fromJson(d));
+      }
+
+      myDataList = myData;
+
       notifyListeners();
       return data;
     } else {
