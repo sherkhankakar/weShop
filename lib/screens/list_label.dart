@@ -1032,87 +1032,43 @@ class _ListLabelState extends State<ListLabel> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
+
         // appBar: AppBar(
-        //   backgroundColor:Color.fromRGBO(0,173,25,1),
+        //   backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+        //   leading: IconButton(onPressed: (){
+        //     Navigator.of(context).pop();
+        //   },icon: Icon(Icons.arrow_back_ios_rounded),),
         //   title: Row(
         //     children: [
-        //       Container(
-        //         child: Icon(Icons.arrow_back_ios_new),
-        //       ),
-        //       Container(
-        //         margin: EdgeInsets.only(left: 30.0,),
-        //         child: const Text('List Label',
-        //           style: TextStyle(
-        //             fontSize: 18.0,
-        //             fontWeight: FontWeight.w600,
-        //             color: Colors.white,
-        //           ),
+        //       Expanded(child: Text(
+        //         'List Label',
+        //         style: TextStyle(
+        //           fontSize: 18.0,
+        //           fontWeight: FontWeight.w600,
+        //           color: Colors.white,
         //         ),
-        //       ),
-        //       Container(
-        //         margin: EdgeInsets.only(left: 122.0,),
-        //         child: InkWell(
+        //       ),),
+        //       InkWell(
         //           onTap: (){
+        //             setState(() {
+        //               if (_isVisible4 = false) {}
+        //               if (_isVisible5 = true) {}
+        //             });
         //             _showPopupMenu3();
         //           },
-        //           child: ImageIcon(
-        //             AssetImage('assets/images/Vector (1).png'),
-        //
-        //
-        //           ),
-        //         ),
-        //
-        //       ),
-        //       Container(
-        //         margin: EdgeInsets.only(),
-        //         child: IconButton(
-        //           onPressed: (){
-        //             _showPopupMenu1();
-        //           },
-        //           icon: Icon(Icons.more_vert_sharp,size: 23.0,),
-        //
+        //           child: Image.asset('assets/images/Vector (1).png')),
+        //       IconButton(
+        //         onPressed: () {
+        //           _showPopupMenu1();
+        //         },
+        //         icon: Icon(
+        //           Icons.more_vert_sharp,
+        //           size: 23.0,
         //         ),
         //       ),
         //     ],
         //   ),
-        //   automaticallyImplyLeading: false,
         // ),
-        appBar: AppBar(
-          backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-          leading: IconButton(onPressed: (){
-            Navigator.of(context).pop();
-          },icon: Icon(Icons.arrow_back_ios_rounded),),
-          title: Row(
-            children: [
-              Expanded(child: Text(
-                'List Label',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
-              ),),
-              InkWell(
-                  onTap: (){
-                    setState(() {
-                      if (_isVisible4 = false) {}
-                      if (_isVisible5 = true) {}
-                    });
-                    _showPopupMenu3();
-                  },
-                  child: Image.asset('assets/images/Vector (1).png')),
-              IconButton(
-                onPressed: () {
-                  _showPopupMenu1();
-                },
-                icon: Icon(
-                  Icons.more_vert_sharp,
-                  size: 23.0,
-                ),
-              ),
-            ],
-          ),
-        ),
         body: (Container(
           child: Column(
             children: [
@@ -2157,7 +2113,7 @@ class _ListLabelState extends State<ListLabel> {
                 ),
               ),
               SizedBox(
-                height: 240.0,
+                height: 180.0,
               ),
               Container(
                 margin: EdgeInsets.only(right: 15.0),

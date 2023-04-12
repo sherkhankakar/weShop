@@ -497,7 +497,7 @@ class _signin1STFState extends State<signin1STF> {
     if (email.text.isEmpty || password.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please proivde the above details'),
+          content: Text('Please provide the above details'),
         ),
       );
     } else {

@@ -56,7 +56,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
         Container(
           child: CircleAvatar(
             backgroundImage:
-                Image.network(model.usersDetails!.photoURL ?? "").image,
+            Image.network(model.usersDetails!.photoURL ?? "").image,
           ),
         ),
         Row(
@@ -66,7 +66,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
             Text(
               model.usersDetails!.displayName ?? "",
               style:
-                  TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+              TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
             ),
           ],
         ),
@@ -125,7 +125,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
   Map<String, dynamic>? _userData;
   Future<UserCredential> signInFacebook() async {
     final LoginResult loginResult =
-        await FacebookAuth.instance.login(permissions: ['email,']);
+    await FacebookAuth.instance.login(permissions: ['email,']);
     if (loginResult == LoginStatus.success) {
       final userData = await FacebookAuth.instance.getUserData();
       _userData = userData;
@@ -137,7 +137,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
     });
 
     final OAuthCredential oAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.token);
+    FacebookAuthProvider.credential(loginResult.accessToken!.token);
     return FirebaseAuth.instance.signInWithCredential(oAuthCredential);
   }
 
@@ -146,7 +146,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
     if (result.status == LoginStatus.success) {
       // Create a credential from the access token
       final OAuthCredential credential =
-          FacebookAuthProvider.credential(result.accessToken!.token);
+      FacebookAuthProvider.credential(result.accessToken!.token);
       // Once signed in, return the UserCredential
       return await FirebaseAuth.instance.signInWithCredential(credential);
     }
@@ -547,7 +547,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
             MaterialPageRoute(
               builder: (context) => BottomBar(),
             ),
-            (route) => false);
+                (route) => false);
       });
     } else {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
