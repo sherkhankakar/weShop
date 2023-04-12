@@ -1,13 +1,14 @@
-import 'dart:core';
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:weshop/screens/qr_code.dart';
+import 'package:provider/provider.dart';
+
+import '../../screens/qr_code.dart';
+import '../constant/widget_constants.dart';
+import '../providers/list_provider.dart';
 import 'add_item.dart';
-import 'home_screen.dart';
-import 'milk.dart';
 
 class ListLabel extends StatefulWidget {
-  const ListLabel({Key? key}) : super(key: key);
+  const ListLabel({Key? key, required this.listId}) : super(key: key);
+  final String listId;
 
   @override
   State<ListLabel> createState() => _ListLabelState();
@@ -16,10 +17,11 @@ class ListLabel extends StatefulWidget {
 class _ListLabelState extends State<ListLabel> {
   ///for radio button
   int _value = 1;
+  ListProvider? provider;
 
   ///popup menu1
-  void _showPopupMenu1() async {
-    await showMenu(
+  void _showPopupMenu1() {
+    showMenu(
       context: context,
       position: RelativeRect.fromLTRB(180, 80, 600, 500),
       items: [
@@ -39,7 +41,7 @@ class _ListLabelState extends State<ListLabel> {
                 ),
                 child: InkWell(
                   onTap: () {
-                    setState(() {});
+                    title.value = true;
                   },
                   child: Text(
                     'Delete',
@@ -94,7 +96,7 @@ class _ListLabelState extends State<ListLabel> {
                               ),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     margin: EdgeInsets.only(
@@ -115,7 +117,7 @@ class _ListLabelState extends State<ListLabel> {
                                     ),
                                     child: Radio(
                                       activeColor:
-                                          Color.fromRGBO(52, 107, 33, 1),
+                                      Color.fromRGBO(52, 107, 33, 1),
                                       value: 1,
                                       groupValue: _value,
                                       onChanged: (value) {
@@ -131,7 +133,7 @@ class _ListLabelState extends State<ListLabel> {
                             Container(
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     margin: EdgeInsets.only(
@@ -152,7 +154,7 @@ class _ListLabelState extends State<ListLabel> {
                                     ),
                                     child: Radio(
                                       activeColor:
-                                          Color.fromRGBO(52, 107, 33, 1),
+                                      Color.fromRGBO(52, 107, 33, 1),
                                       value: 2,
                                       groupValue: _value,
                                       onChanged: (value) {
@@ -168,7 +170,7 @@ class _ListLabelState extends State<ListLabel> {
                             Container(
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     margin: EdgeInsets.only(
@@ -189,7 +191,7 @@ class _ListLabelState extends State<ListLabel> {
                                     ),
                                     child: Radio(
                                       activeColor:
-                                          Color.fromRGBO(52, 107, 33, 1),
+                                      Color.fromRGBO(52, 107, 33, 1),
                                       value: 3,
                                       groupValue: _value,
                                       onChanged: (value) {
@@ -205,7 +207,7 @@ class _ListLabelState extends State<ListLabel> {
                             Container(
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     margin: EdgeInsets.only(
@@ -226,7 +228,7 @@ class _ListLabelState extends State<ListLabel> {
                                     ),
                                     child: Radio(
                                       activeColor:
-                                          Color.fromRGBO(52, 107, 33, 1),
+                                      Color.fromRGBO(52, 107, 33, 1),
                                       value: 4,
                                       groupValue: _value,
                                       onChanged: (value) {
@@ -242,7 +244,7 @@ class _ListLabelState extends State<ListLabel> {
                             Container(
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     margin: EdgeInsets.only(
@@ -263,7 +265,7 @@ class _ListLabelState extends State<ListLabel> {
                                     ),
                                     child: Radio(
                                       activeColor:
-                                          Color.fromRGBO(52, 107, 33, 1),
+                                      Color.fromRGBO(52, 107, 33, 1),
                                       value: 5,
                                       groupValue: _value,
                                       onChanged: (value) {
@@ -308,8 +310,8 @@ class _ListLabelState extends State<ListLabel> {
                                         style: TextStyle(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w400,
-                                          color: Color.fromRGBO(
-                                              100, 100, 100, 1),
+                                          color:
+                                          Color.fromRGBO(100, 100, 100, 1),
                                         ),
                                       ),
                                     ),
@@ -322,7 +324,7 @@ class _ListLabelState extends State<ListLabel> {
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       margin: EdgeInsets.only(
@@ -333,8 +335,7 @@ class _ListLabelState extends State<ListLabel> {
                                         style: TextStyle(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w400,
-                                          color:
-                                              Color.fromRGBO(20, 20, 20, 1),
+                                          color: Color.fromRGBO(20, 20, 20, 1),
                                         ),
                                       ),
                                     ),
@@ -344,7 +345,7 @@ class _ListLabelState extends State<ListLabel> {
                                       ),
                                       child: Radio(
                                         activeColor:
-                                            Color.fromRGBO(52, 107, 33, 1),
+                                        Color.fromRGBO(52, 107, 33, 1),
                                         value: 1,
                                         groupValue: _value,
                                         onChanged: (value) {
@@ -360,7 +361,7 @@ class _ListLabelState extends State<ListLabel> {
                               Container(
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       margin: EdgeInsets.only(
@@ -371,8 +372,7 @@ class _ListLabelState extends State<ListLabel> {
                                         style: TextStyle(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w400,
-                                          color:
-                                              Color.fromRGBO(20, 20, 20, 1),
+                                          color: Color.fromRGBO(20, 20, 20, 1),
                                         ),
                                       ),
                                     ),
@@ -382,7 +382,7 @@ class _ListLabelState extends State<ListLabel> {
                                       ),
                                       child: Radio(
                                         activeColor:
-                                            Color.fromRGBO(52, 107, 33, 1),
+                                        Color.fromRGBO(52, 107, 33, 1),
                                         value: 2,
                                         groupValue: _value,
                                         onChanged: (value) {
@@ -398,7 +398,7 @@ class _ListLabelState extends State<ListLabel> {
                               Container(
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       margin: EdgeInsets.only(
@@ -409,8 +409,7 @@ class _ListLabelState extends State<ListLabel> {
                                         style: TextStyle(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w400,
-                                          color:
-                                              Color.fromRGBO(20, 20, 20, 1),
+                                          color: Color.fromRGBO(20, 20, 20, 1),
                                         ),
                                       ),
                                     ),
@@ -420,7 +419,7 @@ class _ListLabelState extends State<ListLabel> {
                                       ),
                                       child: Radio(
                                         activeColor:
-                                            Color.fromRGBO(52, 107, 33, 1),
+                                        Color.fromRGBO(52, 107, 33, 1),
                                         value: 3,
                                         groupValue: _value,
                                         onChanged: (value) {
@@ -436,7 +435,7 @@ class _ListLabelState extends State<ListLabel> {
                               Container(
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       margin: EdgeInsets.only(
@@ -447,8 +446,7 @@ class _ListLabelState extends State<ListLabel> {
                                         style: TextStyle(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w400,
-                                          color:
-                                              Color.fromRGBO(20, 20, 20, 1),
+                                          color: Color.fromRGBO(20, 20, 20, 1),
                                         ),
                                       ),
                                     ),
@@ -458,7 +456,7 @@ class _ListLabelState extends State<ListLabel> {
                                       ),
                                       child: Radio(
                                         activeColor:
-                                            Color.fromRGBO(52, 107, 33, 1),
+                                        Color.fromRGBO(52, 107, 33, 1),
                                         value: 4,
                                         groupValue: _value,
                                         onChanged: (value) {
@@ -474,7 +472,7 @@ class _ListLabelState extends State<ListLabel> {
                               Container(
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       margin: EdgeInsets.only(
@@ -485,8 +483,7 @@ class _ListLabelState extends State<ListLabel> {
                                         style: TextStyle(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w400,
-                                          color:
-                                              Color.fromRGBO(20, 20, 20, 1),
+                                          color: Color.fromRGBO(20, 20, 20, 1),
                                         ),
                                       ),
                                     ),
@@ -496,7 +493,7 @@ class _ListLabelState extends State<ListLabel> {
                                       ),
                                       child: Radio(
                                         activeColor:
-                                            Color.fromRGBO(52, 107, 33, 1),
+                                        Color.fromRGBO(52, 107, 33, 1),
                                         value: 5,
                                         groupValue: _value,
                                         onChanged: (value) {
@@ -567,7 +564,7 @@ class _ListLabelState extends State<ListLabel> {
                                         ),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
                                               margin: EdgeInsets.only(
@@ -605,7 +602,7 @@ class _ListLabelState extends State<ListLabel> {
                                       Container(
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
                                               margin: EdgeInsets.only(
@@ -643,7 +640,7 @@ class _ListLabelState extends State<ListLabel> {
                                       Container(
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
                                               margin: EdgeInsets.only(
@@ -681,7 +678,7 @@ class _ListLabelState extends State<ListLabel> {
                                       Container(
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
                                               margin: EdgeInsets.only(
@@ -719,7 +716,7 @@ class _ListLabelState extends State<ListLabel> {
                                       Container(
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
                                               margin: EdgeInsets.only(
@@ -914,10 +911,10 @@ class _ListLabelState extends State<ListLabel> {
                         child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
                                 side: BorderSide(
-                              color: Color.fromRGBO(0, 173, 25, 1),
-                            )),
+                                  color: Color.fromRGBO(0, 173, 25, 1),
+                                )),
                             onPressed: () {
-                              changeText();
+                              // changeText();
                             },
                             child: Text(
                               'Limited Access',
@@ -934,10 +931,10 @@ class _ListLabelState extends State<ListLabel> {
                         child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
                                 side: BorderSide(
-                              color: Color.fromRGBO(0, 173, 25, 1),
-                            )),
+                                  color: Color.fromRGBO(0, 173, 25, 1),
+                                )),
                             onPressed: () {
-                              changeText2();
+                              // changeText2();
                             },
                             child: Text(
                               'Full Access',
@@ -1004,1671 +1001,566 @@ class _ListLabelState extends State<ListLabel> {
 
   ///changing text 1
   var displayText = "Select Access Type ";
+  ValueNotifier<bool> title = ValueNotifier(false);
+  // var String = ['Need approval to make changes'];
 
-  var String = ['Need approval to make changes'];
-
-  void changeText() {
-    setState(() {
-      displayText = String[Random().nextInt(String.length)];
-    });
-  }
+  // void changeText() {
+  //   setState(() {
+  //     displayText = String[Random().nextInt(String.length)];
+  //   });
+  // }
 
   ///changing text 2
-  var displayText2 = "Select Access Type ";
+  // var displayText2 = "Select Access Type ";
 
-  var String2 = ['Make changes without approval'];
+  // var String2 = ['Make changes without approval'];
 
-  void changeText2() {
-    setState(() {
-      displayText = String2[Random().nextInt(String2.length)];
-    });
+  // void changeText2() {
+  //   setState(() {
+  //     displayText = String2[Random().nextInt(String2.length)];
+  //   });
+  // }
+
+  @override
+  void initState() {
+    provider = Provider.of<ListProvider>(context, listen: false);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-
+    print(widget.listId);
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-
         // appBar: AppBar(
-        //   backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-        //   leading: IconButton(onPressed: (){
-        //     Navigator.of(context).pop();
-        //   },icon: Icon(Icons.arrow_back_ios_rounded),),
+        //   backgroundColor:Color.fromRGBO(0,173,25,1),
         //   title: Row(
         //     children: [
-        //       Expanded(child: Text(
-        //         'List Label',
-        //         style: TextStyle(
-        //           fontSize: 18.0,
-        //           fontWeight: FontWeight.w600,
-        //           color: Colors.white,
+        //       Container(
+        //         child: Icon(Icons.arrow_back_ios_new),
+        //       ),
+        //       Container(
+        //         margin: EdgeInsets.only(left: 30.0,),
+        //         child: const Text('List Label',
+        //           style: TextStyle(
+        //             fontSize: 18.0,
+        //             fontWeight: FontWeight.w600,
+        //             color: Colors.white,
+        //           ),
         //         ),
-        //       ),),
-        //       InkWell(
+        //       ),
+        //       Container(
+        //         margin: EdgeInsets.only(left: 122.0,),
+        //         child: InkWell(
         //           onTap: (){
-        //             setState(() {
-        //               if (_isVisible4 = false) {}
-        //               if (_isVisible5 = true) {}
-        //             });
         //             _showPopupMenu3();
         //           },
-        //           child: Image.asset('assets/images/Vector (1).png')),
-        //       IconButton(
-        //         onPressed: () {
-        //           _showPopupMenu1();
-        //         },
-        //         icon: Icon(
-        //           Icons.more_vert_sharp,
-        //           size: 23.0,
+        //           child: ImageIcon(
+        //             AssetImage('assets/images/Vector (1).png'),
+        //
+        //
+        //           ),
+        //         ),
+        //
+        //       ),
+        //       Container(
+        //         margin: EdgeInsets.only(),
+        //         child: IconButton(
+        //           onPressed: (){
+        //             _showPopupMenu1();
+        //           },
+        //           icon: Icon(Icons.more_vert_sharp,size: 23.0,),
+        //
         //         ),
         //       ),
         //     ],
         //   ),
+        //   automaticallyImplyLeading: false,
         // ),
-        body: (Container(
-          child: Column(
+        appBar: AppBar(
+          backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(Icons.arrow_back_ios_rounded),
+          ),
+          title: Row(
             children: [
-              Container(
-                child: Stack(
-                  children: [
-                    Container(
-                      child: Positioned(
-                          child: AppBar(
-                        backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-                        title: Row(
-                          children: [
-                            Container(
-                              child: InkWell(
-                                  onTap: () {
-                                    setState(() {});
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HomeScreen()));
-                                  },
-                                  child: Icon(Icons.arrow_back_ios_new)),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                left: 25.0,
-                              ),
-                              child: const Text(
-                                'List Label',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                left: 127.0,
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    if (_isVisible4 = false) {}
-                                    if (_isVisible5 = true) {}
-                                  });
-                                  _showPopupMenu3();
-                                },
-                                child: ImageIcon(
-                                  AssetImage('assets/images/Vector (1).png'),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(),
-                              child: IconButton(
-                                onPressed: () {
-                                  _showPopupMenu1();
-                                },
-                                icon: Icon(
-                                  Icons.more_vert_sharp,
-                                  size: 23.0,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        automaticallyImplyLeading: false,
-                      )),
-                    ),
-                    Visibility(
-                      visible: _isVisible5,
-                      child: AppBar(
-                        backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-                        title: Row(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                left: 10.0,
-                              ),
-                              child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      if (_isVisible4 = true) {}
-                                      if (_isVisible5 = false) {}
-                                    });
-                                  },
-                                  child: Icon(
-                                    Icons.close,
-                                    color: Colors.white,
-                                  )),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                left: 30.0,
-                              ),
-                              child: const Text(
-                                'Add Contributor',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        automaticallyImplyLeading: false,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-
-
-              Visibility(
-                visible: _isVisible2,
-                child: Container(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 23.0,
-                      ),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                left: 16.0,
-                              ),
-                              child: Text(
-                                'Total',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromRGBO(0, 173, 25, 1),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                right: 16.0,
-                              ),
-                              child: Text(
-                                'PKR 440',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color.fromRGBO(20, 20, 20, 1),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      ///1st card
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      Container(
-                        width: width * 0.945,
-                        height: height * 0.08,
-                        child: Card(
-                          elevation: 5.0,
-                          child: Row(
-                            children: [
-                              Container(
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 5),
-                                  child: Visibility(
-                                    child: InkWell(
-                                      // onLongPress: changedata,
-                                      child: Checkbox(
-                                        side: BorderSide(
-                                          color: Color.fromRGBO(0, 173, 25, 1),
-                                        ),
-                                        value: isChecked,
-                                        activeColor:
-                                            Color.fromRGBO(0, 173, 25, 1),
-                                        onChanged: (newBool) {
-                                          setState(() {
-                                            isChecked = newBool;
-                                            // if(_isVisible6=true){}
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                  top: 4.0,
-                                ),
-                                child: Text(
-                                  'Milk',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                  top: 14.0,
-                                ),
-                                width: width * 0.05,
-                                height: height * 0.02,
-                                child: Card(
-                                  color: Color.fromRGBO(52, 107, 33, 1),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(1)),
-                                  child: Container(
-                                    margin: EdgeInsets.only(
-                                      left: 2.2,
-                                    ),
-                                    child: Text(
-                                      'L',
-                                      style: TextStyle(
-                                        fontSize: 8.0,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                              ///Stack1
-                              Container(
-                                child: Container(
-                                  margin: EdgeInsets.only(),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          left: 70.0,
-                                          top: 10.0,
-                                        ),
-                                        width: width * 0.13,
-                                        height: height * 0.04,
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                              side: BorderSide(
-                                                color: Color.fromRGBO(
-                                                    0, 173, 25, 1),
-                                              )),
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                              left: 12.0,
-                                              top: 5.0,
-                                            ),
-                                            child: Text(
-                                              '01',
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 99.0, top: 29.0),
-                                        width: width * 0.07,
-                                        height: height * 0.023,
-                                        child: Card(
-                                          color: Color.fromRGBO(52, 107, 33, 1),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(3)),
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                              left: 2.0,
-                                              top: 1.0,
-                                            ),
-                                            child: Text(
-                                              'QTY',
-                                              style: TextStyle(
-                                                fontSize: 7.0,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-
-                              ///Stack 2
-                              Container(
-                                child: Container(
-                                  margin: EdgeInsets.only(),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          top: 10.0,
-                                        ),
-                                        width: width * 0.13,
-                                        height: height * 0.04,
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                              side: BorderSide(
-                                                  color: Color.fromRGBO(
-                                                      0, 173, 25, 1))),
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                              left: 9.0,
-                                              top: 5.0,
-                                            ),
-                                            child: Text(
-                                              '180',
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 28.5, top: 29.0),
-                                        width: width * 0.07,
-                                        height: height * 0.023,
-                                        child: Card(
-                                          color: Color.fromRGBO(52, 107, 33, 1),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(3)),
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                              left: 1.0,
-                                              top: 1.0,
-                                            ),
-                                            child: Text(
-                                              'PKR',
-                                              style: TextStyle(
-                                                fontSize: 7.0,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              // Container(
-                              //   child: Container(
-                              //     margin: EdgeInsets.only(),
-                              //     child: Stack(
-                              //       children:[
-                              //         Container(
-                              //           margin: EdgeInsets.only(top: 9.0,),
-                              //           width: width*0.13,
-                              //           height: height*0.04,
-                              //           child: Card(
-                              //             shape: RoundedRectangleBorder(
-                              //                 borderRadius: BorderRadius.circular(7),
-                              //                 side: BorderSide(color:  Color.fromRGBO(0,173,25,1))
-                              //             ),
-                              //             child: Container(
-                              //               margin: EdgeInsets.only(left: 9.0,top: 5.0,),
-                              //               child: Text('180',
-                              //                 style: TextStyle(
-                              //                   fontSize: 12.0,
-                              //                   fontWeight: FontWeight.w400,
-                              //                 ),
-                              //               ),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //         Container(
-                              //           margin: EdgeInsets.only(left: 29.0,top: 29.0),
-                              //           width: width*0.07,
-                              //           height: height*0.023,
-                              //           child: Card(
-                              //               color:  Color.fromRGBO(52,107,33,1),
-                              //             shape: RoundedRectangleBorder(
-                              //                 borderRadius: BorderRadius.circular(3)
-                              //             ),
-                              //             child: Text('PKR',
-                              //               style: TextStyle(
-                              //                 fontSize: 8.0,
-                              //                 color: Colors.white,
-                              //               ),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       ],
-                              //     ),
-                              //   ),
-                              // ),
-                              ///Stack 3
-                              Container(
-                                child: Container(
-                                  margin: EdgeInsets.only(),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          top: 10.0,
-                                        ),
-                                        width: width * 0.13,
-                                        height: height * 0.04,
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                              side: BorderSide(
-                                                  color: Color.fromRGBO(
-                                                      0, 173, 25, 1))),
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                              left: 9.0,
-                                              top: 5.0,
-                                            ),
-                                            child: Text(
-                                              '180',
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.w400,
-                                                color: Color.fromRGBO(
-                                                    100, 100, 100, 1),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 22.0, top: 28.0),
-                                        width: width * 0.095,
-                                        height: height * 0.023,
-                                        child: Card(
-                                          color: Color.fromRGBO(52, 107, 33, 1),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(3)),
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                              left: 2.0,
-                                              top: 1.0,
-                                            ),
-                                            child: Text(
-                                              'TOTAL',
-                                              style: TextStyle(
-                                                fontSize: 7.0,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              // Container(
-                              //   child: Container(
-                              //     margin: EdgeInsets.only(),
-                              //     child: Stack(
-                              //       children:[
-                              //         Container(
-                              //           margin: EdgeInsets.only(top: 9.0,),
-                              //           width: width*0.13,
-                              //           height: height*0.04,
-                              //           child: Card(
-                              //             shape: RoundedRectangleBorder(
-                              //                 borderRadius: BorderRadius.circular(7),
-                              //                 side: BorderSide(color:  Color.fromRGBO(0,173,25,1))
-                              //             ),
-                              //             child: Container(
-                              //               margin: EdgeInsets.only(left: 9.0,top: 5.0,),
-                              //               child: Text('180',
-                              //                 style: TextStyle(
-                              //                   fontSize: 12.0,
-                              //                   fontWeight: FontWeight.w400,
-                              //                 ),
-                              //               ),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //         Container(
-                              //           margin: EdgeInsets.only(left: 25.0,top: 29.0),
-                              //           width: width*0.095,
-                              //           height: height*0.023,
-                              //           child: Card(
-                              //               color:  Color.fromRGBO(52,107,33,1),
-                              //             shape: RoundedRectangleBorder(
-                              //                 borderRadius: BorderRadius.circular(3)
-                              //             ),
-                              //             child: Text('TOTAL',
-                              //               style: TextStyle(
-                              //                 fontSize: 8.0,
-                              //                 color: Colors.white,
-                              //               ),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       ],
-                              //     ),
-                              //   ),
-                              // ),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      ///2nd card
-                      SizedBox(
-                        height: 5.0,
-                      ),
-                      Container(
-                        width: width * 0.945,
-                        height: height * 0.08,
-                        child: Card(
-                          elevation: 5.0,
-                          child: Row(
-                            children: [
-                              Container(
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 5),
-                                  child: Visibility(
-                                    child: InkWell(
-                                      // onLongPress: changedata,
-                                      child: Checkbox(
-                                        side: BorderSide(
-                                          color: Color.fromRGBO(0, 173, 25, 1),
-                                        ),
-                                        value: isChecked2,
-                                        activeColor:
-                                            Color.fromRGBO(0, 173, 25, 1),
-                                        onChanged: (newBool) {
-                                          setState(() {
-                                            isChecked2 = newBool;
-                                            // if(_isVisible6=true){}
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                  top: 6.0,
-                                ),
-                                child: Text(
-                                  'Juice',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                  top: 15.0,
-                                ),
-                                child: Container(
-                                  width: width * 0.06,
-                                  height: height * 0.023,
-                                  margin: EdgeInsets.only(
-                                    top: 1.0,
-                                  ),
-                                  child: Card(
-                                    color: Color.fromRGBO(52, 107, 33, 1),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(2)),
-                                    child: Text(
-                                      'mL',
-                                      style: TextStyle(
-                                          fontSize: 8.0, color: Colors.white),
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                              ///Stack1
-                              Container(
-                                child: Container(
-                                  margin: EdgeInsets.only(),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          left: 60.0,
-                                          top: 10.0,
-                                        ),
-                                        width: width * 0.13,
-                                        height: height * 0.04,
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                              side: BorderSide(
-                                                color: Color.fromRGBO(
-                                                    0, 173, 25, 1),
-                                              )),
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                              left: 12.0,
-                                              top: 5.0,
-                                            ),
-                                            child: Text(
-                                              '01',
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 90.0, top: 29.0),
-                                        width: width * 0.07,
-                                        height: height * 0.023,
-                                        child: Card(
-                                          color: Color.fromRGBO(52, 107, 33, 1),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(3)),
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                              left: 2.0,
-                                              top: 1.0,
-                                            ),
-                                            child: Text(
-                                              'QTY',
-                                              style: TextStyle(
-                                                fontSize: 7.0,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-
-                              ///Stack 2
-                              Container(
-                                child: Container(
-                                  margin: EdgeInsets.only(),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          top: 10.0,
-                                          left: 1.0,
-                                        ),
-                                        width: width * 0.13,
-                                        height: height * 0.04,
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                              side: BorderSide(
-                                                  color: Color.fromRGBO(
-                                                      0, 173, 25, 1))),
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                              left: 9.0,
-                                              top: 5.0,
-                                            ),
-                                            child: Text(
-                                              '180',
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 28.5, top: 29.0),
-                                        width: width * 0.07,
-                                        height: height * 0.023,
-                                        child: Card(
-                                          color: Color.fromRGBO(52, 107, 33, 1),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(3)),
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                              left: 1.0,
-                                              top: 1.0,
-                                            ),
-                                            child: Text(
-                                              'PKR',
-                                              style: TextStyle(
-                                                fontSize: 7.0,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-
-                              ///Stack 3
-                              Container(
-                                child: Container(
-                                  margin: EdgeInsets.only(),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          top: 10.0,
-                                        ),
-                                        width: width * 0.13,
-                                        height: height * 0.04,
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                              side: BorderSide(
-                                                  color: Color.fromRGBO(
-                                                      0, 173, 25, 1))),
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                              left: 9.0,
-                                              top: 5.0,
-                                            ),
-                                            child: Text(
-                                              '180',
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.w400,
-                                                color: Color.fromRGBO(
-                                                    100, 100, 100, 1),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 20.0, top: 28.0),
-                                        width: width * 0.095,
-                                        height: height * 0.023,
-                                        child: Card(
-                                          color: Color.fromRGBO(52, 107, 33, 1),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(3)),
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                              left: 2.0,
-                                              top: 1.0,
-                                            ),
-                                            child: Text(
-                                              'TOTAL',
-                                              style: TextStyle(
-                                                fontSize: 7.0,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      // Container(
-                      //   width: width*0.945,
-                      //   height: height*0.08,
-                      //   child: Card(
-                      //     elevation: 5.0,
-                      //     child: Row(
-                      //       children: [
-                      //         Container(
-                      //           child: Container(
-                      //             margin: EdgeInsets.only(top: 5),
-                      //             child: Visibility(
-                      //               child: InkWell(
-                      //                 // onLongPress: changedata,
-                      //                 child: Checkbox(
-                      //                   side: BorderSide(color: Colors.green),
-                      //                   value: isChecked2,
-                      //                   activeColor: Colors.green,
-                      //                   onChanged: (newBool){
-                      //                     setState(() {
-                      //                       isChecked2 = newBool;
-                      //                       // if(_isVisible6=true){}
-                      //
-                      //                     });
-                      //
-                      //                   },
-                      //
-                      //
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //
-                      //
-                      //
-                      //
-                      //
-                      //
-                      //
-                      //
-                      //           ),
-                      //         ),
-                      //         Container(
-                      //           margin: EdgeInsets.only(top: 4.0,),
-                      //           child: Text('Milk',
-                      //             style: TextStyle(
-                      //               fontWeight: FontWeight.w400,
-                      //               fontSize: 16.0,
-                      //             ),
-                      //           ),
-                      //         ),
-                      //         Container(
-                      //           margin: EdgeInsets.only(top: 15.0,left: 1.0),
-                      //           width: width*0.04,
-                      //           height: height*0.015,
-                      //           color: Colors.green,
-                      //           child: Container(
-                      //             margin: EdgeInsets.only(left: 5.0,top: 1.0,),
-                      //             child: Text('L',
-                      //               style: TextStyle(
-                      //                   fontSize: 8.0,
-                      //                   color: Colors.white
-                      //               ),
-                      //             ),
-                      //           ),
-                      //         ),
-                      //         ///Stack1
-                      //         Container(
-                      //           child: Container(
-                      //             margin: EdgeInsets.only(),
-                      //             child: Stack(
-                      //               children:[
-                      //                 Container(
-                      //                   margin: EdgeInsets.only(left: 70.0,top: 9.0,),
-                      //                   width: width*0.13,
-                      //                   height: height*0.04,
-                      //                   child: Card(
-                      //                     shape: RoundedRectangleBorder(
-                      //                         borderRadius: BorderRadius.circular(7),
-                      //                         side: BorderSide(color: Colors.green)
-                      //                     ),
-                      //                     child: Container(
-                      //                       margin: EdgeInsets.only(left: 12.0,top: 5.0,),
-                      //                       child: Text('01',
-                      //                         style: TextStyle(
-                      //                           fontSize: 12.0,
-                      //                           fontWeight: FontWeight.w400,
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //                 Container(
-                      //                   margin: EdgeInsets.only(left: 100.0,top: 29.0),
-                      //                   width: width*0.07,
-                      //                   height: height*0.023,
-                      //                   child: Card(
-                      //                     color: Colors.green,
-                      //                     shape: RoundedRectangleBorder(
-                      //                         borderRadius: BorderRadius.circular(3)
-                      //                     ),
-                      //                     child: Text('QTY',
-                      //                       style: TextStyle(
-                      //                         fontSize: 8.0,
-                      //                         color: Colors.white,
-                      //                       ),
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //         ),
-                      //         ///Stack 2
-                      //         Container(
-                      //           child: Container(
-                      //             margin: EdgeInsets.only(),
-                      //             child: Stack(
-                      //               children:[
-                      //                 Container(
-                      //                   margin: EdgeInsets.only(top: 9.0,left: 1.0,),
-                      //                   width: width*0.13,
-                      //                   height: height*0.04,
-                      //                   child: Card(
-                      //                     shape: RoundedRectangleBorder(
-                      //                         borderRadius: BorderRadius.circular(7),
-                      //                         side: BorderSide(color: Colors.green)
-                      //                     ),
-                      //                     child: Container(
-                      //                       margin: EdgeInsets.only(left: 9.0,top: 5.0,),
-                      //                       child: Text('180',
-                      //                         style: TextStyle(
-                      //                           fontSize: 12.0,
-                      //                           fontWeight: FontWeight.w400,
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //                 Container(
-                      //                   margin: EdgeInsets.only(left: 30.0,top: 29.0),
-                      //                   width: width*0.07,
-                      //                   height: height*0.023,
-                      //                   child: Card(
-                      //                     color: Colors.green,
-                      //                     shape: RoundedRectangleBorder(
-                      //                         borderRadius: BorderRadius.circular(3)
-                      //                     ),
-                      //                     child: Text('PKR',
-                      //                       style: TextStyle(
-                      //                         fontSize: 8.0,
-                      //                         color: Colors.white,
-                      //                       ),
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //         ),
-                      //         ///Stack 3
-                      //         Container(
-                      //           child: Container(
-                      //             margin: EdgeInsets.only(),
-                      //             child: Stack(
-                      //               children:[
-                      //                 Container(
-                      //                   margin: EdgeInsets.only(top: 9.0,),
-                      //                   width: width*0.13,
-                      //                   height: height*0.04,
-                      //                   child: Card(
-                      //                     shape: RoundedRectangleBorder(
-                      //                         borderRadius: BorderRadius.circular(7),
-                      //                         side: BorderSide(color: Colors.green)
-                      //                     ),
-                      //                     child: Container(
-                      //                       margin: EdgeInsets.only(left:9.0,top: 5.0,),
-                      //                       child: Text('180',
-                      //                         style: TextStyle(
-                      //                           fontSize: 12.0,
-                      //                           fontWeight: FontWeight.w400,
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //                 Container(
-                      //                   margin: EdgeInsets.only(left: 20.0,top: 29.0),
-                      //                   width: width*0.095,
-                      //                   height: height*0.023,
-                      //                   child: Card(
-                      //                     color: Colors.green,
-                      //                     shape: RoundedRectangleBorder(
-                      //                         borderRadius: BorderRadius.circular(3)
-                      //                     ),
-                      //                     child: Text('TOTAL',
-                      //                       style: TextStyle(
-                      //                         fontSize: 8.0,
-                      //                         color: Colors.white,
-                      //                       ),
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //         ),
-                      //
-                      //
-                      //
-                      //
-                      //       ],
-                      //     ),
-                      //
-                      //   ),
-                      // ),
-                    ],
+              Expanded(
+                child: Text(
+                  'List Label',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
                   ),
                 ),
               ),
-
-              SizedBox(
-                height: 220.0,
-              ),
-
-              ///centre image and text
-              Visibility(
-                visible: _isVisible1,
-                child: Container(
-                  child: Container(
-                    child: Center(
-                      child: Column(
-                        children: [
-                          Container(
-                            child: Image.asset('assets/images/Frame (2).png'),
-                          ),
-                          SizedBox(
-                            height: 7.0,
-                          ),
-                          Container(
-                            child: Text(
-                              'Add items to show here',
-                              style: TextStyle(
-                                  fontSize: 13.0,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.grey),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+              InkWell(
+                  onTap: () {
+                    setState(() {
+                      if (_isVisible4 = false) {}
+                      if (_isVisible5 = true) {}
+                    });
+                    _showPopupMenu3();
+                  },
+                  child: Image.asset('assets/images/Vector (1).png')),
+              IconButton(
+                onPressed: () {
+                  _showPopupMenu1();
+                },
+                icon: Icon(
+                  Icons.more_vert_sharp,
+                  size: 23.0,
                 ),
               ),
-              SizedBox(
-                height: 180.0,
-              ),
-              Container(
-                margin: EdgeInsets.only(right: 15.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(15),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => AddItem(
-                                  isVisible: _isVisible1,
-                                  isVisible2: _isVisible2,
-                                  isVisible3: _isVisible3,
-                                  isVisible4: _isVisible4,
-                                  isVisible5: _isVisible5,
-                                )));
-                        // _showPopupMenu3();
-                      },
-                      child: Icon(Icons.add),
-                    ),
-                  ],
-                ),
-              ),
-
-              ///Bottom Sheet
-              SizedBox(
-                height: height * 0.02,
-              ),
-              Visibility(
-                visible: _isVisible3,
-                child: Container(
-                  margin: EdgeInsets.only(),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  child: Card(
-                    elevation: 15.0,
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: 18.0,
-                            top: 3.0,
-                          ),
-                          child: Image.asset('assets/images/Group 13.png'),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: 6.0,
-                          ),
-                          child: Text(
-                            'Item Prices In',
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(0, 0, 0, 1),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: 3.0,
-                          ),
-                          child: Text(
-                            'Lahore',
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(0, 173, 25, 1),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: 84.0,
-                          ),
-                          child: IconButton(
-                            onPressed: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return SizedBox(
-                                      height: 220,
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              top: 30.0,
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                    left: 18.0,
-                                                  ),
-                                                  child: Image.asset(
-                                                      'assets/images/Group 13.png'),
-                                                ),
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                    left: 6.0,
-                                                  ),
-                                                  child: Text(
-                                                    'Item Prices In',
-                                                    style: TextStyle(
-                                                      fontSize: 18.0,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: Color.fromRGBO(
-                                                          0, 0, 0, 1),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                    left: 3.0,
-                                                  ),
-                                                  child: Text(
-                                                    'Lahore',
-                                                    style: TextStyle(
-                                                      fontSize: 18.0,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: Color.fromRGBO(
-                                                          0, 173, 25, 1),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                    left: 100.0,
-                                                  ),
-                                                  child: InkWell(
-                                                      onTap: () {
-                                                        Navigator.of(context).push(
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        ListLabel()));
-                                                      },
-                                                      child: const Icon(
-                                                        Icons.close,
-                                                        color: Color.fromRGBO(
-                                                            52, 107, 33, 1),
-                                                      )),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-
-                                          ///milk text card
-                                          InkWell(
-                                            onTap: () {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          milkscreen()));
-                                            },
-                                            child: Container(
-                                              margin: EdgeInsets.only(
-                                                top: 20.0,
-                                              ),
-                                              width: width * 0.93,
-                                              height: height * 0.081,
-                                              child: Card(
-                                                elevation: 10.0,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Column(
-                                                      children: [
-                                                        Container(
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                            right: 92.0,
-                                                            top: 10.0,
-                                                          ),
-                                                          child: Text(
-                                                            'Milk',
-                                                            style: TextStyle(
-                                                              fontSize: 16.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: Color
-                                                                  .fromRGBO(
-                                                                      20,
-                                                                      20,
-                                                                      20,
-                                                                      1),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                            top: 4.0,
-                                                            left: 10.0,
-                                                          ),
-                                                          child: Row(
-                                                            children: [
-                                                              Container(
-                                                                child: Text(
-                                                                  'Starting From:',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        12.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            0,
-                                                                            173,
-                                                                            25,
-                                                                            1),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Container(
-                                                                margin:
-                                                                    EdgeInsets
-                                                                        .only(
-                                                                  left: 3.0,
-                                                                ),
-                                                                child: Text(
-                                                                  'PKR 60-80',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        12.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            20,
-                                                                            20,
-                                                                            20,
-                                                                            1),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                        right: 10.0,
-                                                      ),
-                                                      child: Icon(
-                                                        Icons.close,
-                                                        size: 20.0,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-
-                                          ///Juice text card
-                                          Container(
-                                            width: width * 0.93,
-                                            height: height * 0.081,
-                                            child: Card(
-                                              elevation: 10.0,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Column(
-                                                    children: [
-                                                      Container(
-                                                        margin: EdgeInsets.only(
-                                                          right: 92.0,
-                                                          top: 10.0,
-                                                        ),
-                                                        child: Text(
-                                                          'Juice',
-                                                          style: TextStyle(
-                                                            fontSize: 16.0,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color:
-                                                                Color.fromRGBO(
-                                                                    20,
-                                                                    20,
-                                                                    20,
-                                                                    1),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        margin: EdgeInsets.only(
-                                                          top: 4.0,
-                                                          left: 10.0,
-                                                        ),
-                                                        child: Row(
-                                                          children: [
-                                                            Container(
-                                                              child: Text(
-                                                                'Starting From:',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize:
-                                                                      12.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: Color
-                                                                      .fromRGBO(
-                                                                          0,
-                                                                          173,
-                                                                          25,
-                                                                          1),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                left: 3.0,
-                                                              ),
-                                                              child: Text(
-                                                                'PKR 35-280',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize:
-                                                                      12.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: Color
-                                                                      .fromRGBO(
-                                                                          20,
-                                                                          20,
-                                                                          20,
-                                                                          1),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                      right: 10.0,
-                                                    ),
-                                                    child: Icon(
-                                                      Icons.close,
-                                                      size: 20.0,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  });
-                            },
-                            icon: Icon(
-                              Icons.chevron_right_outlined,
-                              color: Color.fromRGBO(52, 107, 33, 1),
-                              size: 30.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-
-              ///Expanded card
-              // Container(
-              //   margin: EdgeInsets.only(),
-              //   child: Card(
-              //     elevation: 5.0,
-              //     child: ExpansionTile(
-              //       title: Row(
-              //         children: [
-              //         Container(
-              //
-              //           margin: EdgeInsets.only(),
-              //           child: Image.asset('assets/images/Group 13.png'),
-              //         ),
-              //     Container(
-              //                margin: EdgeInsets.only(left: 6.0,),
-              //                child: Text('Item Prices In',
-              //                  style: TextStyle(
-              //                    fontSize: 18.0,
-              //                    fontWeight: FontWeight.w600,
-              //
-              //                  ),
-              //                ),
-              //              ),
-              //     Container(
-              //                 margin: EdgeInsets.only(left: 3.0,),
-              //                 child: Text('Lahore',
-              //                   style: TextStyle(
-              //                     fontSize: 18.0,
-              //                     fontWeight: FontWeight.w600,
-              //                     color: Colors.green,
-              //                   ),
-              //                 ),
-              //               ),
-              //
-              //
-              //
-              //
-              //
-              //
-              //
-              //         ],
-              //       ),
-              //       children: [
-              //         Container(
-              //           width: width*0.93,
-              //           height: height*0.081,
-              //           child: Card(
-              //             elevation: 10.0,
-              //
-              //             child: Row(
-              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //               children: [
-              //                 Column(
-              //                   children: [
-              //                     Container(
-              //                       margin: EdgeInsets.only(right: 92.0,top: 10.0,),
-              //                       child: Text('Milk',
-              //
-              //                         style: TextStyle(
-              //                           fontSize: 16.0,
-              //                           fontWeight: FontWeight.w400,
-              //                         ),
-              //                       ),
-              //                     ),
-              //                     Container(
-              //                       margin: EdgeInsets.only(top: 4.0,left: 10.0,),
-              //                       child: Row(
-              //                         children: [
-              //                           Container(
-              //                             child: Text('Starting From:',
-              //                               style: TextStyle(
-              //                                 fontSize: 12.0,
-              //                                 fontWeight: FontWeight.w400,
-              //                                 color: Colors.green,
-              //                               ),
-              //                             ),
-              //                           ),
-              //                           Container(
-              //                             margin: EdgeInsets.only(left: 3.0,),
-              //                             child: Text('PKR 60-80',
-              //                               style: TextStyle(
-              //                                 fontSize: 12.0,
-              //                                 fontWeight: FontWeight.w400
-              //                               ),
-              //                             ),
-              //                           ),
-              //                         ],
-              //                       ),
-              //                     ),
-              //                   ],
-              //                 ),
-              //                 Container(
-              //                   margin: EdgeInsets.only(right: 10.0,),
-              //                   child: Icon(Icons.close,size: 20.0,),
-              //                 ),
-              //
-              //               ],
-              //             ),
-              //           ),
-              //         ),
-              //         Container(
-              //           width: width*0.93,
-              //           height: height*0.081,
-              //           child: Card(
-              //             elevation: 10.0,
-              //
-              //             child: Row(
-              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //               children: [
-              //                 Column(
-              //                   children: [
-              //                     Container(
-              //                       margin: EdgeInsets.only(right: 92.0,top: 10.0,),
-              //                       child: Text('Juice',
-              //
-              //                         style: TextStyle(
-              //                           fontSize: 16.0,
-              //                           fontWeight: FontWeight.w400,
-              //                         ),
-              //                       ),
-              //                     ),
-              //                     Container(
-              //                       margin: EdgeInsets.only(top: 4.0,left: 10.0,),
-              //                       child: Row(
-              //                         children: [
-              //                           Container(
-              //                             child: Text('Starting From:',
-              //                               style: TextStyle(
-              //                                 fontSize: 12.0,
-              //                                 fontWeight: FontWeight.w400,
-              //                                 color: Colors.green,
-              //                               ),
-              //                             ),
-              //                           ),
-              //                           Container(
-              //                             margin: EdgeInsets.only(left: 3.0,),
-              //                             child: Text('PKR 35-280',
-              //                               style: TextStyle(
-              //                                   fontSize: 12.0,
-              //                                   fontWeight: FontWeight.w400
-              //                               ),
-              //                             ),
-              //                           ),
-              //                         ],
-              //                       ),
-              //                     ),
-              //                   ],
-              //                 ),
-              //                 Container(
-              //                   margin: EdgeInsets.only(right: 10.0,),
-              //                   child: Icon(Icons.close,size: 20.0,),
-              //                 ),
-              //
-              //               ],
-              //             ),
-              //           ),
-              //         ),
-              //
-              //
-              //       ],
-              //     ),
-              //   ),
-              // ),
             ],
           ),
+        ),
+
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => AddItem(
+                  isVisible: _isVisible1,
+                  isVisible2: _isVisible2,
+                  isVisible3: _isVisible3,
+                  isVisible4: _isVisible4,
+                  isVisible5: _isVisible5,
+                  listId: widget.listId,
+                )));
+            // _showPopupMenu3();
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+        ),
+        body: (Column(
+          children: [
+            SizedBox(
+              height: 23.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(
+                    left: 16.0,
+                  ),
+                  child: Text(
+                    'Total',
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromRGBO(0, 173, 25, 1),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    right: 16.0,
+                  ),
+                  child: Text(
+                    'PKR 440',
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromRGBO(20, 20, 20, 1),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            ///1st card
+            SizedBox(height: 15.0),
+            Expanded(
+              child: FutureBuilder<dynamic>(
+                future: provider!.fetchListedItems(widget.listId),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error while fetching data from the server'),
+                    );
+                  } else if (snapshot.hasData) {
+                    if (snapshot.data['data'].isEmpty) {
+                      return Center(
+                        child: Text('No data found'),
+                      );
+                    }
+                    return ListView.builder(
+                        itemCount: snapshot.data['data'].length,
+                        itemBuilder: (context, index) {
+                          return tileCard(snapshot.data['data'][index], index);
+                        });
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
+            ),
+            ValueListenableBuilder(
+              valueListenable: title,
+              builder: (BuildContext context, dynamic value, Widget? child) {
+                return value == true
+                    ? ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+                    ),
+                    onPressed: () {
+                      WidgetConstants.showSnackBar(
+                          context, 'Deleting selected lists');
+                      provider!.deleteItems({
+                        'gros_list_id': provider!.listIdForItems,
+                        'item_id': provider!.idsList[0],
+                      }).whenComplete(() {
+                        if (provider!.msg == 'item deleted successfully') {
+                          WidgetConstants.hideSnackBar(context);
+                          setState(() {});
+                          WidgetConstants.showSnackBar(
+                              context, provider!.msg);
+                          title.value = false;
+                        } else {
+                          WidgetConstants.hideSnackBar(context);
+                          WidgetConstants.showSnackBar(
+                              context, provider!.msg);
+                        }
+                      });
+                    },
+                    child: Text('Delete'))
+                    : SizedBox();
+              },
+            ),
+            SizedBox(height: kBottomNavigationBarHeight),
+
+            ///Expanded card
+            // Container(
+            //   margin: EdgeInsets.only(),
+            //   child: Card(
+            //     elevation: 5.0,
+            //     child: ExpansionTile(
+            //       title: Row(
+            //         children: [
+            //           Container(
+            //             margin: EdgeInsets.only(),
+            //             child: Image.asset('assets/images/Group 13.png'),
+            //           ),
+            //           Container(
+            //             margin: EdgeInsets.only(
+            //               left: 6.0,
+            //             ),
+            //             child: Text(
+            //               'Item Prices In',
+            //               style: TextStyle(
+            //                 fontSize: 18.0,
+            //                 fontWeight: FontWeight.w600,
+            //               ),
+            //             ),
+            //           ),
+            //           Container(
+            //             margin: EdgeInsets.only(
+            //               left: 3.0,
+            //             ),
+            //             child: Text(
+            //               'Lahore',
+            //               style: TextStyle(
+            //                 fontSize: 18.0,
+            //                 fontWeight: FontWeight.w600,
+            //                 color: Colors.green,
+            //               ),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //       children: [
+            //         Container(
+            //           width: width * 0.93,
+            //           height: height * 0.081,
+            //           child: Card(
+            //             elevation: 10.0,
+            //             child: Row(
+            //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //               children: [
+            //                 Column(
+            //                   children: [
+            //                     Container(
+            //                       margin: EdgeInsets.only(
+            //                         right: 92.0,
+            //                         top: 10.0,
+            //                       ),
+            //                       child: Text(
+            //                         'Milk',
+            //                         style: TextStyle(
+            //                           fontSize: 16.0,
+            //                           fontWeight: FontWeight.w400,
+            //                         ),
+            //                       ),
+            //                     ),
+            //                     Container(
+            //                       margin: EdgeInsets.only(
+            //                         top: 4.0,
+            //                         left: 10.0,
+            //                       ),
+            //                       child: Row(
+            //                         children: [
+            //                           Container(
+            //                             child: Text(
+            //                               'Starting From:',
+            //                               style: TextStyle(
+            //                                 fontSize: 12.0,
+            //                                 fontWeight: FontWeight.w400,
+            //                                 color: Colors.green,
+            //                               ),
+            //                             ),
+            //                           ),
+            //                           Container(
+            //                             margin: EdgeInsets.only(
+            //                               left: 3.0,
+            //                             ),
+            //                             child: Text(
+            //                               'PKR 60-80',
+            //                               style: TextStyle(
+            //                                   fontSize: 12.0,
+            //                                   fontWeight: FontWeight.w400),
+            //                             ),
+            //                           ),
+            //                         ],
+            //                       ),
+            //                     ),
+            //                   ],
+            //                 ),
+            //                 Container(
+            //                   margin: EdgeInsets.only(
+            //                     right: 10.0,
+            //                   ),
+            //                   child: Icon(
+            //                     Icons.close,
+            //                     size: 20.0,
+            //                   ),
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+            //         ),
+            //         Container(
+            //           width: width * 0.93,
+            //           height: height * 0.081,
+            //           child: Card(
+            //             elevation: 10.0,
+            //             child: Row(
+            //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //               children: [
+            //                 Column(
+            //                   children: [
+            //                     Container(
+            //                       margin: EdgeInsets.only(
+            //                         right: 92.0,
+            //                         top: 10.0,
+            //                       ),
+            //                       child: Text(
+            //                         'Juice',
+            //                         style: TextStyle(
+            //                           fontSize: 16.0,
+            //                           fontWeight: FontWeight.w400,
+            //                         ),
+            //                       ),
+            //                     ),
+            //                     Container(
+            //                       margin: EdgeInsets.only(
+            //                         top: 4.0,
+            //                         left: 10.0,
+            //                       ),
+            //                       child: Row(
+            //                         children: [
+            //                           Container(
+            //                             child: Text(
+            //                               'Starting From:',
+            //                               style: TextStyle(
+            //                                 fontSize: 12.0,
+            //                                 fontWeight: FontWeight.w400,
+            //                                 color: Colors.green,
+            //                               ),
+            //                             ),
+            //                           ),
+            //                           Container(
+            //                             margin: EdgeInsets.only(
+            //                               left: 3.0,
+            //                             ),
+            //                             child: Text(
+            //                               'PKR 35-280',
+            //                               style: TextStyle(
+            //                                   fontSize: 12.0,
+            //                                   fontWeight: FontWeight.w400),
+            //                             ),
+            //                           ),
+            //                         ],
+            //                       ),
+            //                     ),
+            //                   ],
+            //                 ),
+            //                 Container(
+            //                   margin: EdgeInsets.only(
+            //                     right: 10.0,
+            //                   ),
+            //                   child: Icon(
+            //                     Icons.close,
+            //                     size: 20.0,
+            //                   ),
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+          ],
         )),
       ),
+    );
+  }
+
+  Widget tileCard(dynamic data, int index) {
+    return Card(
+      elevation: 3.0,
+      child: Row(
+        children: [
+          Consumer<ListProvider>(
+            builder: (context, myType, child) {
+              return ValueListenableBuilder(
+                valueListenable: title,
+                builder: (BuildContext context, dynamic value, Widget? child) {
+                  return title.value == true
+                      ? Checkbox(
+                      value: myType.myDataList[index].isChecked,
+                      onChanged: (value) {
+                        myType.toggleItem(data['id'], isListedItem: true);
+                      })
+                      : SizedBox(width: 20);
+                },
+              );
+            },
+          ),
+          Container(
+              margin: EdgeInsets.only(
+                top: 4.0,
+              ),
+              child: FutureBuilder<String>(
+                future: provider!.getSingleItem(data['item_id']),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text(
+                      snapshot.error.toString(),
+                    );
+                  } else if (snapshot.hasData) {
+                    return Text(
+                      snapshot.data!,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16.0,
+                      ),
+                    );
+                  } else {
+                    return Text('Loading...');
+                  }
+                },
+              )),
+          Container(
+            margin: EdgeInsets.only(
+              top: 14.0,
+            ),
+            width: width * 0.05,
+            height: height * 0.02,
+            child: Card(
+              color: Color.fromRGBO(52, 107, 33, 1),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(1)),
+              child: Container(
+                margin: EdgeInsets.only(
+                  left: 2.2,
+                ),
+                child: Text(
+                  'L',
+                  style: TextStyle(
+                    fontSize: 8.0,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          ///Stack1
+          Spacer(),
+          rightContainer('qty', '01'),
+          SizedBox(width: 9),
+          rightContainer('pkr', '180'),
+          SizedBox(width: 9),
+          rightContainer('total', '180'),
+          SizedBox(width: 25)
+        ],
+      ),
+    );
+  }
+
+  Widget rightContainer(String type, String text) {
+    return Stack(
+      children: [
+        Container(
+          width: width * 0.13,
+          height: height * 0.04,
+          child: Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+                side: BorderSide(
+                  color: Color.fromRGBO(0, 173, 25, 1),
+                )),
+            child: Container(
+              margin: EdgeInsets.only(
+                left: 12.0,
+                top: 5.0,
+              ),
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          top: 20,
+          right: -4,
+          child: Container(
+            child: Card(
+              color: Color.fromRGBO(52, 107, 33, 1),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(3)),
+              child: Container(
+                margin: EdgeInsets.only(
+                  left: 2.0,
+                  top: 1.0,
+                ),
+                child: Text(
+                  type.toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 7.0,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -7,6 +7,7 @@ import 'package:weshop/screens/Sign_In.dart';
 import 'package:weshop/screens/bottom_bar.dart';
 import 'package:weshop/screens/getstarted.dart';
 
+import 'providers/list_provider.dart';
 import 'providers/logincontroller.dart';
 
 Future<void> main() async {
@@ -62,7 +63,10 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<loginController>(
-            create: (context) => loginController())
+            create: (context) => loginController()),
+        ChangeNotifierProvider<ListProvider>(
+          create: (context) => ListProvider(),
+        )
       ],
       child: MaterialApp(
         useInheritedMediaQuery: false,

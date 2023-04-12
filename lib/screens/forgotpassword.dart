@@ -1,4 +1,5 @@
 import 'package:provider/provider.dart';
+import 'package:weshop/constant/widget_constants.dart';
 import 'package:weshop/providers/logincontroller.dart';
 import 'package:email_otp/email_otp.dart';
 
@@ -37,7 +38,12 @@ class _forgotSTFState extends State<forgotSTF> {
 
   late double height;
   late double width;
-
+  loginController? provider;
+  @override
+  void initState() {
+    provider = Provider.of<loginController>(context, listen: false);
+    super.initState();
+  }
   // get myauth => true;
 
   @override
@@ -153,17 +159,26 @@ class _forgotSTFState extends State<forgotSTF> {
                   //   ));
                   // }
                   emailcontroller.text.isNotEmpty
-                      ? Provider.of<loginController>(context, listen: false)
+                      ? provider!
                           .forgotPassword(emailcontroller.text)
                           .whenComplete(
-                            () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (ctx) => VerifyCode(
-                                  email: emailcontroller.text,
+                          () {
+                            if (provider!.msg == 'Successful') {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (ctx) => VerifyCode(
+                                    email: emailcontroller.text,
+                                  ),
                                 ),
-                              ),
-                            ),
-                          )
+                              );
+                            } else {
+                              WidgetConstants.showSnackBar(
+                                context,
+                                provider!.msg,
+                              );
+                            }
+                          },
+                        )
                       : ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Please enter your email'),

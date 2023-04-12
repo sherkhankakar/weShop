@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
+import '../constant/widget_constants.dart';
 import '../screens/bottom_bar.dart';
 import '../main.dart';
 import 'forgotpassword.dart';
@@ -29,8 +30,8 @@ class signin1 extends StatelessWidget {
 class signin1STF extends StatefulWidget {
   const signin1STF({Key? key})
       : super(
-          key: key,
-        );
+    key: key,
+  );
 
   @override
   State<signin1STF> createState() => _signin1STFState();
@@ -56,7 +57,7 @@ class _signin1STFState extends State<signin1STF> {
         Container(
           child: CircleAvatar(
             backgroundImage:
-                Image.network(model.usersDetails!.photoURL ?? "").image,
+            Image.network(model.usersDetails!.photoURL ?? "").image,
           ),
         ),
         Row(
@@ -66,7 +67,7 @@ class _signin1STFState extends State<signin1STF> {
             Text(
               model.usersDetails!.displayName ?? "",
               style:
-                  TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+              TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
             ),
           ],
         ),
@@ -126,7 +127,7 @@ class _signin1STFState extends State<signin1STF> {
 
   Future<UserCredential> signInFacebook() async {
     final LoginResult loginResult =
-        await FacebookAuth.instance.login(permissions: ['email,']);
+    await FacebookAuth.instance.login(permissions: ['email,']);
     if (loginResult == LoginStatus.success) {
       final userData = await FacebookAuth.instance.getUserData();
       _userData = userData;
@@ -137,7 +138,7 @@ class _signin1STFState extends State<signin1STF> {
       welcome = _userData!['email'];
     });
     final OAuthCredential oAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.token);
+    FacebookAuthProvider.credential(loginResult.accessToken!.token);
     return FirebaseAuth.instance.signInWithCredential(oAuthCredential);
   }
 
@@ -146,7 +147,7 @@ class _signin1STFState extends State<signin1STF> {
     if (result.status == LoginStatus.success) {
       // Create a credential from the access token
       final OAuthCredential credential =
-          FacebookAuthProvider.credential(result.accessToken!.token);
+      FacebookAuthProvider.credential(result.accessToken!.token);
       // Once signed in, return the UserCredential
       return await FirebaseAuth.instance.signInWithCredential(credential);
     }
@@ -321,7 +322,7 @@ class _signin1STFState extends State<signin1STF> {
                       children: [
                         Container(
                           margin:
-                              EdgeInsets.only(top: 17.0, left: 20, right: 20),
+                          EdgeInsets.only(top: 17.0, left: 20, right: 20),
                           height: height * 0.053,
                           child: TextFormField(
                             controller: email,
@@ -356,7 +357,7 @@ class _signin1STFState extends State<signin1STF> {
                         ///password
                         Container(
                           margin:
-                              EdgeInsets.only(top: 17.0, left: 20, right: 20),
+                          EdgeInsets.only(top: 17.0, left: 20, right: 20),
                           height: height * 0.053,
                           child: TextFormField(
                             controller: password,
@@ -452,14 +453,14 @@ class _signin1STFState extends State<signin1STF> {
                             return provider!.isLoading == true
                                 ? CircularProgressIndicator()
                                 : Text(
-                                    'Sign In',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color.fromRGBO(255, 255, 255, 1),
-                                    ),
-                                  );
+                              'Sign In',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w700,
+                                color: Color.fromRGBO(255, 255, 255, 1),
+                              ),
+                            );
                           },
                         )),
                   ),
@@ -495,19 +496,22 @@ class _signin1STFState extends State<signin1STF> {
   void loginUser() async {
     ///ye login ki api ka link ha
     if (email.text.isEmpty || password.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Please provide the above details'),
-        ),
-      );
+      WidgetConstants.showSnackBar(context, 'Please proivde the above details');
     } else {
       await provider!.login(email.text, password.text).whenComplete(
-            () => Navigator.of(context).pushAndRemoveUntil(
+            () {
+          if (provider!.msg == 'Successful') {
+            Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                   builder: (context) => BottomBar(),
                 ),
-                (route) => false),
-          );
+                    (route) => false);
+          } else {
+            WidgetConstants.hideSnackBar(context);
+            WidgetConstants.showSnackBar(context, provider!.msg);
+          }
+        },
+      );
     }
   }
 }

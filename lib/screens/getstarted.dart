@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:weshop/screens/bottom_bar.dart';
+import '../constant/widget_constants.dart';
 import '../main.dart';
 import 'Sign_In.dart';
 import '../models/datamodel.dart';
@@ -529,25 +529,31 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
 
   ///Connect Register Api in flutter correct method
   void registerUser() async {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text('Registering...')));
+    final provider = Provider.of<loginController>(context, listen: false);
+    WidgetConstants.showSnackBar(context, 'Registering...');
 
     ///ya register ki api ka link ha
     if (emailController.text.isNotEmpty &&
         nameController.text.isNotEmpty &&
         passwordController.text.isNotEmpty) {
-      Provider.of<loginController>(context, listen: false)
+      provider
           .registerNewUser(
         emailController.text,
         passwordController.text,
         nameController.text,
       )
           .whenComplete(() {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (context) => BottomBar(),
-            ),
-                (route) => false);
+        if (provider.msg == 'Successfully registered') {
+          WidgetConstants.showSnackBar(context, 'Successfully registered');
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => signin1(),
+              ),
+                  (route) => false);
+        } else {
+          WidgetConstants.hideSnackBar(context);
+          WidgetConstants.showSnackBar(context, provider.msg);
+        }
       });
     } else {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();

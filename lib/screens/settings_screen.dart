@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weshop/screens/profile_settings.dart';
 
+import '../main.dart';
 import 'change_password.dart';
 import 'language_settings.dart';
 import 'location_settings.dart';
@@ -36,14 +38,24 @@ class _SettingScreenState extends State<SettingScreen> {
           Row(
             children: [
               SizedBox(width: 20),
-              Image.asset('assets/images/Ellipse (2).png',height: 80,),
+              Image.asset(
+                'assets/images/Ellipse (2).png',
+                height: 80,
+              ),
               SizedBox(width: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Bagja Alfatih',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
+                  Text(
+                    'Bagja Alfatih',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
                   SizedBox(height: 5),
-                  Text('example@email.com',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w400,color: Colors.black54)),
+                  Text('example@email.com',
+                      style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black54)),
                 ],
               )
             ],
@@ -192,7 +204,14 @@ class _SettingScreenState extends State<SettingScreen> {
                 color: Color.fromRGBO(52, 107, 33, 1),
                 size: 25.0,
               ),
-              'Logout'),
+              'Logout', ontap: () async {
+            final prefs = await SharedPreferences.getInstance();
+            prefs.clear().whenComplete(
+                  () => Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => MyappSTF()),
+                      (route) => false),
+                );
+          }),
           SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -209,21 +228,24 @@ class _SettingScreenState extends State<SettingScreen> {
     ));
   }
 
-  rowTiles2(Icon icon, String title) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20),
-      child: Row(
-        children: [
-          icon,
-          SizedBox(width: 20),
-          Text(
-            title,
-            style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w400,
-                color: Colors.black.withOpacity(0.9)),
-          ),
-        ],
+  rowTiles2(Icon icon, String title, {VoidCallback? ontap}) {
+    return InkWell(
+      onTap: ontap ?? null,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20),
+        child: Row(
+          children: [
+            icon,
+            SizedBox(width: 20),
+            Text(
+              title,
+              style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black.withOpacity(0.9)),
+            ),
+          ],
+        ),
       ),
     );
   }
