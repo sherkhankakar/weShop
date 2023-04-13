@@ -39,6 +39,9 @@ class ListProvider with ChangeNotifier {
 
   List<dynamic> myDataList = [];
 
+  List<String> _glistLength = [];
+  List<String> get gListLength => _glistLength;
+
   Stream<dynamic> getLists() async* {
     final prefs = await SharedPreferences.getInstance();
 
@@ -49,11 +52,15 @@ class ListProvider with ChangeNotifier {
     final data = jsonDecode(result.body) as Map<String, dynamic>;
     if (result.statusCode == 200) {
       List<GlistModel> myData = [];
+      List<String> len = [];
       for (var d in data['data']['glists']) {
         myData.add(GlistModel.fromJson(d));
+
+        len.add(d['list_item'].length.toString());
       }
 
       myDataList = myData;
+      _glistLength = len;
       notifyListeners();
       yield data;
     } else {

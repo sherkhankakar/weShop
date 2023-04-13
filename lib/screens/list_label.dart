@@ -26,6 +26,9 @@ class _ListLabelState extends State<ListLabel> {
       position: RelativeRect.fromLTRB(180, 80, 600, 500),
       items: [
         PopupMenuItem(
+          onTap: () {
+            title.value = true;
+          },
           child: Row(
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -39,17 +42,12 @@ class _ListLabelState extends State<ListLabel> {
                 margin: EdgeInsets.only(
                   left: 10.0,
                 ),
-                child: InkWell(
-                  onTap: () {
-                    title.value = true;
-                  },
-                  child: Text(
-                    'Delete',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w400,
-                      color: Color.fromRGBO(0, 0, 0, 0.87),
-                    ),
+                child: Text(
+                  'Delete',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                    color: Color.fromRGBO(0, 0, 0, 0.87),
                   ),
                 ),
               ),
@@ -59,716 +57,469 @@ class _ListLabelState extends State<ListLabel> {
         PopupMenuItem(
           child: InkWell(
             onTap: () {
-              setState(() {
-                Navigator.pop(context);
-              });
+              Navigator.pop(context);
+
               showModalBottomSheet(
                   context: context,
                   builder: (BuildContext context) {
-                    return SizedBox(
-                      height: 280,
-                      child: Container(
-                        child: Column(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                top: 15.0,
-                                left: 12.0,
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    child: Text(
-                                      'Sort By',
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color.fromRGBO(100, 100, 100, 1),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                top: 5.0,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      left: 13.0,
-                                    ),
-                                    child: Text(
-                                      'Price: High to low',
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color.fromRGBO(20, 20, 20, 1),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      right: 10.0,
-                                    ),
-                                    child: Radio(
-                                      activeColor:
-                                      Color.fromRGBO(52, 107, 33, 1),
-                                      value: 1,
-                                      groupValue: _value,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _value = value!;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      left: 13.0,
-                                    ),
-                                    child: Text(
-                                      'Price: low to high',
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color.fromRGBO(20, 20, 20, 1),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      right: 10.0,
-                                    ),
-                                    child: Radio(
-                                      activeColor:
-                                      Color.fromRGBO(52, 107, 33, 1),
-                                      value: 2,
-                                      groupValue: _value,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _value = value!;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      left: 13.0,
-                                    ),
-                                    child: Text(
-                                      'Data modified',
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color.fromRGBO(20, 20, 20, 1),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      right: 10.0,
-                                    ),
-                                    child: Radio(
-                                      activeColor:
-                                      Color.fromRGBO(52, 107, 33, 1),
-                                      value: 3,
-                                      groupValue: _value,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _value = value!;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      left: 13.0,
-                                    ),
-                                    child: Text(
-                                      'Alphabetically (A-Z)',
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color.fromRGBO(20, 20, 20, 1),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      right: 10.0,
-                                    ),
-                                    child: Radio(
-                                      activeColor:
-                                      Color.fromRGBO(52, 107, 33, 1),
-                                      value: 4,
-                                      groupValue: _value,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _value = value!;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      left: 13.0,
-                                    ),
-                                    child: Text(
-                                      'Alphabetically (Z-A)',
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color.fromRGBO(20, 20, 20, 1),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      right: 10.0,
-                                    ),
-                                    child: Radio(
-                                      activeColor:
-                                      Color.fromRGBO(52, 107, 33, 1),
-                                      value: 5,
-                                      groupValue: _value,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _value = value!;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  });
-            },
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  Navigator.pop(context);
-                });
-                showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return SizedBox(
-                        height: 280,
-                        child: Container(
-                          child: Column(
+                    return Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                            top: 15.0,
+                            left: 12.0,
+                          ),
+                          child: Row(
                             children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                  top: 15.0,
-                                  left: 12.0,
-                                ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      child: Text(
-                                        'Sort By',
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w400,
-                                          color:
-                                          Color.fromRGBO(100, 100, 100, 1),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                  top: 5.0,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                        left: 13.0,
-                                      ),
-                                      child: Text(
-                                        'Price: High to low',
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color.fromRGBO(20, 20, 20, 1),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                        right: 10.0,
-                                      ),
-                                      child: Radio(
-                                        activeColor:
-                                        Color.fromRGBO(52, 107, 33, 1),
-                                        value: 1,
-                                        groupValue: _value,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _value = value!;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                        left: 13.0,
-                                      ),
-                                      child: Text(
-                                        'Price: low to high',
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color.fromRGBO(20, 20, 20, 1),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                        right: 10.0,
-                                      ),
-                                      child: Radio(
-                                        activeColor:
-                                        Color.fromRGBO(52, 107, 33, 1),
-                                        value: 2,
-                                        groupValue: _value,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _value = value!;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                        left: 13.0,
-                                      ),
-                                      child: Text(
-                                        'Data modified',
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color.fromRGBO(20, 20, 20, 1),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                        right: 10.0,
-                                      ),
-                                      child: Radio(
-                                        activeColor:
-                                        Color.fromRGBO(52, 107, 33, 1),
-                                        value: 3,
-                                        groupValue: _value,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _value = value!;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                        left: 13.0,
-                                      ),
-                                      child: Text(
-                                        'Alphabetically (A-Z)',
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color.fromRGBO(20, 20, 20, 1),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                        right: 10.0,
-                                      ),
-                                      child: Radio(
-                                        activeColor:
-                                        Color.fromRGBO(52, 107, 33, 1),
-                                        value: 4,
-                                        groupValue: _value,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _value = value!;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                        left: 13.0,
-                                      ),
-                                      child: Text(
-                                        'Alphabetically (Z-A)',
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color.fromRGBO(20, 20, 20, 1),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                        right: 10.0,
-                                      ),
-                                      child: Radio(
-                                        activeColor:
-                                        Color.fromRGBO(52, 107, 33, 1),
-                                        value: 5,
-                                        groupValue: _value,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _value = value!;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ],
+                              Text(
+                                'Sort By',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color.fromRGBO(100, 100, 100, 1),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      );
-                    });
-              },
-              child: Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    child: ImageIcon(
-                      AssetImage('assets/images/Vector (2).png'),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: 10.0,
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          Navigator.pop(context);
-                        });
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return SizedBox(
-                                height: 280,
-                                child: Container(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          top: 15.0,
-                                          left: 12.0,
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              child: Text(
-                                                'Sort By',
-                                                style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Color.fromRGBO(
-                                                      100, 100, 100, 1),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          top: 5.0,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                left: 13.0,
-                                              ),
-                                              child: Text(
-                                                'Price: High to low',
-                                                style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Color.fromRGBO(
-                                                      20, 20, 20, 1),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                right: 10.0,
-                                              ),
-                                              child: Radio(
-                                                activeColor: Color.fromRGBO(
-                                                    52, 107, 33, 1),
-                                                value: 1,
-                                                groupValue: _value,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    _value = value!;
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                left: 13.0,
-                                              ),
-                                              child: Text(
-                                                'Price: low to high',
-                                                style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Color.fromRGBO(
-                                                      20, 20, 20, 1),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                right: 10.0,
-                                              ),
-                                              child: Radio(
-                                                activeColor: Color.fromRGBO(
-                                                    52, 107, 33, 1),
-                                                value: 2,
-                                                groupValue: _value,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    _value = value!;
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                left: 13.0,
-                                              ),
-                                              child: Text(
-                                                'Data modified',
-                                                style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Color.fromRGBO(
-                                                      20, 20, 20, 1),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                right: 10.0,
-                                              ),
-                                              child: Radio(
-                                                activeColor: Color.fromRGBO(
-                                                    52, 107, 33, 1),
-                                                value: 3,
-                                                groupValue: _value,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    _value = value!;
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                left: 13.0,
-                                              ),
-                                              child: Text(
-                                                'Alphabetically (A-Z)',
-                                                style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Color.fromRGBO(
-                                                      20, 20, 20, 1),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                right: 10.0,
-                                              ),
-                                              child: Radio(
-                                                activeColor: Color.fromRGBO(
-                                                    52, 107, 33, 1),
-                                                value: 4,
-                                                groupValue: _value,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    _value = value!;
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                left: 13.0,
-                                              ),
-                                              child: Text(
-                                                'Alphabetically (Z-A)',
-                                                style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Color.fromRGBO(
-                                                      20, 20, 20, 1),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                right: 10.0,
-                                              ),
-                                              child: Radio(
-                                                activeColor: Color.fromRGBO(
-                                                    52, 107, 33, 1),
-                                                value: 5,
-                                                groupValue: _value,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    _value = value!;
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
+                        Container(
+                          margin: EdgeInsets.only(
+                            top: 5.0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: 13.0,
+                                ),
+                                child: Text(
+                                  'Price: High to low',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color.fromRGBO(20, 20, 20, 1),
                                   ),
                                 ),
-                              );
-                            });
-                        // Navigator.of(context).push(MaterialPageRoute(builder: (context) => mylist2()));
-                      },
-                      child: Text(
-                        'Sort',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w400,
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  right: 10.0,
+                                ),
+                                child: Radio(
+                                  activeColor: Color.fromRGBO(52, 107, 33, 1),
+                                  value: 1,
+                                  groupValue: _value,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _value = value!;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: 13.0,
+                                ),
+                                child: Text(
+                                  'Price: low to high',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color.fromRGBO(20, 20, 20, 1),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  right: 10.0,
+                                ),
+                                child: Radio(
+                                  activeColor: Color.fromRGBO(52, 107, 33, 1),
+                                  value: 2,
+                                  groupValue: _value,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _value = value!;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: 13.0,
+                                ),
+                                child: Text(
+                                  'Data modified',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color.fromRGBO(20, 20, 20, 1),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  right: 10.0,
+                                ),
+                                child: Radio(
+                                  activeColor: Color.fromRGBO(52, 107, 33, 1),
+                                  value: 3,
+                                  groupValue: _value,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _value = value!;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: 13.0,
+                                ),
+                                child: Text(
+                                  'Alphabetically (A-Z)',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color.fromRGBO(20, 20, 20, 1),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  right: 10.0,
+                                ),
+                                child: Radio(
+                                  activeColor: Color.fromRGBO(52, 107, 33, 1),
+                                  value: 4,
+                                  groupValue: _value,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _value = value!;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: 13.0,
+                                ),
+                                child: Text(
+                                  'Alphabetically (Z-A)',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color.fromRGBO(20, 20, 20, 1),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  right: 10.0,
+                                ),
+                                child: Radio(
+                                  activeColor: Color.fromRGBO(52, 107, 33, 1),
+                                  value: 5,
+                                  groupValue: _value,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _value = value!;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  });
+            },
+            child: Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  child: ImageIcon(
+                    AssetImage('assets/images/Vector (2).png'),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    left: 10.0,
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        Navigator.pop(context);
+                      });
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SizedBox(
+                              height: 280,
+                              child: Container(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top: 15.0,
+                                        left: 12.0,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            child: Text(
+                                              'Sort By',
+                                              style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w400,
+                                                color: Color.fromRGBO(
+                                                    100, 100, 100, 1),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top: 5.0,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              left: 13.0,
+                                            ),
+                                            child: Text(
+                                              'Price: High to low',
+                                              style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w400,
+                                                color: Color.fromRGBO(
+                                                    20, 20, 20, 1),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              right: 10.0,
+                                            ),
+                                            child: Radio(
+                                              activeColor: Color.fromRGBO(
+                                                  52, 107, 33, 1),
+                                              value: 1,
+                                              groupValue: _value,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _value = value!;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              left: 13.0,
+                                            ),
+                                            child: Text(
+                                              'Price: low to high',
+                                              style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w400,
+                                                color: Color.fromRGBO(
+                                                    20, 20, 20, 1),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              right: 10.0,
+                                            ),
+                                            child: Radio(
+                                              activeColor: Color.fromRGBO(
+                                                  52, 107, 33, 1),
+                                              value: 2,
+                                              groupValue: _value,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _value = value!;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              left: 13.0,
+                                            ),
+                                            child: Text(
+                                              'Data modified',
+                                              style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w400,
+                                                color: Color.fromRGBO(
+                                                    20, 20, 20, 1),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              right: 10.0,
+                                            ),
+                                            child: Radio(
+                                              activeColor: Color.fromRGBO(
+                                                  52, 107, 33, 1),
+                                              value: 3,
+                                              groupValue: _value,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _value = value!;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              left: 13.0,
+                                            ),
+                                            child: Text(
+                                              'Alphabetically (A-Z)',
+                                              style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w400,
+                                                color: Color.fromRGBO(
+                                                    20, 20, 20, 1),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              right: 10.0,
+                                            ),
+                                            child: Radio(
+                                              activeColor: Color.fromRGBO(
+                                                  52, 107, 33, 1),
+                                              value: 4,
+                                              groupValue: _value,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _value = value!;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              left: 13.0,
+                                            ),
+                                            child: Text(
+                                              'Alphabetically (Z-A)',
+                                              style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w400,
+                                                color: Color.fromRGBO(
+                                                    20, 20, 20, 1),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              right: 10.0,
+                                            ),
+                                            child: Radio(
+                                              activeColor: Color.fromRGBO(
+                                                  52, 107, 33, 1),
+                                              value: 5,
+                                              groupValue: _value,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _value = value!;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                      // Navigator.of(context).push(MaterialPageRoute(builder: (context) => mylist2()));
+                    },
+                    child: Text(
+                      'Sort',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -1102,10 +853,6 @@ class _ListLabelState extends State<ListLabel> {
               ),
               InkWell(
                   onTap: () {
-                    setState(() {
-                      if (_isVisible4 = false) {}
-                      if (_isVisible5 = true) {}
-                    });
                     _showPopupMenu3();
                   },
                   child: Image.asset('assets/images/Vector (1).png')),
@@ -1198,9 +945,7 @@ class _ListLabelState extends State<ListLabel> {
                         });
                   } else {
                     return Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ),
+                      child: CircularProgressIndicator(),
                     );
                   }
                 },
@@ -1450,9 +1195,8 @@ class _ListLabelState extends State<ListLabel> {
             },
           ),
           Container(
-              padding: EdgeInsets.symmetric(vertical: 10),
               margin: EdgeInsets.only(
-                top: 4.0,bottom: 10
+                top: 4.0,
               ),
               child: FutureBuilder<String>(
                 future: provider!.getSingleItem(data['item_id']),
@@ -1497,16 +1241,6 @@ class _ListLabelState extends State<ListLabel> {
                 ),
               ),
             ),
-          ),
-          SizedBox(width: 10),
-          Container(
-            height: 25,
-            width: 25,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.green
-            ),
-            child: Center(child: Icon(Icons.edit,color: Colors.white,size: 17,)),
           ),
 
           ///Stack1

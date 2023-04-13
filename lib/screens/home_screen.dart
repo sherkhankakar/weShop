@@ -93,6 +93,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String deletepost = "";
 
+  ValueNotifier<bool> isEmptyList = ValueNotifier(false);
+
   ///popup menu 1
   void _showPopupMenu3({bool? isEditing = false, String? listId}) async {
     await showMenu(
@@ -808,7 +810,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     return ListView.builder(
                       itemBuilder: (context, index) {
                         return customCard(
-                            snapshot.data['data']['glists'][index], index);
+                          snapshot.data['data']['glists'][index],
+                          index,
+                        );
                       },
                       itemCount: snapshot.data['data']['glists'].length,
                     );
@@ -859,6 +863,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget customCard(dynamic data, int index) {
+    data['list_item'].isEmpty
+        ? isEmptyList.value = false
+        : isEmptyList.value = true;
+    print(data['list_item'].length);
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
@@ -896,12 +904,17 @@ class _HomeScreenState extends State<HomeScreen> {
               fontSize: 18.0,
             ),
           ),
-          subtitle: Text(
-            'items: ${data['list_items'] == null ? 0 : data['list_items'].length}',
-            style: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 13.0,
-            ),
+          subtitle: ValueListenableBuilder(
+            valueListenable: isEmptyList,
+            builder: (BuildContext context, bool value, Widget? child) {
+              return Text(
+                'items: ${provider!.gListLength[index]}',
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 13.0,
+                ),
+              );
+            },
           ),
           trailing: Column(
             children: [
@@ -937,7 +950,7 @@ ValueListenableBuilder(
                   ? Selector<ListProvider, bool>(
                       selector: (_, myType) => provider!.isChecked,
                       builder: (context, isChecked, child) {
-                        return 
+                        return
                       },
                     )
                   : SizedBox();

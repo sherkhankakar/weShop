@@ -113,8 +113,8 @@ class _AddItemState extends State<AddItem> {
                     filled: true,
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                      color: Color.fromRGBO(100, 100, 100, 1),
-                    )),
+                          color: Color.fromRGBO(100, 100, 100, 1),
+                        )),
                     contentPadding: EdgeInsets.only(top: 8.0),
                     hintText: 'Search',
                     hintStyle: TextStyle(
@@ -158,11 +158,11 @@ class _AddItemState extends State<AddItem> {
                           snapshot.data['data'][index]['name'],
                           'Dozen',
                           'Half Dozen',
-                          () {
+                              () {
                             // handleLeftContainerTap();
                             return null;
                           },
-                          () {
+                              () {
                             // handleRightContainerTap();
                             return null;
                           },
@@ -187,14 +187,14 @@ class _AddItemState extends State<AddItem> {
   }
 
   containerTile(
-    String title,
-    String largeQuantity,
-    String smallQuantity,
-    Function? tap1(),
-    Function? tap2(),
-    int currInd,
-    String itemId,
-  ) {
+      String title,
+      String largeQuantity,
+      String smallQuantity,
+      Function? tap1(),
+      Function? tap2(),
+      int currInd,
+      String itemId,
+      ) {
     final provider = Provider.of<ListProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -212,7 +212,7 @@ class _AddItemState extends State<AddItem> {
                 margin: EdgeInsets.symmetric(horizontal: 15),
                 height: 35,
                 decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                BoxDecoration(borderRadius: BorderRadius.circular(5)),
                 child: Row(
                   children: [
                     Text(
@@ -256,50 +256,26 @@ class _AddItemState extends State<AddItem> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: GestureDetector(
-                  onTap: () async {
-                    WidgetConstants.showSnackBar(
-                        context, 'Adding item to list...');
-                    provider
-                        .addItemsToList(widget.listId, itemId)
-                        .whenComplete(() {
-                      if (provider.msg == 'List added successfully') {
-                        WidgetConstants.hideSnackBar(context);
-                        WidgetConstants.showSnackBar(
-                            context, 'Item added to the list successfully');
-                        Navigator.of(context).pop();
-                      } else {
-                        WidgetConstants.hideSnackBar(context);
-                        WidgetConstants.showSnackBar(context, provider.msg);
-                      }
-                    });
-                  },
-                  child: Container(
-                    width: 80,
-                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 4),
-                    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 3),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(
-                        color: Colors.green,
-                        width: 1,
-                      ),
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Add item',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                ),
+              IconButton(
+                onPressed: () async {
+                  WidgetConstants.showSnackBar(
+                      context, 'Adding item to list...');
+                  provider
+                      .addItemsToList(widget.listId, itemId)
+                      .whenComplete(() {
+                    if (provider.msg == 'List added successfully') {
+                      WidgetConstants.hideSnackBar(context);
+                      WidgetConstants.showSnackBar(
+                          context, 'Item added to the list successfully');
+                      Navigator.of(context).pop();
+                    } else {
+                      WidgetConstants.hideSnackBar(context);
+                      WidgetConstants.showSnackBar(context, provider.msg);
+                    }
+                  });
+                },
+                icon: Text('Add Item'),
               ),
-              //
             ]),
       ),
     );
@@ -311,7 +287,7 @@ class _AddItemState extends State<AddItem> {
       builder: (BuildContext context, dynamic value, Widget? child) {
         return GestureDetector(
           onTap: () {
-            currentIndex.value = currInd;
+            currentIndex.value = index;
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 1),
@@ -319,7 +295,7 @@ class _AddItemState extends State<AddItem> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               border: Border.all(
-                color: currentIndex.value == currInd && currInd == index
+                color: currentIndex.value == index
                     ? _selectedColor
                     : _unselectedColor,
                 width: 1,
