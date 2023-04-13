@@ -332,7 +332,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
               height: MediaQuery.of(context).size.height * 0.053,
               child: TextFormField(
                 // autovalidateMode: AutovalidateMode.onUserInteraction,
-                obscureText: true,
+                obscureText: _obscureText2,
                 cursorColor: Color.fromRGBO(100, 100, 100, 1),
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(

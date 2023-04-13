@@ -1198,7 +1198,9 @@ class _ListLabelState extends State<ListLabel> {
                         });
                   } else {
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
                     );
                   }
                 },
@@ -1448,8 +1450,9 @@ class _ListLabelState extends State<ListLabel> {
             },
           ),
           Container(
+              padding: EdgeInsets.symmetric(vertical: 10),
               margin: EdgeInsets.only(
-                top: 4.0,
+                top: 4.0,bottom: 10
               ),
               child: FutureBuilder<String>(
                 future: provider!.getSingleItem(data['item_id']),
@@ -1494,6 +1497,16 @@ class _ListLabelState extends State<ListLabel> {
                 ),
               ),
             ),
+          ),
+          SizedBox(width: 10),
+          Container(
+            height: 25,
+            width: 25,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.green
+            ),
+            child: Center(child: Icon(Icons.edit,color: Colors.white,size: 17,)),
           ),
 
           ///Stack1

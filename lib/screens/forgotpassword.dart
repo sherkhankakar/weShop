@@ -31,7 +31,7 @@ class forgotSTF extends StatefulWidget {
 
 class _forgotSTFState extends State<forgotSTF> {
   ///Text editing controller
-  final TextEditingController emailcontroller = TextEditingController();
+  final TextEditingController emailCtr = TextEditingController();
   EmailOTP myauth = EmailOTP();
 
   ///function to generate otp
@@ -108,7 +108,7 @@ class _forgotSTFState extends State<forgotSTF> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
-                controller: emailcontroller,
+                controller: emailCtr,
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -158,16 +158,16 @@ class _forgotSTFState extends State<forgotSTF> {
                   //     content: Text("Oops, OTP send failed"),
                   //   ));
                   // }
-                  emailcontroller.text.isNotEmpty
+                  emailCtr.text.isNotEmpty
                       ? provider!
-                          .forgotPassword(emailcontroller.text)
+                          .forgotPassword(emailCtr.text)
                           .whenComplete(
                           () {
                             if (provider!.msg == 'Successful') {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (ctx) => VerifyCode(
-                                    email: emailcontroller.text,
+                                    email: emailCtr.text,
                                   ),
                                 ),
                               );
@@ -189,7 +189,9 @@ class _forgotSTFState extends State<forgotSTF> {
                   selector: (_, ctr) => ctr.isLoading,
                   builder: (context, isLoading, child) {
                     return isLoading == true
-                        ? CircularProgressIndicator()
+                        ? CircularProgressIndicator(
+                      color: Colors.white,
+                    )
                         : Text(
                             'Continue',
                             textAlign: TextAlign.center,

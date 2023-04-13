@@ -256,26 +256,50 @@ class _AddItemState extends State<AddItem> {
                   ],
                 ),
               ),
-              IconButton(
-                onPressed: () async {
-                  WidgetConstants.showSnackBar(
-                      context, 'Adding item to list...');
-                  provider
-                      .addItemsToList(widget.listId, itemId)
-                      .whenComplete(() {
-                    if (provider.msg == 'List added successfully') {
-                      WidgetConstants.hideSnackBar(context);
-                      WidgetConstants.showSnackBar(
-                          context, 'Item added to the list successfully');
-                      Navigator.of(context).pop();
-                    } else {
-                      WidgetConstants.hideSnackBar(context);
-                      WidgetConstants.showSnackBar(context, provider.msg);
-                    }
-                  });
-                },
-                icon: Text('Add Item'),
+              SizedBox(height: 20),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: GestureDetector(
+                  onTap: () async {
+                    WidgetConstants.showSnackBar(
+                        context, 'Adding item to list...');
+                    provider
+                        .addItemsToList(widget.listId, itemId)
+                        .whenComplete(() {
+                      if (provider.msg == 'List added successfully') {
+                        WidgetConstants.hideSnackBar(context);
+                        WidgetConstants.showSnackBar(
+                            context, 'Item added to the list successfully');
+                        Navigator.of(context).pop();
+                      } else {
+                        WidgetConstants.hideSnackBar(context);
+                        WidgetConstants.showSnackBar(context, provider.msg);
+                      }
+                    });
+                  },
+                  child: Container(
+                    width: 80,
+                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 4),
+                    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: Colors.green,
+                        width: 1,
+                      ),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Add item',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
               ),
+              //
             ]),
       ),
     );

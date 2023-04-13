@@ -221,7 +221,7 @@ class _signin1STFState extends State<signin1STF> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         OutlinedButton(
                           onPressed: () {
@@ -236,7 +236,7 @@ class _signin1STFState extends State<signin1STF> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Image.asset('assets/images/google.png'),
-                                SizedBox(width: 30),
+                                SizedBox(width: 20),
                                 Text(
                                   'Google',
                                   style: TextStyle(
@@ -249,7 +249,7 @@ class _signin1STFState extends State<signin1STF> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 20),
+                        Spacer(),
                         OutlinedButton(
                           style: OutlinedButton.styleFrom(
                             padding: EdgeInsets.symmetric(horizontal: 20),
@@ -451,7 +451,9 @@ class _signin1STFState extends State<signin1STF> {
                           selector: (_, ctr) => ctr.isLoading,
                           builder: (context, isLoading, child) {
                             return provider!.isLoading == true
-                                ? CircularProgressIndicator()
+                                ? CircularProgressIndicator(
+                              color: Colors.white,
+                            )
                                 : Text(
                               'Sign In',
                               textAlign: TextAlign.center,
