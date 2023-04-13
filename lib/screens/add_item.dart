@@ -287,7 +287,7 @@ class _AddItemState extends State<AddItem> {
       builder: (BuildContext context, dynamic value, Widget? child) {
         return GestureDetector(
           onTap: () {
-            currentIndex.value = currInd;
+            currentIndex.value = index;
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 1),
@@ -295,7 +295,7 @@ class _AddItemState extends State<AddItem> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               border: Border.all(
-                color: currentIndex.value == currInd && currInd == index
+                color: currentIndex.value == index
                     ? _selectedColor
                     : _unselectedColor,
                 width: 1,
