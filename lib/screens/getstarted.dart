@@ -443,12 +443,12 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
             SizedBox(height: 30),
 
             ///btns row
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  OutlinedButton(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(width: 20),
+                Expanded(
+                  child: OutlinedButton(
                     onPressed: () {
                       _googleSignIn.signIn().then((value) {
                         String userName = value!.displayName!;
@@ -461,21 +461,25 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Image.asset('assets/images/google.png'),
-                          SizedBox(width: 30),
-                          Text(
-                            'Google',
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(20, 20, 20, 1),
+                          SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              'Google',
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromRGBO(20, 20, 20, 1),
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(width: 20),
-                  OutlinedButton(
+                ),
+                SizedBox(width: 20),
+                Expanded(
+                  child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                     ),
@@ -499,8 +503,9 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+                SizedBox(width: 20)
+              ],
             ),
 
             ///have an cccount
