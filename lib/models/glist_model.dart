@@ -36,3 +36,19 @@ class AddedItemsModel {
     );
   }
 }
+
+class Item {
+  final String name;
+  // final double price;
+  final DateTime dateModified;
+
+  Item({required this.name, required this.dateModified});
+
+  factory Item.fromJson(Map<String, dynamic> json) {
+    return Item(
+      name: json['name'],
+      // price: json['price'],
+      dateModified: DateTime.parse(json['updated_at ']),
+    );
+  }
+}

@@ -836,7 +836,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           WidgetConstants.showSnackBar(
                               context, 'Deleting selected lists');
                           provider!
-                              .deleteList(provider!.idsList)
+                              .deleteList(provider!.idsList[0])
                               .whenComplete(() {
                             if (provider!.msg == 'List deleted successfully') {
                               WidgetConstants.hideSnackBar(context);

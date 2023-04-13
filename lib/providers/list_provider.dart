@@ -42,6 +42,39 @@ class ListProvider with ChangeNotifier {
   List<String> _glistLength = [];
   List<String> get gListLength => _glistLength;
 
+  List<Item> _items = [];
+  String _selectedSortOption = 'Price: Low to High';
+
+  List<Item> get items => _items;
+
+  String get selectedSortOption => _selectedSortOption;
+
+  set selectedSortOption(String option) {
+    _selectedSortOption = option;
+    _sortItems();
+    notifyListeners();
+  }
+
+  void _sortItems() {
+    switch (_selectedSortOption) {
+      // case 'Price: Low to High':
+      //   _items.sort((a, b) => a.price.compareTo(b.price));
+      //   break;
+      // case 'Price: High to Low':
+      //   _items.sort((a, b) => b.price.compareTo(a.price));
+      //   break;
+      case 'Date Modified':
+        _items.sort((a, b) => a.dateModified.compareTo(b.dateModified));
+        break;
+      case 'Alphabetically: A-Z':
+        _items.sort((a, b) => a.name.compareTo(b.name));
+        break;
+      case 'Alphabetically: Z-A':
+        _items.sort((a, b) => b.name.compareTo(a.name));
+        break;
+    }
+  }
+
   Stream<dynamic> getLists() async* {
     final prefs = await SharedPreferences.getInstance();
 
@@ -53,14 +86,16 @@ class ListProvider with ChangeNotifier {
     if (result.statusCode == 200) {
       List<GlistModel> myData = [];
       List<String> len = [];
+      List<Item> sortedList = [];
       for (var d in data['data']['glists']) {
         myData.add(GlistModel.fromJson(d));
-
+        sortedList.add(Item.fromJson(d));
         len.add(d['list_item'].length.toString());
       }
 
       myDataList = myData;
       _glistLength = len;
+      _items = sortedList;
       notifyListeners();
       yield data;
     } else {
@@ -172,7 +207,7 @@ class ListProvider with ChangeNotifier {
   }
 
   //delete list
-  Future<void> deleteList(List<String> listId) async {
+  Future<void> deleteList(String listId) async {
     final prefs = await SharedPreferences.getInstance();
     final result = await AuthenticationServices.baseFunction(
       Apiserviceconstant.deleteList,
