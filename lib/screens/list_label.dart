@@ -1195,6 +1195,8 @@ class _ListLabelState extends State<ListLabel> {
             },
           ),
           Container(
+
+            padding: EdgeInsets.symmetric(vertical: 20),
               margin: EdgeInsets.only(
                 top: 4.0,
               ),
@@ -1220,7 +1222,7 @@ class _ListLabelState extends State<ListLabel> {
               )),
           Container(
             margin: EdgeInsets.only(
-              top: 14.0,
+              top: 15.0,
             ),
             width: width * 0.05,
             height: height * 0.02,
@@ -1242,6 +1244,16 @@ class _ListLabelState extends State<ListLabel> {
               ),
             ),
           ),
+          Container(
+            height: 25,
+            width: 25,
+            padding: EdgeInsets.symmetric(horizontal: 3),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.green
+            ),
+            child: Icon(Icons.edit,color: Colors.white,size: 17,),
+          ),
 
           ///Stack1
           Spacer(),
@@ -1260,8 +1272,9 @@ class _ListLabelState extends State<ListLabel> {
     return Stack(
       children: [
         Container(
+          //color: Colors.green,
           width: width * 0.13,
-          height: height * 0.04,
+          height: height * 0.05,
           child: Card(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4),
@@ -1273,6 +1286,7 @@ class _ListLabelState extends State<ListLabel> {
                 left: 12.0,
                 top: 5.0,
               ),
+
               child: Text(
                 text,
                 style: TextStyle(
@@ -1286,22 +1300,21 @@ class _ListLabelState extends State<ListLabel> {
         Positioned(
           top: 20,
           right: -4,
-          child: Container(
-            child: Card(
-              color: Color.fromRGBO(52, 107, 33, 1),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(3)),
-              child: Container(
-                margin: EdgeInsets.only(
-                  left: 2.0,
-                  top: 1.0,
-                ),
-                child: Text(
-                  type.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 7.0,
-                    color: Colors.white,
-                  ),
+          child: Card(
+            color: Color.fromRGBO(52, 107, 33, 1),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(3)),
+            child: Container(
+              margin: EdgeInsets.only(
+                left: 2.0,
+                top: 1.0,
+              ),
+              padding: EdgeInsets.symmetric(vertical: 2,horizontal: 2),
+              child: Text(
+                type.toUpperCase(),
+                style: TextStyle(
+                  fontSize: 7.0,
+                  color: Colors.white,
                 ),
               ),
             ),
