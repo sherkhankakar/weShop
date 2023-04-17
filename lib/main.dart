@@ -15,7 +15,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (context) => const MyApp(),
     ),
   );

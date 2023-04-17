@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -158,7 +160,7 @@ class _signin1STFState extends State<signin1STF> {
   TextEditingController email = new TextEditingController();
   TextEditingController password = new TextEditingController();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-
+  var user;
   // int id =40;
 
   //late double width;
@@ -224,11 +226,10 @@ class _signin1STFState extends State<signin1STF> {
                       SizedBox(width: 20),
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () {
-                            _googleSignIn.signIn().then((value) {
-                              String userName = value!.displayName!;
-                              String profilePicture = value.photoUrl!;
-                            });
+                          onPressed: () async{
+                            await _googleSignIn.signOut();
+                            final user = await _googleSignIn.signIn();
+                            print('User is === $user');
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),

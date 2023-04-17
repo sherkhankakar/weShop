@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Corvit</string>
-    <string name="facebook_app_id">1110638412865628</string>
-    <string name="facebook_client_token">b7b4bea5eea1111ab43197fb90d2c1cf</string>
-    <string name="fb_login_protocol_scheme">ccfe31b5fae6b028cf19a280fc8a8be0</string>
+    <string name="app_name">app for login</string>
+    <string name="facebook_app_id">642779954337502</string>
+    <string name="fb_login_protocol_scheme">fb642779954337502</string>
+    <string name="facebook_client_token">1535e04f245a4ffe133c138a3a179ca3</string>
 </resources>

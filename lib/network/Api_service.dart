@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:http/http.dart' as http;
 
 class AuthenticationServices {
@@ -11,6 +13,7 @@ class AuthenticationServices {
         return response;
       }
     } catch (e) {
+      log(e.toString());
       throw Exception('error occured while dealing with the api');
     }
   }

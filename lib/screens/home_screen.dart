@@ -124,13 +124,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: Center(
                         child: Text(
-                      isEditing == true ? "Update List" : "New List",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
-                    )),
+                          isEditing == true ? "Update List" : "New List",
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        )),
                   ),
                   Container(
                     margin: EdgeInsets.only(
@@ -139,13 +139,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: Center(
                         child: Text(
-                      "Enter new list name",
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(100, 100, 100, 1),
-                      ),
-                    )),
+                          "Enter new list name",
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w400,
+                            color: Color.fromRGBO(100, 100, 100, 1),
+                          ),
+                        )),
                   ),
 
                   ///input field
@@ -170,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: Colors.green, width: 1.2),
+                          BorderSide(color: Colors.green, width: 1.2),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -212,37 +212,37 @@ class _HomeScreenState extends State<HomeScreen> {
                         // });
                         isEditing == false
                             ? provider!
-                                .addNewList(_textController.text)
-                                .whenComplete(() {
-                                if (provider!.msg ==
-                                    'List added successfully') {
-                                  Navigator.of(context).pop();
-                                  setState(() {});
-                                  WidgetConstants.showSnackBar(
-                                      context, provider!.msg);
-                                } else {
-                                  Navigator.of(context).pop();
-                                  WidgetConstants.showSnackBar(
-                                      context, provider!.msg);
-                                }
-                                _textController.clear();
-                              })
+                            .addNewList(_textController.text)
+                            .whenComplete(() {
+                          if (provider!.msg ==
+                              'List added successfully') {
+                            Navigator.of(context).pop();
+                            setState(() {});
+                            WidgetConstants.showSnackBar(
+                                context, provider!.msg);
+                          } else {
+                            Navigator.of(context).pop();
+                            WidgetConstants.showSnackBar(
+                                context, provider!.msg);
+                          }
+                          _textController.clear();
+                        })
                             : provider!
-                                .updateListName(_textController.text, listId!)
-                                .whenComplete(() {
-                                if (provider!.msg ==
-                                    'List updated successfully') {
-                                  Navigator.of(context).pop();
-                                  setState(() {});
-                                  WidgetConstants.showSnackBar(
-                                      context, provider!.msg);
-                                } else {
-                                  Navigator.of(context).pop();
-                                  WidgetConstants.showSnackBar(
-                                      context, provider!.msg);
-                                }
-                                _textController.clear();
-                              });
+                            .updateListName(_textController.text, listId!)
+                            .whenComplete(() {
+                          if (provider!.msg ==
+                              'List updated successfully') {
+                            Navigator.of(context).pop();
+                            setState(() {});
+                            WidgetConstants.showSnackBar(
+                                context, provider!.msg);
+                          } else {
+                            Navigator.of(context).pop();
+                            WidgetConstants.showSnackBar(
+                                context, provider!.msg);
+                          }
+                          _textController.clear();
+                        });
                       },
                       child: Text(
                         'Continue',
@@ -350,6 +350,261 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+    // final tabs = [
+    //   ///List Screen
+    //   Column(
+    //     children: [
+    //       SizedBox(
+    //         height: 20.0,
+    //       ),
+    //       ///List card
+    //       Visibility(
+    //         visible: _isVisible2,
+    //         child: Container(
+    //           margin: EdgeInsets.symmetric(horizontal: 10),
+    //           width: MediaQuery.of(context).size.width,
+    //           height: MediaQuery.of(context).size.height * 0.096,
+    //           child: InkWell(
+    //             onDoubleTap: changedata1,
+    //             onTap: () {
+    //               Navigator.of(context).push(
+    //                   MaterialPageRoute(builder: (context) => ListLabel()));
+    //             },
+    //             child: Card(
+    //               elevation: 3.0,
+    //               child: Column(
+    //                 children: [
+    //                   Container(
+    //                     height: 40,
+    //                     child: Row(
+    //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                       children: [
+    //                         Row(
+    //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                           children: [
+    //                             ///check boxxxxxx
+    //                             Visibility(
+    //                               visible: _isVisible4,
+    //                               child: Container(
+    //                                 margin: EdgeInsets.only(),
+    //                                 child: Visibility(
+    //                                   child: InkWell(
+    //                                     onLongPress: changedata,
+    //                                     child: Checkbox(
+    //                                       side: BorderSide(color: Colors.green),
+    //                                       value: isChecked,
+    //                                       activeColor: Colors.green,
+    //                                       onChanged: (newBool) {
+    //                                         setState(() {
+    //                                           isChecked = newBool;
+    //                                           if (_isVisible6 = true) {}
+    //                                         });
+    //                                       },
+    //                                     ),
+    //                                   ),
+    //                                 ),
+    //                               ),
+    //                             ),
+    //                             ///checkbox 2
+    //                             Visibility(
+    //                               visible: _isVisible8,
+    //                               child: Container(
+    //                                 margin: EdgeInsets.only(),
+    //                                 child: Visibility(
+    //                                   child: InkWell(
+    //                                     onLongPress: changedata1,
+    //                                     child: Checkbox(
+    //                                       side: BorderSide(color: Colors.green),
+    //                                       value: isChecked,
+    //                                       activeColor: Colors.green,
+    //                                       onChanged: (newBool) {
+    //                                         setState(() {
+    //                                           isChecked = newBool;
+    //                                           if (_isVisible10 = true) {}
+    //                                         });
+    //                                       },
+    //                                     ),
+    //                                   ),
+    //                                 ),
+    //                               ),
+    //                             ),
+    //                             ///Visibility 3
+    //                             Visibility(
+    //                               visible: _isVisible12,
+    //                               child: Container(
+    //                                 margin: EdgeInsets.only(),
+    //                                 child: Visibility(
+    //                                   child: InkWell(
+    //                                     onDoubleTap: changedata2,
+    //                                     child: Checkbox(
+    //                                       side: BorderSide(color: Colors.green),
+    //                                       value: isChecked,
+    //                                       activeColor: Colors.green,
+    //                                       onChanged: (newBool) {
+    //                                         setState(() {
+    //                                           isChecked = newBool;
+    //                                           if (_isVisible13 = true) {}
+    //                                         });
+    //                                       },
+    //                                     ),
+    //                                   ),
+    //                                 ),
+    //                               ),
+    //                             ),
+    //                             Padding(
+    //                               padding: const EdgeInsets.only(left: 10),
+    //                               child: Text(
+    //                                 maxLines: 1,
+    //                                 overflow: TextOverflow.ellipsis,
+    //                                 UserPost,
+    //                                 style: TextStyle(
+    //                                   fontWeight: FontWeight.w500,
+    //                                   fontSize: 18.0,
+    //                                 ),
+    //                               ),
+    //                             ),
+    //                           ],
+    //                         ),
+    //                         Padding(
+    //                           padding: const EdgeInsets.only(right: 10),
+    //                           child: Text(
+    //                             'PKR 0.00',
+    //                             style: TextStyle(
+    //                               fontWeight: FontWeight.w400,
+    //                               fontSize: 14.0,
+    //                             ),
+    //                           ),
+    //                         ),
+    //                       ],
+    //                     ),
+    //                   ),
+    //                   Padding(
+    //                     padding: const EdgeInsets.only(left: 10),
+    //                     child: Align(
+    //                       alignment: Alignment.topLeft,
+    //                       child: Text(
+    //                         'items: 0',
+    //                         style: TextStyle(
+    //                           fontWeight: FontWeight.w400,
+    //                           fontSize: 13.0,
+    //                         ),
+    //                       ),
+    //                     ),
+    //                   ),
+    //                 ],
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //       ),
+    //       SizedBox(
+    //         height: 140.0,
+    //       ),
+    //       /// apply visibilty
+    //       Visibility(
+    //         visible: _isVisible,
+    //         child: Center(
+    //           child: Column(
+    //             children: [
+    //               Image.asset('assets/images/Frame (1).png'),
+    //               SizedBox(
+    //                 height: 10,
+    //               ),
+    //               Text(
+    //                 'Create list to show here',
+    //                 style: TextStyle(
+    //                   fontSize: 13.0,
+    //                   fontWeight: FontWeight.w400,
+    //                   color: Color.fromRGBO(151, 151, 151, 1),
+    //                 ),
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //       ),
+    //       // SizedBox(
+    //       //   height: 200.0,
+    //       // ),
+    //       Visibility(
+    //         visible: _isVisible9,
+    //         child: Container(
+    //           margin: EdgeInsets.only(right: 30.0),
+    //           child: Row(
+    //             mainAxisAlignment: MainAxisAlignment.end,
+    //             children: [
+    //               ElevatedButton(
+    //                 style: ElevatedButton.styleFrom(
+    //                   backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+    //                   shape: CircleBorder(),
+    //                   padding: EdgeInsets.all(16),
+    //                 ),
+    //                 onPressed: () {
+    //                   _showPopupMenu3();
+    //                 },
+    //                 child: Icon(Icons.add),
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //       ),
+    //       ///Delete button
+
+    //       Visibility(
+    //         visible: true,
+    //         child: Container(
+    //           margin: EdgeInsets.only(top: 150.0, left: 20, right: 20),
+    //           width: width,
+    //           height: height * 0.05,
+    //           child:
+    //       ),
+    //       ///Share Button
+    //       Visibility(
+    //         visible: _isVisible10,
+    //         child: Container(
+    //           margin: EdgeInsets.only(top: 140.0, left: 20, right: 20),
+    //           width: width,
+    //           height: height * 0.05,
+    //           child: ElevatedButton(
+    //             style: ElevatedButton.styleFrom(
+    //               backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+    //             ),
+    //             onPressed: () async {
+    //               ///ya kam phone ki gallery ma sa image kasa pick karni ha islie kia ha
+    //               // final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    //               // if(image == null)return;
+    //               // await Share.shareFiles([image.path]);
+    //               Share.share(
+    //                   "https://play.google.com/store/apps/details?id=com.instructivetech.testapp");
+    //             },
+    //             child: Text('Share'),
+    //           ),
+    //         ),
+    //       ),
+    //       ///Edit Button
+    //       Visibility(
+    //         visible: _isVisible13,
+    //         child: Container(
+    //           margin: EdgeInsets.only(top: 140.0, left: 20, right: 20),
+    //           width: width,
+    //           height: height * 0.05,
+    //           child: ElevatedButton(
+    //               style: ElevatedButton.styleFrom(
+    //                 backgroundColor: Colors.green,
+    //               ),
+    //               onPressed: () async {
+    //                 ///ya kam phone  ki gallery ma sa image kasa pick karni ha islie kia ha
+    //                 // final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    //                 // if(image == null)return;
+    //                 // await Share.shareFiles([image.path]);
+    //                 // Share.share("https://play.google.com/store/apps/details?id=com.instructivetech.testapp");
+    //                 _showPopupMenu3();
+    //               },
+    //               child: Text('Edit')),
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // ];
     ///popup menu phla yaha call hoti ha but humna uper menu ma kam kia ha to islie function ko bhi uper call kara gan
 
     return SafeArea(
@@ -563,9 +818,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   } else {
                     return Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ),
+                      child: CircularProgressIndicator(),
                     );
                   }
                 },
@@ -576,28 +829,28 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (BuildContext context, dynamic value, Widget? child) {
                 return value == 'Delete'
                     ? ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-                        ),
-                        onPressed: () {
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+                    ),
+                    onPressed: () {
+                      WidgetConstants.showSnackBar(
+                          context, 'Deleting selected lists');
+                      provider!
+                          .deleteList(provider!.idsList[0])
+                          .whenComplete(() {
+                        if (provider!.msg == 'List deleted successfully') {
+                          WidgetConstants.hideSnackBar(context);
+                          setState(() {});
                           WidgetConstants.showSnackBar(
-                              context, 'Deleting selected lists');
-                          provider!
-                              .deleteList(provider!.idsList)
-                              .whenComplete(() {
-                            if (provider!.msg == 'List deleted successfully') {
-                              WidgetConstants.hideSnackBar(context);
-                              setState(() {});
-                              WidgetConstants.showSnackBar(
-                                  context, provider!.msg);
-                            } else {
-                              WidgetConstants.hideSnackBar(context);
-                              WidgetConstants.showSnackBar(
-                                  context, provider!.msg);
-                            }
-                          });
-                        },
-                        child: Text('Delete'))
+                              context, provider!.msg);
+                        } else {
+                          WidgetConstants.hideSnackBar(context);
+                          WidgetConstants.showSnackBar(
+                              context, provider!.msg);
+                        }
+                      });
+                    },
+                    child: Text('Delete'))
                     : SizedBox();
               },
             ),
@@ -630,10 +883,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (BuildContext context, dynamic value, Widget? child) {
                   return title.value == 'Delete'
                       ? Checkbox(
-                          value: myType.myDataList[index].isChecked,
-                          onChanged: (value) {
-                            myType.toggleItem(data['id']);
-                          })
+                      value: myType.myDataList[index].isChecked,
+                      onChanged: (value) {
+                        myType.toggleItem(data['id']);
+                      })
                       : SizedBox();
                 },
               );
