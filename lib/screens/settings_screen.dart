@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weshop/screens/profile_settings.dart';
 
@@ -206,6 +207,7 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
               'Logout', ontap: () async {
             final prefs = await SharedPreferences.getInstance();
+            await GoogleSignIn().signOut();
             prefs.clear().whenComplete(
                   () => Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) => MyappSTF()),

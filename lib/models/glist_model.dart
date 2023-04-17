@@ -48,7 +48,7 @@ class Item {
     return Item(
       name: json['name'],
       // price: json['price'],
-      dateModified: DateTime.parse(json['updated_at ']),
+      dateModified: DateTime.parse(json['updated_at']),
     );
   }
 }

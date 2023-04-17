@@ -7,12 +7,15 @@ import 'package:weshop/screens/Sign_In.dart';
 import 'package:weshop/screens/bottom_bar.dart';
 import 'package:weshop/screens/getstarted.dart';
 
+import 'firebase_options.dart';
 import 'providers/list_provider.dart';
 import 'providers/logincontroller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     DevicePreview(
       enabled: true,

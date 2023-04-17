@@ -155,9 +155,67 @@ class _signin1STFState extends State<signin1STF> {
   }
 
   loginController? provider;
-  TextEditingController email = new TextEditingController();
-  TextEditingController password = new TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<void> _signInWithGoogle() async {
+    try {
+      // Sign in with Google
+      await _googleSignIn.signOut();
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+      // Use the credential to authenticate with your backend server
+      if (googleUser != null && googleUser.email.isNotEmpty) {
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication.whenComplete(
+          () {
+            provider!
+                .registerNewUser(googleUser.email, googleUser.id.toString(),
+                    googleUser.displayName ?? 'Google User')
+                .then((value) async {
+              print(value);
+              if (provider!.msg == 'The email has already been taken.') {
+                final GoogleSignInAccount? googleUser =
+                    await _googleSignIn.signInSilently().then((value) {
+                  print('value $value');
+                  if (value != null) {
+                    loginWithGoogle(
+                      gEmail: value.email,
+                      gPass: value.id.toString(),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Error while logging in with google'),
+                      ),
+                    );
+                  }
+                  return null;
+                });
+                print(googleUser);
+              } else {
+                loginWithGoogle(
+                  gEmail: googleUser.email,
+                  gPass: googleUser.id.toString(),
+                );
+              }
+            });
+          },
+        );
+
+        final String? accessToken = googleAuth.accessToken;
+        final String? idToken = googleAuth.idToken;
+
+        print(accessToken);
+        print(idToken);
+      }
+
+      print(googleUser);
+    } catch (error) {
+      // Handle the error
+    }
+  }
 
   // int id =40;
 
@@ -167,7 +225,6 @@ class _signin1STFState extends State<signin1STF> {
   bool _obscureText = true;
 
   GlobalKey<FormState> _FormKey = GlobalKey<FormState>();
-  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -224,12 +281,7 @@ class _signin1STFState extends State<signin1STF> {
                       SizedBox(width: 20),
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () {
-                            _googleSignIn.signIn().then((value) {
-                              String userName = value!.displayName!;
-                              String profilePicture = value.photoUrl!;
-                            });
-                          },
+                          onPressed: _signInWithGoogle,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Row(
@@ -503,12 +555,15 @@ class _signin1STFState extends State<signin1STF> {
   }
 
   ///Login user correct api
-  void loginUser() async {
+  void loginUser({String? gEmail, String? gPass}) async {
     ///ye login ki api ka link ha
+
     if (email.text.isEmpty || password.text.isEmpty) {
       WidgetConstants.showSnackBar(context, 'Please proivde the above details');
     } else {
-      await provider!.login(email.text, password.text).whenComplete(
+      await provider!
+          .login(gEmail ?? email.text, gPass ?? password.text)
+          .whenComplete(
         () {
           if (provider!.msg == 'Successful') {
             Navigator.of(context).pushAndRemoveUntil(
@@ -523,6 +578,25 @@ class _signin1STFState extends State<signin1STF> {
         },
       );
     }
+  }
+
+  void loginWithGoogle({String? gEmail, String? gPass}) async {
+    ///ye login ki api ka link ha
+
+    await provider!.login(gEmail!, gPass!).whenComplete(
+      () {
+        if (provider!.msg == 'Successful') {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => BottomBar(),
+              ),
+              (route) => false);
+        } else {
+          WidgetConstants.hideSnackBar(context);
+          WidgetConstants.showSnackBar(context, provider!.msg);
+        }
+      },
+    );
   }
 }
 
