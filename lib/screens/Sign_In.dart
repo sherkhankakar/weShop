@@ -1,7 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
@@ -11,8 +12,6 @@ import '../main.dart';
 import 'forgotpassword.dart';
 import 'getstarted.dart';
 import '../providers/logincontroller.dart';
-
-import 'loginwithfacebook.dart';
 
 // import 'package:form_field_validator/form_field_validator.dart';
 class signin1 extends StatelessWidget {
@@ -123,41 +122,81 @@ class _signin1STFState extends State<signin1STF> {
 
   ///fb work
   String welcome = "Facebook";
-  Map<String, dynamic>? _userData;
 
-  Future<UserCredential> signInFacebook() async {
-    final LoginResult loginResult =
-        await FacebookAuth.instance.login(permissions: ['email,']);
-    if (loginResult == LoginStatus.success) {
-      final userData = await FacebookAuth.instance.getUserData();
-      _userData = userData;
-    } else {
-      print(loginResult.message);
-    }
+  Map<String, dynamic>? _userData;
+  AccessToken? _accessToken;
+  bool _checking = true;
+
+  Future<void> _checkIfIsLogged() async {
+    final accessToken = await FacebookAuth.instance.accessToken;
     setState(() {
-      welcome = _userData!['email'];
+      _checking = false;
     });
-    final OAuthCredential oAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.token);
-    return FirebaseAuth.instance.signInWithCredential(oAuthCredential);
+    if (accessToken != null) {
+      print("is Logged:::: ${(accessToken.toJson())}");
+      // now you can call to  FacebookAuth.instance.getUserData();
+      final userData = await FacebookAuth.instance.getUserData();
+      // final userData = await FacebookAuth.instance.getUserData(fields: "email,birthday,friends,gender,link");
+      _accessToken = accessToken;
+      setState(() {
+        _userData = userData;
+      });
+    }
   }
 
-  Future<UserCredential?> signInWithFacebook() async {
-    final LoginResult result = await FacebookAuth.instance.login();
+  void _printCredentials() {
+    print(
+      'Data access: ${_accessToken!.toJson()}',
+    );
+  }
+
+  Future<void> _login() async {
+    _logOut();
+    // final LoginResult result = await FacebookAuth.instance
+    //     .login(); // by default we request the email and the public profile
+
+    // loginBehavior is only supported for Android devices, for ios it will be ignored
+    final result = await FacebookAuth.instance.login(
+        permissions: ['email', 'public_profile'],
+        loginBehavior: LoginBehavior.dialogOnly
+        // .DIALOG_ONLY, // (only android) show an authentication dialog instead of redirecting to facebook app
+        );
+
     if (result.status == LoginStatus.success) {
-      // Create a credential from the access token
-      final OAuthCredential credential =
-          FacebookAuthProvider.credential(result.accessToken!.token);
-      // Once signed in, return the UserCredential
-      return await FirebaseAuth.instance.signInWithCredential(credential);
+      _accessToken = result.accessToken;
+
+      _printCredentials();
+      // get the user data
+      // by default we get the userId, email,name and picture
+      final userData = await FacebookAuth.instance.getUserData();
+
+      // final userData = await FacebookAuth.instance.getUserData(fields: "email,birthday,friends,gender,link");
+      _userData = userData;
+      print('_userData: $userData');
+      log(_accessToken!.grantedPermissions![2]);
+    } else {
+      print(result.status);
+      print(result.message);
     }
-    return null;
+
+    setState(() {
+      _checking = false;
+    });
+  }
+
+  Future<void> _logOut() async {
+    await FacebookAuth.instance.logOut();
+    _accessToken = null;
+    _userData = null;
+    setState(() {});
   }
 
   loginController? provider;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  FacebookAuth facebookAuth = FacebookAuth.instance;
 
   Future<void> _signInWithGoogle() async {
     try {
@@ -174,11 +213,11 @@ class _signin1STFState extends State<signin1STF> {
                 .registerNewUser(googleUser.email, googleUser.id.toString(),
                     googleUser.displayName ?? 'Google User')
                 .then((value) async {
-              print(value);
+              print('kakar $value');
               if (provider!.msg == 'The email has already been taken.') {
                 final GoogleSignInAccount? googleUser =
                     await _googleSignIn.signInSilently().then((value) {
-                  print('value $value');
+                  print('sher khan $value');
                   if (value != null) {
                     loginWithGoogle(
                       gEmail: value.email,
@@ -310,9 +349,14 @@ class _signin1STFState extends State<signin1STF> {
                           style: OutlinedButton.styleFrom(
                             padding: EdgeInsets.symmetric(horizontal: 20),
                           ),
-                          onPressed: () async {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => LoginWithFacebook()));
+                          onPressed: () {
+                            _login();
+
+                            // Navigator.of(context).push(
+                            //   MaterialPageRoute(
+                            //     builder: (context) => LoginWithFacebook(),
+                            //   ),
+                            // );
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
