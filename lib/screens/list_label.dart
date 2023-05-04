@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +33,7 @@ class _ListLabelState extends State<ListLabel> {
   void _showPopupMenu1() {
     showMenu(
       context: context,
-      position: RelativeRect.fromLTRB(180, 80, 600, 500),
+      position: RelativeRect.fromLTRB(220, 80, 600, 500),
       items: [
         PopupMenuItem(
           onTap: () {
@@ -75,22 +76,22 @@ class _ListLabelState extends State<ListLabel> {
                       children: options
                           .map(
                             (option) => PopupMenuItem<String>(
-                          value: option,
-                          child: RadioListTile(
-                            title: Text(option),
-                            value: option,
-                            groupValue: _selectedOption,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedOption = value;
-                              });
-                              Navigator.pop(context, value);
-                            },
-                            controlAffinity:
-                            ListTileControlAffinity.trailing,
-                          ),
-                        ),
-                      )
+                              value: option,
+                              child: RadioListTile(
+                                title: Text(option),
+                                value: option,
+                                groupValue: _selectedOption,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedOption = value;
+                                  });
+                                  Navigator.pop(context, value);
+                                },
+                                controlAffinity:
+                                    ListTileControlAffinity.trailing,
+                              ),
+                            ),
+                          )
                           .toList(),
                     );
                   });
@@ -258,8 +259,8 @@ class _ListLabelState extends State<ListLabel> {
                         child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
                                 side: BorderSide(
-                                  color: Color.fromRGBO(0, 173, 25, 1),
-                                )),
+                              color: Color.fromRGBO(0, 173, 25, 1),
+                            )),
                             onPressed: () {
                               // changeText();
                             },
@@ -278,8 +279,8 @@ class _ListLabelState extends State<ListLabel> {
                         child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
                                 side: BorderSide(
-                                  color: Color.fromRGBO(0, 173, 25, 1),
-                                )),
+                              color: Color.fromRGBO(0, 173, 25, 1),
+                            )),
                             onPressed: () {
                               // changeText2();
                             },
@@ -349,6 +350,7 @@ class _ListLabelState extends State<ListLabel> {
   ///changing text 1
   var displayText = "Select Access Type ";
   ValueNotifier<bool> title = ValueNotifier(false);
+
   // var String = ['Need approval to make changes'];
 
   // void changeText() {
@@ -469,13 +471,13 @@ class _ListLabelState extends State<ListLabel> {
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => AddItem(
-                  isVisible: _isVisible1,
-                  isVisible2: _isVisible2,
-                  isVisible3: _isVisible3,
-                  isVisible4: _isVisible4,
-                  isVisible5: _isVisible5,
-                  listId: widget.listId,
-                )));
+                      isVisible: _isVisible1,
+                      isVisible2: _isVisible2,
+                      isVisible3: _isVisible3,
+                      isVisible4: _isVisible4,
+                      isVisible5: _isVisible5,
+                      listId: widget.listId,
+                    )));
             // _showPopupMenu3();
           },
           child: Icon(Icons.add),
@@ -486,27 +488,20 @@ class _ListLabelState extends State<ListLabel> {
             SizedBox(
               height: 23.0,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(
-                    left: 16.0,
-                  ),
-                  child: Text(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
                     'Total',
                     style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w600,
-                      color: Color.fromRGBO(0, 173, 25, 1),
+                      color: Color.fromRGBO(52, 107, 33, 1),
                     ),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                    right: 16.0,
-                  ),
-                  child: Text(
+                  Text(
                     'PKR 440',
                     style: TextStyle(
                       fontSize: 14.0,
@@ -514,8 +509,8 @@ class _ListLabelState extends State<ListLabel> {
                       color: Color.fromRGBO(20, 20, 20, 1),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
 
             ///1st card
@@ -552,30 +547,30 @@ class _ListLabelState extends State<ListLabel> {
               builder: (BuildContext context, dynamic value, Widget? child) {
                 return value == true
                     ? ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-                    ),
-                    onPressed: () {
-                      WidgetConstants.showSnackBar(
-                          context, 'Deleting selected lists');
-                      provider!.deleteItems({
-                        'gros_list_id': provider!.listIdForItems,
-                        'item_id': provider!.idsList[0],
-                      }).whenComplete(() {
-                        if (provider!.msg == 'item deleted successfully') {
-                          WidgetConstants.hideSnackBar(context);
-                          setState(() {});
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+                        ),
+                        onPressed: () {
                           WidgetConstants.showSnackBar(
-                              context, provider!.msg);
-                          title.value = false;
-                        } else {
-                          WidgetConstants.hideSnackBar(context);
-                          WidgetConstants.showSnackBar(
-                              context, provider!.msg);
-                        }
-                      });
-                    },
-                    child: Text('Delete'))
+                              context, 'Deleting selected lists');
+                          provider!.deleteItems({
+                            'gros_list_id': provider!.listIdForItems,
+                            'item_id': provider!.idsList[0],
+                          }).whenComplete(() {
+                            if (provider!.msg == 'item deleted successfully') {
+                              WidgetConstants.hideSnackBar(context);
+                              setState(() {});
+                              WidgetConstants.showSnackBar(
+                                  context, provider!.msg);
+                              title.value = false;
+                            } else {
+                              WidgetConstants.hideSnackBar(context);
+                              WidgetConstants.showSnackBar(
+                                  context, provider!.msg);
+                            }
+                          });
+                        },
+                        child: Text('Delete'))
                     : SizedBox();
               },
             ),
@@ -770,8 +765,19 @@ class _ListLabelState extends State<ListLabel> {
   }
 
   Widget tileCard(dynamic data, int index) {
-    return Card(
-      elevation: 3.0,
+    return Container(
+      height: 60,
+      margin: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(6),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black38,
+                spreadRadius: 1,
+                blurRadius: 3,
+                offset: Offset(0, 2))
+          ]),
       child: Row(
         children: [
           Consumer<ListProvider>(
@@ -781,10 +787,10 @@ class _ListLabelState extends State<ListLabel> {
                 builder: (BuildContext context, dynamic value, Widget? child) {
                   return title.value == true
                       ? Checkbox(
-                      value: myType.myDataList[index].isChecked,
-                      onChanged: (value) {
-                        myType.toggleItem(data['id'], isListedItem: true);
-                      })
+                          value: myType.myDataList[index].isChecked,
+                          onChanged: (value) {
+                            myType.toggleItem(data['id'], isListedItem: true);
+                          })
                       : SizedBox(width: 20);
                 },
               );
@@ -815,36 +821,43 @@ class _ListLabelState extends State<ListLabel> {
                 },
               )),
           Container(
-            margin: EdgeInsets.only(
-              top: 14.0,
-            ),
-            width: width * 0.05,
-            height: height * 0.02,
-            child: Card(
-              color: Color.fromRGBO(52, 107, 33, 1),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(1)),
-              child: Container(
-                margin: EdgeInsets.only(
-                  left: 2.2,
-                ),
-                child: Text(
-                  'L',
-                  style: TextStyle(
-                    fontSize: 8.0,
-                    color: Colors.white,
-                  ),
+            margin: EdgeInsets.only(top: 16.0, left: 3),
+            decoration: BoxDecoration(
+                color: Color.fromRGBO(52, 107, 33, 1),
+                borderRadius: BorderRadius.circular(4)),
+            width: 13,
+            height: 15,
+            child: Center(
+              child: Text(
+                'L',
+                style: TextStyle(
+                  fontSize: 9,
+                  color: Colors.white,
                 ),
               ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 10),
+            height: 25,
+            width: 25,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color.fromRGBO(52, 107, 33, 1),
+            ),
+            child: Icon(
+              Icons.edit,
+              color: Colors.white,
+              size: 15,
             ),
           ),
 
           ///Stack1
           Spacer(),
           rightContainer('qty', '01'),
-          SizedBox(width: 9),
+          SizedBox(width: 12),
           rightContainer('pkr', '180'),
-          SizedBox(width: 9),
+          SizedBox(width: 12),
           rightContainer('total', '180'),
           SizedBox(width: 25)
         ],
@@ -853,51 +866,40 @@ class _ListLabelState extends State<ListLabel> {
   }
 
   Widget rightContainer(String type, String text) {
-    return Stack(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        SizedBox(height: 8,),
         Container(
-          width: width * 0.13,
-          height: height * 0.04,
-          child: Card(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),
-                side: BorderSide(
-                  color: Color.fromRGBO(0, 173, 25, 1),
-                )),
-            child: Container(
-              margin: EdgeInsets.only(
-                left: 12.0,
-                top: 5.0,
-              ),
-              child: Text(
-                text,
-                style: TextStyle(
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w400,
-                ),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.black54),
+              borderRadius: BorderRadius.circular(7)),
+          width: 45,
+          height: 30,
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 12.0,
+                fontWeight: FontWeight.w400,
               ),
             ),
           ),
         ),
-        Positioned(
-          top: 20,
-          right: -4,
+        Transform.translate(
+          offset: Offset(20,-5),
           child: Container(
-            child: Card(
+            padding: EdgeInsets.symmetric(horizontal: 4,vertical: 2),
+            decoration: BoxDecoration(
               color: Color.fromRGBO(52, 107, 33, 1),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(3)),
-              child: Container(
-                margin: EdgeInsets.only(
-                  left: 2.0,
-                  top: 1.0,
-                ),
-                child: Text(
-                  type.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 7.0,
-                    color: Colors.white,
-                  ),
+              borderRadius: BorderRadius.circular(3)
+            ),
+            child: Center(
+              child: Text(
+                type.toUpperCase(),
+                style: TextStyle(
+                  fontSize: 8,
+                  color: Colors.white,
                 ),
               ),
             ),

@@ -256,25 +256,36 @@ class _AddItemState extends State<AddItem> {
                   ],
                 ),
               ),
-              IconButton(
-                onPressed: () async {
-                  WidgetConstants.showSnackBar(
-                      context, 'Adding item to list...');
-                  provider
-                      .addItemsToList(widget.listId, itemId)
-                      .whenComplete(() {
-                    if (provider.msg == 'List added successfully') {
-                      WidgetConstants.hideSnackBar(context);
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Container(
+                  height: 25,
+                  margin: EdgeInsets.only(bottom: 10,top: 10,right: 5),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))
+                    ),
+                    onPressed: () async {
                       WidgetConstants.showSnackBar(
-                          context, 'Item added to the list successfully');
-                      Navigator.of(context).pop();
-                    } else {
-                      WidgetConstants.hideSnackBar(context);
-                      WidgetConstants.showSnackBar(context, provider.msg);
-                    }
-                  });
-                },
-                icon: Text('Add Item'),
+                          context, 'Adding item to list...');
+                      provider
+                          .addItemsToList(widget.listId, itemId)
+                          .whenComplete(() {
+                        if (provider.msg == 'List added successfully') {
+                          WidgetConstants.hideSnackBar(context);
+                          WidgetConstants.showSnackBar(
+                              context, 'Item added to the list successfully');
+                          Navigator.of(context).pop();
+                        } else {
+                          WidgetConstants.hideSnackBar(context);
+                          WidgetConstants.showSnackBar(context, provider.msg);
+                        }
+                      });
+                    },
+                    child: Text('Add Item',style: TextStyle(fontWeight: FontWeight.w400),),
+                  ),
+                ),
               ),
             ]),
       ),

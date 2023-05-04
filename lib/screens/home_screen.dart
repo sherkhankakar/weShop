@@ -268,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _showPopupMenu4() async {
     await showMenu(
       context: context,
-      position: RelativeRect.fromLTRB(180, 80, 600, 500),
+      position: RelativeRect.fromLTRB(220, 80, 600, 500),
       items: [
         ///2nd item delete button
         PopupMenuItem(
