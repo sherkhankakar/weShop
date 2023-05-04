@@ -940,18 +940,3 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-/*
-ValueListenableBuilder(
-            valueListenable: title,
-            builder: (BuildContext context, dynamic value, Widget? child) {
-              return value == 'Delete'
-                  ? Selector<ListProvider, bool>(
-                      selector: (_, myType) => provider!.isChecked,
-                      builder: (context, isChecked, child) {
-                        return
-                      },
-                    )
-                  : SizedBox();
-            },
-          ),
- */
