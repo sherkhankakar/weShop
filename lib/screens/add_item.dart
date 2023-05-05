@@ -256,33 +256,40 @@ class _AddItemState extends State<AddItem> {
                   ],
                 ),
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  WidgetConstants.showSnackBar(
-                      context, 'Adding item to list...');
-                  provider
-                      .addItemsToList(widget.listId, itemId)
-                      .whenComplete(() {
-                    if (provider.msg == 'List added successfully') {
-                      WidgetConstants.hideSnackBar(context);
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Container(
+                  height: 25,
+                  margin: EdgeInsets.only(bottom: 10,right: 5,top: 5),
+                  child: ElevatedButton(
+                    onPressed: () async {
                       WidgetConstants.showSnackBar(
-                          context, 'Item added to the list successfully');
-                      Navigator.of(context).pop();
-                    } else {
-                      WidgetConstants.hideSnackBar(context);
-                      WidgetConstants.showSnackBar(context, provider.msg);
-                    }
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide.none),
+                          context, 'Adding item to list...');
+                      provider
+                          .addItemsToList(widget.listId, itemId)
+                          .whenComplete(() {
+                        if (provider.msg == 'List added successfully') {
+                          WidgetConstants.hideSnackBar(context);
+                          WidgetConstants.showSnackBar(
+                              context, 'Item added to the list successfully');
+                          Navigator.of(context).pop();
+                        } else {
+                          WidgetConstants.hideSnackBar(context);
+                          WidgetConstants.showSnackBar(context, provider.msg);
+                        }
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.white,
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          side: BorderSide.none),
+                    ),
+                    child: Text('Add Item'),
+                  ),
                 ),
-                child: Text('Add Item'),
               ),
             ]),
       ),
