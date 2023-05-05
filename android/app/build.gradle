@@ -66,6 +66,12 @@ android {
             keyAlias 'weshopUpload'
             keyPassword '123456'
         }
+        release {
+            storeFile file('weShopUpload-keystore.jks')
+            storePassword '123456'
+            keyAlias 'weshopUpload'
+            keyPassword '123456'
+        }
     }
     buildTypes {
         debug {
