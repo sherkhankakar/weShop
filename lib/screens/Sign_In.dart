@@ -378,7 +378,7 @@ class _signin1STFState extends State<signin1STF> {
                       SizedBox(width: 20)
                     ],
                   ),
-                  SizedBox(height: 20),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

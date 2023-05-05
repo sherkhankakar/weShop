@@ -332,7 +332,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
               height: MediaQuery.of(context).size.height * 0.053,
               child: TextFormField(
                 // autovalidateMode: AutovalidateMode.onUserInteraction,
-                obscureText: _obscureText2,
+                obscureText: true,
                 cursorColor: Color.fromRGBO(100, 100, 100, 1),
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(
@@ -455,25 +455,20 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                         String profilePicture = value.photoUrl!;
                       });
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Image.asset('assets/images/google.png'),
-                          SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              'Google',
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromRGBO(20, 20, 20, 1),
-                              ),
-                            ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Image.asset('assets/images/google.png'),
+                        SizedBox(width: 15),
+                        Text(
+                          'Google',
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromRGBO(20, 20, 20, 1),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
