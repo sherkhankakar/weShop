@@ -446,22 +446,20 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      _googleSignIn.signIn().then((value) {
-                        String userName = value!.displayName!;
-                        String profilePicture = value.photoUrl!;
-                      });
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        _googleSignIn.signIn().then((value) {
+                          String userName = value!.displayName!;
+                          String profilePicture = value.photoUrl!;
+                        });
+                      },
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset('assets/images/google.png'),
-                          SizedBox(width: 30),
+                          SizedBox(width: 15),
                           Text(
                             'Google',
                             style: TextStyle(
@@ -474,29 +472,31 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 20),
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                    ),
-                    onPressed: () async {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => LoginWithFacebook()));
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Image.asset('assets/images/facebook-alt.png'),
-                        SizedBox(width: 10),
-                        Text(
-                          'Facebook',
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromRGBO(20, 20, 20, 1),
+                  Spacer(),
+                  Expanded(
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                      ),
+                      onPressed: () async {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => LoginWithFacebook()));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset('assets/images/facebook-alt.png'),
+                          SizedBox(width: 15),
+                          Text(
+                            'Facebook',
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromRGBO(20, 20, 20, 1),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],

@@ -314,71 +314,64 @@ class _signin1STFState extends State<signin1STF> {
                   ),
 
                   SizedBox(height: 60),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SizedBox(width: 20),
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: _signInWithGoogle,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: _signInWithGoogle,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.asset('assets/images/google.png'),
-                                SizedBox(width: 12),
-                                Expanded(
-                                  child: Text(
-                                    'Google',
-                                    style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: Color.fromRGBO(20, 20, 20, 1),
-                                    ),
+                                SizedBox(width: 20),
+                                Text(
+                                  'Google',
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromRGBO(20, 20, 20, 1),
                                   ),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(width: 20),
-                      Expanded(
-                        child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                          ),
-                          onPressed: () {
-                            _login();
+                        SizedBox(width: 60),
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () {
+                              _login();
 
-                            // Navigator.of(context).push(
-                            //   MaterialPageRoute(
-                            //     builder: (context) => LoginWithFacebook(),
-                            //   ),
-                            // );
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Image.asset('assets/images/facebook-alt.png'),
-                              SizedBox(width: 10),
-                              Text(
-                                'Facebook',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromRGBO(20, 20, 20, 1),
+                              // Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //     builder: (context) => LoginWithFacebook(),
+                              //   ),
+                              // );
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset('assets/images/facebook-alt.png'),
+                                SizedBox(width: 20),
+                                Text(
+                                  'Facebook',
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromRGBO(20, 20, 20, 1),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(width: 20)
-                    ],
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 20),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

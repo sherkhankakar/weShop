@@ -39,6 +39,8 @@ class loginController with ChangeNotifier {
   String _msg = '';
   String get msg => _msg;
 
+  Map<String, dynamic> _userData = {};
+  Map<String, dynamic> get userData => _userData;
   Future<void> login(String email, String password) async {
     final prefs = await SharedPreferences.getInstance();
     _isLoading = true;
@@ -56,6 +58,9 @@ class loginController with ChangeNotifier {
     if (result.statusCode == 200 && data['success'] == true) {
       prefs.setString('user_id', data['user']['id'].toString());
       prefs.setString('token', data['token']);
+      prefs.setString('email', data['user']['email']);
+      prefs.setString('name', data['user']['name']);
+
       _msg = 'Successful';
       notifyListeners();
     } else {

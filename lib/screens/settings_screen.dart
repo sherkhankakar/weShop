@@ -17,6 +17,22 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  String? name;
+  String? email;
+  void getUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      name = prefs.getString('name');
+      email = prefs.getString('email');
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    getUserData();
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -48,11 +64,11 @@ class _SettingScreenState extends State<SettingScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Bagja Alfatih',
+                    name ?? 'Bagja Alfatih',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(height: 5),
-                  Text('example@email.com',
+                  Text(email ?? 'example@email.com',
                       style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w400,

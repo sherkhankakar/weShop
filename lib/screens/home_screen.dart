@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import '../constant/widget_constants.dart';
 import '../providers/list_provider.dart';
 import 'list_label.dart';
@@ -96,171 +97,159 @@ class _HomeScreenState extends State<HomeScreen> {
   ValueNotifier<bool> isEmptyList = ValueNotifier(false);
 
   ///popup menu 1
-  void _showPopupMenu3({bool? isEditing = false, String? listId}) async {
-    await showMenu(
-      context: context,
-      position: RelativeRect.fromLTRB(60, 300, 170, 150),
-      items: [
-        PopupMenuItem(
-          child: Center(
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.3,
-              width: MediaQuery.of(context).size.width * 0.85,
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Icon(
-                      Icons.close,
-                      color: Color.fromRGBO(52, 107, 33, 1),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: 5.0,
-                    ),
-                    child: Center(
-                        child: Text(
-                      isEditing == true ? "Update List" : "New List",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
-                    )),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: 5.0,
-                      top: 7.0,
-                    ),
-                    child: Center(
-                        child: Text(
-                      "Enter new list name",
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(100, 100, 100, 1),
-                      ),
-                    )),
-                  ),
-
-                  ///input field
-                  Container(
-                    width: width * 0.93,
-                    height: height * 0.07,
-                    margin: EdgeInsets.only(
-                      top: 17.0,
-                    ),
-                    child: TextFormField(
-                      controller: _textController,
-                      keyboardType: TextInputType.text,
-                      // maxLengthEnforcement: true,
-                      maxLength: 10,
-
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      cursorColor: Colors.grey,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.only(
-                          top: 5.0,
-                          left: 15.0,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.green, width: 1.2),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromRGBO(100, 100, 100, 1),
-                              width: 1.2),
-                        ),
-                        hintText: 'List Name',
-                      ),
-                    ),
-
-                    // validator: (password) {
-                    //   if (isPasswordValid(password)) return null;
-                    //   else
-                    //     return 'Enter a valid password';
-                    // },
-                  ),
-                  // Text("${name}"),
-                  ///btn
-                  SizedBox(
-                    height: 14.0,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.93,
-                    height: MediaQuery.of(context).size.height * 0.042,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-                      ),
-                      onPressed: () {
-                        // store.dispatch(ReplayAction(timerBloc, varBloc.fireAnalytics));
-                        // Navigator.pop(context);
-                        // UserPost = _textController.text;
-                        // setState(() {
-                        //   _textController.text.isEmpty
-                        //       ? _validate = false
-                        //       : _validate = true;
-                        //   if (_isVisible = false) {
-                        //   } else if (_isVisible2 = true) {}
-                        // });
-                        isEditing == false
-                            ? provider!
-                                .addNewList(_textController.text)
-                                .whenComplete(() {
-                                if (provider!.msg ==
-                                    'List added successfully') {
-                                  Navigator.of(context).pop();
-                                  setState(() {});
-                                  WidgetConstants.showSnackBar(
-                                      context, provider!.msg);
-                                } else {
-                                  Navigator.of(context).pop();
-                                  WidgetConstants.showSnackBar(
-                                      context, provider!.msg);
-                                }
-                                _textController.clear();
-                              })
-                            : provider!
-                                .updateListName(_textController.text, listId!)
-                                .whenComplete(() {
-                                if (provider!.msg ==
-                                    'List updated successfully') {
-                                  Navigator.of(context).pop();
-                                  setState(() {});
-                                  WidgetConstants.showSnackBar(
-                                      context, provider!.msg);
-                                } else {
-                                  Navigator.of(context).pop();
-                                  WidgetConstants.showSnackBar(
-                                      context, provider!.msg);
-                                }
-                                _textController.clear();
-                              });
-                      },
-                      child: Text(
-                        'Continue',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+  Widget _showPopupMenu3({
+    bool? isEditing = false,
+    String? listId,
+    String? listName,
+  }) {
+    return AlertDialog(
+      content: Container(
+        width: MediaQuery.of(context).size.width * 0.85,
+        height: MediaQuery.of(context).size.height / 4,
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: Icon(
+                Icons.close,
+                color: Color.fromRGBO(52, 107, 33, 1),
               ),
             ),
-          ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Center(
+                child: Text(
+              isEditing == true ? "Update List" : "New List",
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
+            )),
+            Container(
+              margin: EdgeInsets.only(
+                top: 7.0,
+              ),
+              child: Center(
+                  child: Text(
+                "Enter new list name",
+                style: TextStyle(
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w400,
+                  color: Color.fromRGBO(100, 100, 100, 1),
+                ),
+              )),
+            ),
+
+            ///input field
+            Card(
+              elevation: 0,
+              child: Container(
+                width: width * 0.93,
+                height: height * 0.07,
+                margin: EdgeInsets.only(
+                  top: 17.0,
+                ),
+                child: TextFormField(
+                  controller: _textController,
+                  keyboardType: TextInputType.text,
+                  // maxLengthEnforcement: true,
+                  maxLength: 10,
+
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  cursorColor: Colors.grey,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(
+                      top: 5.0,
+                      left: 15.0,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green, width: 1.2),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromRGBO(100, 100, 100, 1), width: 1.2),
+                    ),
+                    hintText: listName ?? 'List Name',
+                  ),
+                ),
+
+                // validator: (password) {
+                //   if (isPasswordValid(password)) return null;
+                //   else
+                //     return 'Enter a valid password';
+                // },
+              ),
+            ),
+            // Text("${name}"),
+            ///btn
+            SizedBox(
+              height: 14.0,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.93,
+              height: MediaQuery.of(context).size.height * 0.042,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+                ),
+                onPressed: () {
+                  // store.dispatch(ReplayAction(timerBloc, varBloc.fireAnalytics));
+                  // Navigator.pop(context);
+                  // UserPost = _textController.text;
+                  // setState(() {
+                  //   _textController.text.isEmpty
+                  //       ? _validate = false
+                  //       : _validate = true;
+                  //   if (_isVisible = false) {
+                  //   } else if (_isVisible2 = true) {}
+                  // });
+                  isEditing == false
+                      ? provider!
+                          .addNewList(_textController.text)
+                          .whenComplete(() {
+                          if (provider!.msg == 'List added successfully') {
+                            Navigator.of(context).pop();
+                            setState(() {});
+                            WidgetConstants.showSnackBar(
+                                context, provider!.msg);
+                          } else {
+                            Navigator.of(context).pop();
+                            WidgetConstants.showSnackBar(
+                                context, provider!.msg);
+                          }
+                          _textController.clear();
+                        })
+                      : provider!
+                          .updateListName(_textController.text, listId!)
+                          .whenComplete(() {
+                          if (provider!.msg == 'List updated successfully') {
+                            Navigator.of(context).pop();
+                            setState(() {});
+                            WidgetConstants.showSnackBar(
+                                context, provider!.msg);
+                          } else {
+                            Navigator.of(context).pop();
+                            WidgetConstants.showSnackBar(
+                                context, provider!.msg);
+                          }
+                          _textController.clear();
+                        });
+                },
+                child: Text(
+                  'Continue',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
-      elevation: 4.0,
+      ),
     );
   }
 
@@ -268,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _showPopupMenu4() async {
     await showMenu(
       context: context,
-      position: RelativeRect.fromLTRB(180, 80, 600, 500),
+      position: RelativeRect.fromLTRB(180, 80, 0, 500),
       items: [
         ///2nd item delete button
         PopupMenuItem(
@@ -548,7 +537,6 @@ class _HomeScreenState extends State<HomeScreen> {
     //         ),
     //       ),
     //       ///Delete button
-
     //       Visibility(
     //         visible: true,
     //         child: Container(
@@ -611,9 +599,12 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            _showPopupMenu3();
-          },
+          onPressed: () => showDialog(
+            context: context,
+            builder: (context) {
+              return _showPopupMenu3();
+            },
+          ),
           backgroundColor: Color.fromRGBO(0, 173, 25, 1),
           child: Icon(
             Icons.add,
@@ -655,7 +646,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   actions: [
                     if (value == 'My Lists')
                       IconButton(
-                        onPressed: () async {},
+                        onPressed: () {
+                          Share.share('content');
+                        },
                         icon: Icon(Icons.share),
                       ),
                     if (value == 'My Lists')
@@ -926,8 +919,15 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: IconButton(
                   onPressed: () {
-                    _showPopupMenu3(
-                        isEditing: true, listId: data['id'].toString());
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return _showPopupMenu3(
+                            isEditing: true,
+                            listId: data['id'].toString(),
+                            listName: data['name'],
+                          );
+                        });
                   },
                   icon: Icon(Icons.edit),
                 ),

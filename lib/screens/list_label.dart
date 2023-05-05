@@ -838,6 +838,18 @@ class _ListLabelState extends State<ListLabel> {
               ),
             ),
           ),
+          SizedBox(
+            width: 12,
+          ),
+          CircleAvatar(
+            radius: 12,
+            backgroundColor: Colors.green,
+            child: Icon(
+              Icons.edit,
+              color: Colors.white,
+              size: 18,
+            ),
+          ),
 
           ///Stack1
           Spacer(),

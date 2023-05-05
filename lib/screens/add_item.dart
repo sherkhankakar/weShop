@@ -256,7 +256,7 @@ class _AddItemState extends State<AddItem> {
                   ],
                 ),
               ),
-              IconButton(
+              ElevatedButton(
                 onPressed: () async {
                   WidgetConstants.showSnackBar(
                       context, 'Adding item to list...');
@@ -274,7 +274,15 @@ class _AddItemState extends State<AddItem> {
                     }
                   });
                 },
-                icon: Text('Add Item'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      side: BorderSide.none),
+                ),
+                child: Text('Add Item'),
               ),
             ]),
       ),
