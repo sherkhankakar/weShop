@@ -499,6 +499,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                       ),
                     ),
                   ),
+                  SizedBox(width: 20)
                 ],
               ),
             ),

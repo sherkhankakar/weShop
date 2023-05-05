@@ -33,13 +33,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
             ),
             body: Container(
               height: height,
+              margin: EdgeInsets.all(0),
               child: ListView.builder(
                 itemCount: 3, // Number of items in the list
                 itemBuilder: (BuildContext context, int index) {
                   // Return a widget for each item in the list
                   return Column(
                     children: [
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 10),
                       notificationCard(index, 'Name',
                           'Requested to add an item to list name', '5 min'),
                     ],
@@ -51,8 +52,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   notificationCard(int index, String title, String subTitle, String time) {
     return Container(
-      width: width * 0.93,
-      height: height * 0.12,
+      margin: EdgeInsets.symmetric(horizontal: 15),
+      height: 90,
       child: GestureDetector(
           onTap: () {
             setState(() {

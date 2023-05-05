@@ -36,9 +36,9 @@ class _ProfileSettingState extends State<ProfileSetting> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 30),
+            SizedBox(height: 20),
             Center(child: Image.asset('assets/images/Ellipse (2).png')),
-            SizedBox(height: 40),
+            SizedBox(height: 20),
 
             Container(
               height: 50,
@@ -47,7 +47,6 @@ class _ProfileSettingState extends State<ProfileSetting> {
                 child: TextFormField(
                   controller: nameCtr,
                   keyboardType: TextInputType.name,
-                  obscureText: true,
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -65,7 +64,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Container(
               height: 50,
               padding: const EdgeInsets.only(left: 20, right: 20,),
@@ -73,7 +72,6 @@ class _ProfileSettingState extends State<ProfileSetting> {
                 child: TextFormField(
                   controller: emailCtr,
                   keyboardType: TextInputType.emailAddress,
-                  obscureText: true,
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -91,7 +89,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
                 ),
               ),
             ),
-            Expanded(child: SizedBox()),
+            Expanded(child: SizedBox(height: 20,)),
             Container(
               width: width,
               padding: EdgeInsets.symmetric(horizontal: 20),

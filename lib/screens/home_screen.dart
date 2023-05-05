@@ -105,14 +105,29 @@ class _HomeScreenState extends State<HomeScreen> {
     return AlertDialog(
       content: Container(
         width: MediaQuery.of(context).size.width * 0.85,
+<<<<<<< HEAD
         height: MediaQuery.of(context).size.height / 4,
+=======
+        height: MediaQuery.of(context).size.height / 3.7,
+>>>>>>> 00a4e67b1885b16ea8991869b4817ba7f16bbb39
         child: Column(
           children: [
             Align(
               alignment: Alignment.topRight,
+<<<<<<< HEAD
               child: Icon(
                 Icons.close,
                 color: Color.fromRGBO(52, 107, 33, 1),
+=======
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.of(context).pop();
+                },
+                child: Icon(
+                  Icons.close,
+                  color: Color.fromRGBO(52, 107, 33, 1),
+                ),
+>>>>>>> 00a4e67b1885b16ea8991869b4817ba7f16bbb39
               ),
             ),
             SizedBox(
@@ -120,6 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Center(
                 child: Text(
+<<<<<<< HEAD
               isEditing == true ? "Update List" : "New List",
               style: TextStyle(
                 fontSize: 16.0,
@@ -127,12 +143,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.black,
               ),
             )),
+=======
+                  isEditing == true ? "Update List" : "New List",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                )),
+>>>>>>> 00a4e67b1885b16ea8991869b4817ba7f16bbb39
             Container(
               margin: EdgeInsets.only(
                 top: 7.0,
               ),
               child: Center(
                   child: Text(
+<<<<<<< HEAD
                 "Enter new list name",
                 style: TextStyle(
                   fontSize: 12.0,
@@ -140,6 +166,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Color.fromRGBO(100, 100, 100, 1),
                 ),
               )),
+=======
+                    "Enter new list name",
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromRGBO(100, 100, 100, 1),
+                    ),
+                  )),
+>>>>>>> 00a4e67b1885b16ea8991869b4817ba7f16bbb39
             ),
 
             ///input field
@@ -207,6 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // });
                   isEditing == false
                       ? provider!
+<<<<<<< HEAD
                           .addNewList(_textController.text)
                           .whenComplete(() {
                           if (provider!.msg == 'List added successfully') {
@@ -236,6 +272,37 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                           _textController.clear();
                         });
+=======
+                      .addNewList(_textController.text)
+                      .whenComplete(() {
+                    if (provider!.msg == 'List added successfully') {
+                      Navigator.of(context).pop();
+                      setState(() {});
+                      WidgetConstants.showSnackBar(
+                          context, provider!.msg);
+                    } else {
+                      Navigator.of(context).pop();
+                      WidgetConstants.showSnackBar(
+                          context, provider!.msg);
+                    }
+                    _textController.clear();
+                  })
+                      : provider!
+                      .updateListName(_textController.text, listId!)
+                      .whenComplete(() {
+                    if (provider!.msg == 'List updated successfully') {
+                      Navigator.of(context).pop();
+                      setState(() {});
+                      WidgetConstants.showSnackBar(
+                          context, provider!.msg);
+                    } else {
+                      Navigator.of(context).pop();
+                      WidgetConstants.showSnackBar(
+                          context, provider!.msg);
+                    }
+                    _textController.clear();
+                  });
+>>>>>>> 00a4e67b1885b16ea8991869b4817ba7f16bbb39
                 },
                 child: Text(
                   'Continue',
@@ -822,28 +889,28 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (BuildContext context, dynamic value, Widget? child) {
                 return value == 'Delete'
                     ? ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-                        ),
-                        onPressed: () {
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+                    ),
+                    onPressed: () {
+                      WidgetConstants.showSnackBar(
+                          context, 'Deleting selected lists');
+                      provider!
+                          .deleteList(provider!.idsList[0])
+                          .whenComplete(() {
+                        if (provider!.msg == 'List deleted successfully') {
+                          WidgetConstants.hideSnackBar(context);
+                          setState(() {});
                           WidgetConstants.showSnackBar(
-                              context, 'Deleting selected lists');
-                          provider!
-                              .deleteList(provider!.idsList[0])
-                              .whenComplete(() {
-                            if (provider!.msg == 'List deleted successfully') {
-                              WidgetConstants.hideSnackBar(context);
-                              setState(() {});
-                              WidgetConstants.showSnackBar(
-                                  context, provider!.msg);
-                            } else {
-                              WidgetConstants.hideSnackBar(context);
-                              WidgetConstants.showSnackBar(
-                                  context, provider!.msg);
-                            }
-                          });
-                        },
-                        child: Text('Delete'))
+                              context, provider!.msg);
+                        } else {
+                          WidgetConstants.hideSnackBar(context);
+                          WidgetConstants.showSnackBar(
+                              context, provider!.msg);
+                        }
+                      });
+                    },
+                    child: Text('Delete'))
                     : SizedBox();
               },
             ),
@@ -876,24 +943,53 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (BuildContext context, dynamic value, Widget? child) {
                   return title.value == 'Delete'
                       ? Checkbox(
-                          value: myType.myDataList[index].isChecked,
-                          onChanged: (value) {
-                            myType.toggleItem(data['id']);
-                          })
+                      value: myType.myDataList[index].isChecked,
+                      onChanged: (value) {
+                        myType.toggleItem(data['id']);
+                      })
                       : SizedBox();
                 },
               );
             },
           ),
           minLeadingWidth: 0,
-          title: Text(
-            data['name'],
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 18.0,
-            ),
+          title: Row(
+            children: [
+              Text(
+                data['name'],
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18.0,
+                ),
+              ),
+              SizedBox(width: 10),
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return _showPopupMenu3(
+                          isEditing: true,
+                          listId: data['id'].toString(),
+                          listName: data['name'],
+                        );
+                      });
+                },
+                child: Container(
+                  height: 25,
+                  width: 25,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.green),
+                  child: Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                    size: 15,
+                  ),
+                ),
+              ),
+            ],
           ),
           subtitle: ValueListenableBuilder(
             valueListenable: isEmptyList,
@@ -907,6 +1003,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
           ),
+<<<<<<< HEAD
           trailing: Column(
             children: [
               Text(
@@ -933,6 +1030,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               )
             ],
+=======
+          trailing: Text(
+            'PKR 0.00',
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 14.0,
+            ),
+>>>>>>> 00a4e67b1885b16ea8991869b4817ba7f16bbb39
           ),
         ),
       ),
@@ -948,7 +1053,7 @@ ValueListenableBuilder(
                   ? Selector<ListProvider, bool>(
                       selector: (_, myType) => provider!.isChecked,
                       builder: (context, isChecked, child) {
-                        return 
+                        return
                       },
                     )
                   : SizedBox();

@@ -113,8 +113,8 @@ class _AddItemState extends State<AddItem> {
                     filled: true,
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                      color: Color.fromRGBO(100, 100, 100, 1),
-                    )),
+                          color: Color.fromRGBO(100, 100, 100, 1),
+                        )),
                     contentPadding: EdgeInsets.only(top: 8.0),
                     hintText: 'Search',
                     hintStyle: TextStyle(
@@ -158,11 +158,11 @@ class _AddItemState extends State<AddItem> {
                           snapshot.data['data'][index]['name'],
                           'Dozen',
                           'Half Dozen',
-                          () {
+                              () {
                             // handleLeftContainerTap();
                             return null;
                           },
-                          () {
+                              () {
                             // handleRightContainerTap();
                             return null;
                           },
@@ -187,14 +187,14 @@ class _AddItemState extends State<AddItem> {
   }
 
   containerTile(
-    String title,
-    String largeQuantity,
-    String smallQuantity,
-    Function? tap1(),
-    Function? tap2(),
-    int currInd,
-    String itemId,
-  ) {
+      String title,
+      String largeQuantity,
+      String smallQuantity,
+      Function? tap1(),
+      Function? tap2(),
+      int currInd,
+      String itemId,
+      ) {
     final provider = Provider.of<ListProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -212,7 +212,7 @@ class _AddItemState extends State<AddItem> {
                 margin: EdgeInsets.symmetric(horizontal: 15),
                 height: 35,
                 decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                BoxDecoration(borderRadius: BorderRadius.circular(5)),
                 child: Row(
                   children: [
                     Text(
@@ -256,6 +256,7 @@ class _AddItemState extends State<AddItem> {
                   ],
                 ),
               ),
+<<<<<<< HEAD
               ElevatedButton(
                 onPressed: () async {
                   WidgetConstants.showSnackBar(
@@ -283,6 +284,42 @@ class _AddItemState extends State<AddItem> {
                       side: BorderSide.none),
                 ),
                 child: Text('Add Item'),
+=======
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Container(
+                  height: 25,
+                  margin: EdgeInsets.only(bottom: 10,right: 5,top: 5),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      WidgetConstants.showSnackBar(
+                          context, 'Adding item to list...');
+                      provider
+                          .addItemsToList(widget.listId, itemId)
+                          .whenComplete(() {
+                        if (provider.msg == 'List added successfully') {
+                          WidgetConstants.hideSnackBar(context);
+                          WidgetConstants.showSnackBar(
+                              context, 'Item added to the list successfully');
+                          Navigator.of(context).pop();
+                        } else {
+                          WidgetConstants.hideSnackBar(context);
+                          WidgetConstants.showSnackBar(context, provider.msg);
+                        }
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.white,
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          side: BorderSide.none),
+                    ),
+                    child: Text('Add Item'),
+                  ),
+                ),
+>>>>>>> 00a4e67b1885b16ea8991869b4817ba7f16bbb39
               ),
             ]),
       ),

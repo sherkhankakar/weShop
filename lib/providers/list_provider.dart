@@ -57,12 +57,12 @@ class ListProvider with ChangeNotifier {
 
   void _sortItems() {
     switch (_selectedSortOption) {
-      // case 'Price: Low to High':
-      //   _items.sort((a, b) => a.price.compareTo(b.price));
-      //   break;
-      // case 'Price: High to Low':
-      //   _items.sort((a, b) => b.price.compareTo(a.price));
-      //   break;
+    // case 'Price: Low to High':
+    //   _items.sort((a, b) => a.price.compareTo(b.price));
+    //   break;
+    // case 'Price: High to Low':
+    //   _items.sort((a, b) => b.price.compareTo(a.price));
+    //   break;
       case 'Date Modified':
         _items.sort((a, b) => a.dateModified.compareTo(b.dateModified));
         break;
