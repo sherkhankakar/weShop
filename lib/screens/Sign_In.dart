@@ -159,13 +159,8 @@ class _signin1STFState extends State<signin1STF> {
     final result = await FacebookAuth.instance.login(
         permissions: ['email', 'public_profile'],
         loginBehavior: LoginBehavior.dialogOnly
-<<<<<<< HEAD
-        // .DIALOG_ONLY, // (only android) show an authentication dialog instead of redirecting to facebook app
-        );
-=======
       // .DIALOG_ONLY, // (only android) show an authentication dialog instead of redirecting to facebook app
     );
->>>>>>> 00a4e67b1885b16ea8991869b4817ba7f16bbb39
 
     if (result.status == LoginStatus.success) {
       _accessToken = result.accessToken;
@@ -319,32 +314,35 @@ class _signin1STFState extends State<signin1STF> {
                   ),
 
                   SizedBox(height: 60),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Expanded(
-                          child: OutlinedButton(
-                            onPressed: _signInWithGoogle,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: _signInWithGoogle,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Image.asset('assets/images/google.png'),
-                                SizedBox(width: 20),
-                                Text(
-                                  'Google',
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color.fromRGBO(20, 20, 20, 1),
+                                SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    'Google',
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromRGBO(20, 20, 20, 1),
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                      
+                      ),
                       SizedBox(width: 20),
                       Expanded(
                         child: OutlinedButton(
@@ -371,13 +369,14 @@ class _signin1STFState extends State<signin1STF> {
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w600,
                                   color: Color.fromRGBO(20, 20, 20, 1),
-                                ),),
-                              ],
-                            ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(width: 20)
+                    ],
                   ),
 
                   Row(

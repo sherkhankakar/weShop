@@ -54,18 +54,6 @@ class _SettingScreenState extends State<SettingScreen> {
               SizedBox(height: 20),
               Row(
                 children: [
-<<<<<<< HEAD
-                  Text(
-                    name ?? 'Bagja Alfatih',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                  SizedBox(height: 5),
-                  Text(email ?? 'example@email.com',
-                      style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black54)),
-=======
                   SizedBox(width: 20),
                   Image.asset(
                     'assets/images/Ellipse (2).png',
@@ -87,7 +75,6 @@ class _SettingScreenState extends State<SettingScreen> {
                               color: Colors.black54)),
                     ],
                   )
->>>>>>> 00a4e67b1885b16ea8991869b4817ba7f16bbb39
                 ],
               ),
               SizedBox(height: 40),

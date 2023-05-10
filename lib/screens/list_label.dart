@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,8 +9,10 @@ import '../providers/list_provider.dart';
 import 'add_item.dart';
 
 class ListLabel extends StatefulWidget {
-  const ListLabel({Key? key, required this.listId}) : super(key: key);
+  const ListLabel({Key? key, required this.listId, required this.totoalPrice})
+      : super(key: key);
   final String listId;
+  final String totoalPrice;
 
   @override
   State<ListLabel> createState() => _ListLabelState();
@@ -28,310 +32,161 @@ class _ListLabelState extends State<ListLabel> {
   ];
   String? _selectedOption;
 
-  ///popup menu1
-  void _showPopupMenu1() {
-    showMenu(
-      context: context,
-      position: RelativeRect.fromLTRB(180, 80, 600, 500),
-      items: [
-        PopupMenuItem(
-          onTap: () {
-            title.value = true;
-          },
-          child: Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                child: const Icon(
-                  Icons.delete_outline,
-                  color: Color.fromRGBO(52, 107, 33, 1),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  left: 10.0,
-                ),
-                child: Text(
-                  'Delete',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                    color: Color.fromRGBO(0, 0, 0, 0.87),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        PopupMenuItem(
-          child: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-
-              showModalBottomSheet(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Column(
-                      children: options
-                          .map(
-                            (option) => PopupMenuItem<String>(
-                          value: option,
-                          child: RadioListTile(
-                            title: Text(option),
-                            value: option,
-                            groupValue: _selectedOption,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedOption = value;
-                              });
-                              Navigator.pop(context, value);
-                            },
-                            controlAffinity:
-                            ListTileControlAffinity.trailing,
-                          ),
-                        ),
-                      )
-                          .toList(),
-                    );
-                  });
-            },
-            child: Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: ImageIcon(
-                    AssetImage('assets/images/Vector (2).png'),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                    left: 10.0,
-                  ),
-                  child: Text(
-                    'Sort',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        PopupMenuItem(
-          child: Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                child: Icon(
-                  Icons.share,
-                  color: Color.fromRGBO(52, 107, 33, 1),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  left: 10.0,
-                ),
-                child: InkWell(
-                  onTap: () {
-                    setState(() {});
-
-                    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => mylist2()));
-                  },
-                  child: Text(
-                    'Share',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w400,
-                      color: Color.fromRGBO(20, 20, 20, 1),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        PopupMenuItem(
-          child: Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                child: const Icon(
-                  Icons.qr_code_scanner_rounded,
-                  color: Color.fromRGBO(52, 107, 33, 1),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  left: 10.0,
-                ),
-                child: Text(
-                  'Scan QR Code',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                    color: Color.fromRGBO(20, 20, 20, 1),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-      elevation: 8.0,
-    );
-  }
-
   ///add contributor popup menu
-  void _showPopupMenu3() async {
-    await showMenu(
-      context: context,
-      position: RelativeRect.fromLTRB(40, 300, 50, 100),
-      items: [
-        PopupMenuItem(
-          child: Container(
-            height: height * 0.25,
-            child: Column(
-              children: [
-                ///1st row close icon
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Icon(
+  Widget _showPopupMenu3() {
+    return AlertDialog(
+      content: Container(
+        width: MediaQuery.of(context).size.width * 0.85,
+        height: MediaQuery.of(context).size.height / 3.7,
+        child: Column(
+          children: [
+            ///1st row close icon
+            Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(
                     Icons.close,
                     color: Color.fromRGBO(52, 107, 33, 1),
                   ),
-                ),
+                )),
 
-                ///2nd row
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Text(
-                          'Add Contributor',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromRGBO(20, 20, 20, 1),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                ///3rd row
-                SizedBox(
-                  height: 4.0,
-                ),
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Text(
-                          displayText,
-                          style: TextStyle(
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w400,
-                            color: Color.fromRGBO(100, 100, 100, 1),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                ///4th row buttons
-                SizedBox(
-                  height: 22.0,
-                ),
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: width * 0.32,
-                        height: height * 0.05,
-                        child: OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                                side: BorderSide(
-                                  color: Color.fromRGBO(0, 173, 25, 1),
-                                )),
-                            onPressed: () {
-                              // changeText();
-                            },
-                            child: Text(
-                              'Limited Access',
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w300,
-                                color: Color.fromRGBO(100, 100, 100, 1),
-                              ),
-                            )),
-                      ),
-                      Container(
-                        width: width * 0.32,
-                        height: height * 0.05,
-                        child: OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                                side: BorderSide(
-                                  color: Color.fromRGBO(0, 173, 25, 1),
-                                )),
-                            onPressed: () {
-                              // changeText2();
-                            },
-                            child: Text(
-                              'Full Access',
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w300,
-                                color: Color.fromRGBO(100, 100, 100, 1),
-                              ),
-                            )),
-                      ),
-                    ],
-                  ),
-                ),
-
-                ///5th row button
-                SizedBox(
-                  height: 17.0,
-                ),
-                Container(
-                  margin: EdgeInsets.only(),
-                  width: width * 0.7,
-                  height: height * 0.045,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        Navigator.pop(context);
-                      });
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => QrCode()));
-                    },
+            ///2nd row
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
                     child: Text(
-                      'Continue',
-                      textAlign: TextAlign.center,
+                      'Add Contributor',
                       style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromRGBO(20, 20, 20, 1),
                       ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            ///3rd row
+            SizedBox(
+              height: 4.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  child: Text(
+                    displayText,
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromRGBO(100, 100, 100, 1),
                     ),
                   ),
                 ),
               ],
             ),
-          ),
+
+            ///4th row buttons
+            SizedBox(
+              height: 22.0,
+            ),
+            Row(
+              children: [
+                Spacer(),
+                Container(
+                  width: 120,
+                  child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                          side: BorderSide(
+                        color: Color.fromRGBO(0, 173, 25, 1),
+                      )),
+                      onPressed: () {
+                        // changeText();
+                      },
+                      child: Text(
+                        'Limited Access',
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w300,
+                          color: Color.fromRGBO(100, 100, 100, 1),
+                        ),
+                      )),
+                ),
+                SizedBox(width: 15),
+                Container(
+                  width: 120,
+                  child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                          side: BorderSide(
+                        color: Color.fromRGBO(0, 173, 25, 1),
+                      )),
+                      onPressed: () {
+                        // changeText2();
+                      },
+                      child: Text(
+                        'Full Access',
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w300,
+                          color: Color.fromRGBO(100, 100, 100, 1),
+                        ),
+                      )),
+                ),
+                Spacer()
+              ],
+            ),
+
+            ///5th row button
+            SizedBox(
+              height: 17.0,
+            ),
+            Container(
+              margin: EdgeInsets.only(),
+              width: width * 0.7,
+              height: height * 0.045,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => QrCode()));
+                },
+                child: Text(
+                  'Continue',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
-      elevation: 8.0,
+      ),
     );
+
+    // await showMenu(
+    //   context: context,
+    //   position: RelativeRect.fromLTRB(40, 300, 50, 100),
+    //   items: [
+    //     PopupMenuItem(
+    //       child: Container(
+    //         height: height * 0.25,
+    //         child: ),
+    //     ),
+    //   ],
+    //   elevation: 8.0,
+    // );
   }
 
   bool? isChecked = false;
@@ -349,29 +204,16 @@ class _ListLabelState extends State<ListLabel> {
   ///changing text 1
   var displayText = "Select Access Type ";
   ValueNotifier<bool> title = ValueNotifier(false);
-  // var String = ['Need approval to make changes'];
-
-  // void changeText() {
-  //   setState(() {
-  //     displayText = String[Random().nextInt(String.length)];
-  //   });
-  // }
-
-  ///changing text 2
-  // var displayText2 = "Select Access Type ";
-
-  // var String2 = ['Make changes without approval'];
-
-  // void changeText2() {
-  //   setState(() {
-  //     displayText = String2[Random().nextInt(String2.length)];
-  //   });
-  // }
 
   @override
   void initState() {
     provider = Provider.of<ListProvider>(context, listen: false);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -447,19 +289,162 @@ class _ListLabelState extends State<ListLabel> {
                   ),
                 ),
               ),
-              InkWell(
-                  onTap: () {
-                    _showPopupMenu3();
-                  },
-                  child: Image.asset('assets/images/Vector (1).png')),
               IconButton(
-                onPressed: () {
-                  _showPopupMenu1();
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return _showPopupMenu3();
+                        });
+                  },
+                  icon: Image.asset('assets/images/Vector (1).png')),
+              PopupMenuButton(
+                itemBuilder: (BuildContext context) {
+                  return [
+                    PopupMenuItem(
+                      onTap: () {
+                        title.value = true;
+                      },
+                      child: Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: const Icon(
+                              Icons.delete_outline,
+                              color: Color.fromRGBO(52, 107, 33, 1),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                              left: 10.0,
+                            ),
+                            child: Text(
+                              'Delete',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w400,
+                                color: Color.fromRGBO(0, 0, 0, 0.87),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // PopupMenuItem(
+                    //   child: InkWell(
+                    //     onTap: () {
+                    //       Navigator.pop(context);
+                    //       showModalBottomSheet(
+                    //           context: context,
+                    //           builder: (BuildContext context) {
+                    //             return Column(
+                    //               children: options
+                    //                   .map(
+                    //                     (option) => PopupMenuItem<String>(
+                    //                       value: option,
+                    //                       child: RadioListTile(
+                    //                         title: Text(option),
+                    //                         value: option,
+                    //                         groupValue: _selectedOption,
+                    //                         onChanged: (value) {
+                    //                           setState(() {
+                    //                             _selectedOption = value;
+                    //                           });
+                    //                           Navigator.pop(context, value);
+                    //                         },
+                    //                         controlAffinity:
+                    //                             ListTileControlAffinity
+                    //                                 .trailing,
+                    //                       ),
+                    //                     ),
+                    //                   )
+                    //                   .toList(),
+                    //             );
+                    //           });
+                    //     },
+                    //     child: Row(
+                    //       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //       children: [
+                    //         Container(
+                    //           child: ImageIcon(
+                    //             AssetImage('assets/images/Vector (2).png'),
+                    //           ),
+                    //         ),
+                    //         // Container(
+                    //         //   margin: EdgeInsets.only(
+                    //         //     left: 10.0,
+                    //         //   ),
+                    //         //   child: Text(
+                    //         //     'Sort',
+                    //         //     style: TextStyle(
+                    //         //       fontSize: 16.0,
+                    //         //       fontWeight: FontWeight.w400,
+                    //         //     ),
+                    //         //   ),
+                    //         // ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    PopupMenuItem(
+                      child: Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: Icon(
+                              Icons.share,
+                              color: Color.fromRGBO(52, 107, 33, 1),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                              left: 10.0,
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                // Navigator.of(context).push(MaterialPageRoute(builder: (context) => mylist2()));
+                              },
+                              child: Text(
+                                'Share',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color.fromRGBO(20, 20, 20, 1),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      child: Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: const Icon(
+                              Icons.qr_code_scanner_rounded,
+                              color: Color.fromRGBO(52, 107, 33, 1),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                              left: 10.0,
+                            ),
+                            child: Text(
+                              'Scan QR Code',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w400,
+                                color: Color.fromRGBO(20, 20, 20, 1),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ];
                 },
-                icon: Icon(
-                  Icons.more_vert_sharp,
-                  size: 23.0,
-                ),
               ),
             ],
           ),
@@ -469,13 +454,13 @@ class _ListLabelState extends State<ListLabel> {
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => AddItem(
-                  isVisible: _isVisible1,
-                  isVisible2: _isVisible2,
-                  isVisible3: _isVisible3,
-                  isVisible4: _isVisible4,
-                  isVisible5: _isVisible5,
-                  listId: widget.listId,
-                )));
+                      isVisible: _isVisible1,
+                      isVisible2: _isVisible2,
+                      isVisible3: _isVisible3,
+                      isVisible4: _isVisible4,
+                      isVisible5: _isVisible5,
+                      listId: widget.listId,
+                    )));
             // _showPopupMenu3();
           },
           child: Icon(Icons.add),
@@ -507,7 +492,7 @@ class _ListLabelState extends State<ListLabel> {
                     right: 16.0,
                   ),
                   child: Text(
-                    'PKR 440',
+                    'PKR ${widget.totoalPrice}',
                     style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w400,
@@ -552,30 +537,30 @@ class _ListLabelState extends State<ListLabel> {
               builder: (BuildContext context, dynamic value, Widget? child) {
                 return value == true
                     ? ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-                    ),
-                    onPressed: () {
-                      WidgetConstants.showSnackBar(
-                          context, 'Deleting selected lists');
-                      provider!.deleteItems({
-                        'gros_list_id': provider!.listIdForItems,
-                        'item_id': provider!.idsList[0],
-                      }).whenComplete(() {
-                        if (provider!.msg == 'item deleted successfully') {
-                          WidgetConstants.hideSnackBar(context);
-                          setState(() {});
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+                        ),
+                        onPressed: () {
                           WidgetConstants.showSnackBar(
-                              context, provider!.msg);
-                          title.value = false;
-                        } else {
-                          WidgetConstants.hideSnackBar(context);
-                          WidgetConstants.showSnackBar(
-                              context, provider!.msg);
-                        }
-                      });
-                    },
-                    child: Text('Delete'))
+                              context, 'Deleting selected lists');
+                          provider!.deleteItems({
+                            'gros_list_id': provider!.listIdForItems,
+                            'item_id': provider!.idsList[0],
+                          }).whenComplete(() {
+                            if (provider!.msg == 'item deleted successfully') {
+                              WidgetConstants.hideSnackBar(context);
+                              setState(() {});
+                              WidgetConstants.showSnackBar(
+                                  context, provider!.msg);
+                              title.value = false;
+                            } else {
+                              WidgetConstants.hideSnackBar(context);
+                              WidgetConstants.showSnackBar(
+                                  context, provider!.msg);
+                            }
+                          });
+                        },
+                        child: Text('Delete'))
                     : SizedBox();
               },
             ),
@@ -769,149 +754,240 @@ class _ListLabelState extends State<ListLabel> {
     );
   }
 
-  Widget tileCard(dynamic data, int index) {
-    return Container(
-      height: 60,
-      margin: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(6),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black38,
-                spreadRadius: 1,
-                blurRadius: 3,
-                offset: Offset(0, 2))
-          ]),
-      child: Row(
-        children: [
-          Consumer<ListProvider>(
-            builder: (context, myType, child) {
-              return ValueListenableBuilder(
-                valueListenable: title,
-                builder: (BuildContext context, dynamic value, Widget? child) {
-                  return title.value == true
-                      ? Checkbox(
-                      value: myType.myDataList[index].isChecked,
-                      onChanged: (value) {
-                        myType.toggleItem(data['id'], isListedItem: true);
-                      })
-                      : SizedBox(width: 20);
-                },
-              );
-            },
-          ),
-          Container(
-              margin: EdgeInsets.only(
-                top: 4.0,
-              ),
-              child: FutureBuilder<String>(
-                future: provider!.getSingleItem(data['item_id']),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text(
-                      snapshot.error.toString(),
-                    );
-                  } else if (snapshot.hasData) {
-                    return Text(
-                      snapshot.data!,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16.0,
-                      ),
-                    );
-                  } else {
-                    return Text('Loading...');
-                  }
-                },
-              )),
-          Container(
-            margin: EdgeInsets.only(top: 16.0, left: 3),
-            decoration: BoxDecoration(
-                color: Color.fromRGBO(52, 107, 33, 1),
-                borderRadius: BorderRadius.circular(4)),
-            width: 13,
-            height: 15,
-            child: Center(
-              child: Text(
-                'L',
-                style: TextStyle(
-                  fontSize: 9,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-<<<<<<< HEAD
-          SizedBox(
-            width: 12,
-          ),
-          CircleAvatar(
-            radius: 12,
-            backgroundColor: Colors.green,
-            child: Icon(
-              Icons.edit,
-              color: Colors.white,
-              size: 18,
-=======
-          Container(
-            margin: EdgeInsets.only(left: 10),
-            height: 25,
-            width: 25,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Color.fromRGBO(52, 107, 33, 1),
-            ),
-            child: Icon(
-              Icons.edit,
-              color: Colors.white,
-              size: 15,
->>>>>>> 00a4e67b1885b16ea8991869b4817ba7f16bbb39
-            ),
-          ),
+  ValueNotifier isEdit = ValueNotifier(false);
+  int currentIndex = -1;
 
-          ///Stack1
-          Spacer(),
-          rightContainer('qty', '01'),
-          SizedBox(width: 12),
-          rightContainer('pkr', '180'),
-          SizedBox(width: 12),
-          rightContainer('total', '180'),
-          SizedBox(width: 25)
-        ],
-      ),
+  Widget tileCard(dynamic data, int index) {
+    return ValueListenableBuilder(
+      valueListenable: isEdit,
+      builder: (BuildContext context, dynamic value, Widget? child) {
+        return Container(
+          height: currentIndex == index ? 150 : 60,
+          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(6),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black38,
+                    spreadRadius: 1,
+                    blurRadius: 3,
+                    offset: Offset(0, 2))
+              ]),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Consumer<ListProvider>(
+                    builder: (context, myType, child) {
+                      log('consumer ');
+                      return ValueListenableBuilder(
+                        valueListenable: title,
+                        builder: (BuildContext context, dynamic value,
+                            Widget? child) {
+                          return title.value == true
+                              ? Checkbox(
+                                  value: myType.myDataList[index].isChecked,
+                                  onChanged: (value) {
+                                    myType.toggleItem(data['id'],
+                                        isListedItem: true);
+                                  })
+                              : SizedBox(width: 20);
+                        },
+                      );
+                    },
+                  ),
+                  Container(
+                      margin: EdgeInsets.only(
+                        top: 4.0,
+                      ),
+                      child: FutureBuilder<String>(
+                        future: provider!.getSingleItem(data['item_id']),
+                        builder: (context, snapshot) {
+                          log('future builder');
+                          if (snapshot.hasError) {
+                            return Text(
+                              snapshot.error.toString(),
+                            );
+                          } else if (snapshot.hasData) {
+                            return Text(
+                              snapshot.data!,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16.0,
+                              ),
+                            );
+                          } else {
+                            return Text('Loading...');
+                          }
+                        },
+                      )),
+                  Container(
+                    margin: EdgeInsets.only(top: 16.0, left: 3),
+                    decoration: BoxDecoration(
+                        color: Color.fromRGBO(52, 107, 33, 1),
+                        borderRadius: BorderRadius.circular(4)),
+                    width: 13,
+                    height: 15,
+                    child: Center(
+                      child: Text(
+                        'L',
+                        style: TextStyle(
+                          fontSize: 9,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 10),
+                    height: 25,
+                    width: 25,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color.fromRGBO(52, 107, 33, 1),
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        isEdit.value = !isEdit.value;
+                        currentIndex = index;
+                      },
+                      child: Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                        size: 15,
+                      ),
+                    ),
+                  ),
+
+                  ///Stack1
+                  Spacer(),
+                  rightContainer('qty', '01', ctr1, index,
+                      value: data['item_qty']),
+                  SizedBox(width: 12),
+                  rightContainer('pkr', '180', ctr2, index,
+                      value: data['item_price']),
+                  SizedBox(width: 12),
+                  rightContainer('total', '180', ctr3, index,
+                      isTotal: true,
+                      value: data['item_price'] != null &&
+                              data['item_qty'] != null
+                          ? '${int.parse(data['item_price']) * int.parse(data['item_qty'])}'
+                          : '0'),
+                  SizedBox(width: 25)
+                ],
+              ),
+              if (currentIndex == index) SizedBox(height: 20),
+              if (currentIndex == index)
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            isEdit.value = !isEdit.value;
+                            currentIndex = -1;
+                          },
+                          child: Text('Cancel'),
+                          style: OutlinedButton.styleFrom(
+                              foregroundColor: Colors.green,
+                              side: BorderSide(
+                                color: Colors.green,
+                                width: 2,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                side: BorderSide(
+                                  color: Colors.green,
+                                  width: 20,
+                                ),
+                              )),
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            provider!
+                                .updateListItem(widget.listId, data['item_id'],
+                                    ctr1.text, ctr2.text)
+                                .whenComplete(() {
+                              if (provider!.msg ==
+                                  'List updated successfully') {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(provider!.msg),
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(provider!.msg),
+                                  ),
+                                );
+                              }
+                            });
+                            isEdit.value = !isEdit.value;
+                            currentIndex = -1;
+                          },
+                          child: Text('Update'),
+                          style: OutlinedButton.styleFrom(
+                              backgroundColor: Colors.green,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              )),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
     );
   }
 
-  Widget rightContainer(String type, String text) {
+  TextEditingController ctr1 = TextEditingController();
+  TextEditingController ctr2 = TextEditingController();
+  TextEditingController ctr3 = TextEditingController();
+
+  Widget rightContainer(
+      String type, String text, TextEditingController ctr, int index,
+      {bool? isTotal = false, String? value}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: 8,),
-        Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.black54),
-              borderRadius: BorderRadius.circular(7)),
-          width: 45,
-          height: 30,
-          child: Center(
-            child: Text(
-              text,
-              style: TextStyle(
-                fontSize: 12.0,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ),
+        SizedBox(
+          height: 8,
         ),
+        // Container(
+        //   decoration: BoxDecoration(
+        //       border: Border.all(color: Colors.black54),
+        //       borderRadius: BorderRadius.circular(7)),
+        //   width: 45,
+        //   height: 30,
+        //   child: Center(
+        //     child: Text(
+        //       text,
+        //       style: TextStyle(
+        //         fontSize: 12.0,
+        //         fontWeight: FontWeight.w400,
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        customTextField(text, ctr, index, value: value, isTotal: isTotal),
         Transform.translate(
-          offset: Offset(20,-5),
+          offset: Offset(20, -5),
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 4,vertical: 2),
+            padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
             decoration: BoxDecoration(
                 color: Color.fromRGBO(52, 107, 33, 1),
-                borderRadius: BorderRadius.circular(3)
-            ),
+                borderRadius: BorderRadius.circular(3)),
             child: Center(
               child: Text(
                 type.toUpperCase(),
@@ -924,6 +1000,53 @@ class _ListLabelState extends State<ListLabel> {
           ),
         ),
       ],
+    );
+  }
+
+  List<String> priceAndQtyValues = [];
+
+  Widget customTextField(String text, TextEditingController ctr, int index,
+      {bool? isTotal, String? value}) {
+    return Container(
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.black54),
+          borderRadius: BorderRadius.circular(7)),
+      width: 45,
+      height: 30,
+      child: Center(
+        child: TextFormField(
+          readOnly: isTotal == true
+              ? true
+              : isEdit.value == true && currentIndex == index
+                  ? false
+                  : true,
+          controller: currentIndex == index ? ctr : null,
+          style: TextStyle(
+            fontSize: 12.0,
+            fontWeight: FontWeight.w400,
+          ),
+          decoration: InputDecoration(
+            hintText: value ?? text,
+            contentPadding: EdgeInsets.only(left: 8),
+            border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black54),
+                borderRadius: BorderRadius.circular(7)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.green),
+                borderRadius: BorderRadius.circular(7)),
+          ),
+          validator: (value) {
+            if (value == null && value!.isEmpty) {
+              return 'Please enter this value';
+            }
+            return null;
+          },
+          onSaved: (value) {
+            priceAndQtyValues.add(value!);
+            log('list values :$priceAndQtyValues');
+          },
+        ),
+      ),
     );
   }
 }
