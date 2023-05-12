@@ -29,8 +29,8 @@ class signin1 extends StatelessWidget {
 class signin1STF extends StatefulWidget {
   const signin1STF({Key? key})
       : super(
-    key: key,
-  );
+          key: key,
+        );
 
   @override
   State<signin1STF> createState() => _signin1STFState();
@@ -56,7 +56,7 @@ class _signin1STFState extends State<signin1STF> {
         Container(
           child: CircleAvatar(
             backgroundImage:
-            Image.network(model.usersDetails!.photoURL ?? "").image,
+                Image.network(model.usersDetails!.photoURL ?? "").image,
           ),
         ),
         Row(
@@ -66,7 +66,7 @@ class _signin1STFState extends State<signin1STF> {
             Text(
               model.usersDetails!.displayName ?? "",
               style:
-              TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+                  TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
             ),
           ],
         ),
@@ -159,8 +159,8 @@ class _signin1STFState extends State<signin1STF> {
     final result = await FacebookAuth.instance.login(
         permissions: ['email', 'public_profile'],
         loginBehavior: LoginBehavior.dialogOnly
-      // .DIALOG_ONLY, // (only android) show an authentication dialog instead of redirecting to facebook app
-    );
+        // .DIALOG_ONLY, // (only android) show an authentication dialog instead of redirecting to facebook app
+        );
 
     if (result.status == LoginStatus.success) {
       _accessToken = result.accessToken;
@@ -188,7 +188,6 @@ class _signin1STFState extends State<signin1STF> {
     await FacebookAuth.instance.logOut();
     _accessToken = null;
     _userData = null;
-    setState(() {});
   }
 
   loginController? provider;
@@ -207,16 +206,16 @@ class _signin1STFState extends State<signin1STF> {
       // Use the credential to authenticate with your backend server
       if (googleUser != null && googleUser.email.isNotEmpty) {
         final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication.whenComplete(
-              () {
+            await googleUser.authentication.whenComplete(
+          () {
             provider!
                 .registerNewUser(googleUser.email, googleUser.id.toString(),
-                googleUser.displayName ?? 'Google User')
+                    googleUser.displayName ?? 'Google User')
                 .then((value) async {
               print('kakar $value');
               if (provider!.msg == 'The email has already been taken.') {
                 final GoogleSignInAccount? googleUser =
-                await _googleSignIn.signInSilently().then((value) {
+                    await _googleSignIn.signInSilently().then((value) {
                   print('sher khan $value');
                   if (value != null) {
                     loginWithGoogle(
@@ -428,7 +427,7 @@ class _signin1STFState extends State<signin1STF> {
                       children: [
                         Container(
                           margin:
-                          EdgeInsets.only(top: 17.0, left: 20, right: 20),
+                              EdgeInsets.only(top: 17.0, left: 20, right: 20),
                           height: height * 0.053,
                           child: TextFormField(
                             controller: email,
@@ -463,7 +462,7 @@ class _signin1STFState extends State<signin1STF> {
                         ///password
                         Container(
                           margin:
-                          EdgeInsets.only(top: 17.0, left: 20, right: 20),
+                              EdgeInsets.only(top: 17.0, left: 20, right: 20),
                           height: height * 0.053,
                           child: TextFormField(
                             controller: password,
@@ -559,14 +558,14 @@ class _signin1STFState extends State<signin1STF> {
                             return provider!.isLoading == true
                                 ? CircularProgressIndicator()
                                 : Text(
-                              'Sign In',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w700,
-                                color: Color.fromRGBO(255, 255, 255, 1),
-                              ),
-                            );
+                                    'Sign In',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color.fromRGBO(255, 255, 255, 1),
+                                    ),
+                                  );
                           },
                         )),
                   ),
@@ -608,13 +607,13 @@ class _signin1STFState extends State<signin1STF> {
       await provider!
           .login(gEmail ?? email.text, gPass ?? password.text)
           .whenComplete(
-            () {
+        () {
           if (provider!.msg == 'Successful') {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                   builder: (context) => BottomBar(),
                 ),
-                    (route) => false);
+                (route) => false);
           } else {
             WidgetConstants.hideSnackBar(context);
             WidgetConstants.showSnackBar(context, provider!.msg);
@@ -628,13 +627,13 @@ class _signin1STFState extends State<signin1STF> {
     ///ye login ki api ka link ha
 
     await provider!.login(gEmail!, gPass!).whenComplete(
-          () {
+      () {
         if (provider!.msg == 'Successful') {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                 builder: (context) => BottomBar(),
               ),
-                  (route) => false);
+              (route) => false);
         } else {
           WidgetConstants.hideSnackBar(context);
           WidgetConstants.showSnackBar(context, provider!.msg);

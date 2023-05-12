@@ -97,10 +97,9 @@ class _ListLabelState extends State<ListLabel> {
               height: 22.0,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Spacer(),
-                Container(
-                  width: 120,
+                Expanded(
                   child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
                           side: BorderSide(
@@ -112,15 +111,14 @@ class _ListLabelState extends State<ListLabel> {
                       child: Text(
                         'Limited Access',
                         style: TextStyle(
-                          fontSize: 12.0,
+                          fontSize: 11.0,
                           fontWeight: FontWeight.w300,
                           color: Color.fromRGBO(100, 100, 100, 1),
                         ),
                       )),
                 ),
                 SizedBox(width: 15),
-                Container(
-                  width: 120,
+                Expanded(
                   child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
                           side: BorderSide(
@@ -132,13 +130,12 @@ class _ListLabelState extends State<ListLabel> {
                       child: Text(
                         'Full Access',
                         style: TextStyle(
-                          fontSize: 12.0,
+                          fontSize: 11.0,
                           fontWeight: FontWeight.w300,
                           color: Color.fromRGBO(100, 100, 100, 1),
                         ),
                       )),
                 ),
-                Spacer()
               ],
             ),
 
@@ -146,26 +143,26 @@ class _ListLabelState extends State<ListLabel> {
             SizedBox(
               height: 17.0,
             ),
-            Container(
-              margin: EdgeInsets.only(),
-              width: width * 0.7,
-              height: height * 0.045,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
 
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => QrCode()));
-                },
-                child: Text(
-                  'Continue',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w700,
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => QrCode()));
+                  },
+                  child: Text(
+                    'Continue',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               ),

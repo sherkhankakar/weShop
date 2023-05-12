@@ -1,4 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
+
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +8,7 @@ import '../main.dart';
 import 'Sign_In.dart';
 import '../models/datamodel.dart';
 
-import 'loginwithfacebook.dart';
+import 'bottom_bar.dart';
 import '../providers/logincontroller.dart';
 import 'package:flutter/material.dart';
 
@@ -56,7 +57,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
         Container(
           child: CircleAvatar(
             backgroundImage:
-            Image.network(model.usersDetails!.photoURL ?? "").image,
+                Image.network(model.usersDetails!.photoURL ?? "").image,
           ),
         ),
         Row(
@@ -66,7 +67,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
             Text(
               model.usersDetails!.displayName ?? "",
               style:
-              TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+                  TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
             ),
           ],
         ),
@@ -123,34 +124,132 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
   ///fb work
   String welcome = "Facebook";
   Map<String, dynamic>? _userData;
-  Future<UserCredential> signInFacebook() async {
-    final LoginResult loginResult =
-    await FacebookAuth.instance.login(permissions: ['email,']);
-    if (loginResult == LoginStatus.success) {
-      final userData = await FacebookAuth.instance.getUserData();
-      _userData = userData;
-    } else {
-      print(loginResult.message);
-    }
-    setState(() {
-      welcome = _userData!['email'];
-    });
+  loginController? provider;
 
-    final OAuthCredential oAuthCredential =
-    FacebookAuthProvider.credential(loginResult.accessToken!.token);
-    return FirebaseAuth.instance.signInWithCredential(oAuthCredential);
+  AccessToken? _accessToken;
+  bool _checking = true;
+
+  void _printCredentials() {
+    print(
+      'Data access: ${_accessToken!.toJson()}',
+    );
   }
 
-  Future<UserCredential?> signInWithFacebook() async {
-    final LoginResult result = await FacebookAuth.instance.login();
+  Future<void> _login() async {
+    _logOut();
+    // final LoginResult result = await FacebookAuth.instance
+    //     .login(); // by default we request the email and the public profile
+
+    // loginBehavior is only supported for Android devices, for ios it will be ignored
+    final result = await FacebookAuth.instance.login(
+        permissions: ['email', 'public_profile'],
+        loginBehavior: LoginBehavior.dialogOnly
+        // .DIALOG_ONLY, // (only android) show an authentication dialog instead of redirecting to facebook app
+        );
+
     if (result.status == LoginStatus.success) {
-      // Create a credential from the access token
-      final OAuthCredential credential =
-      FacebookAuthProvider.credential(result.accessToken!.token);
-      // Once signed in, return the UserCredential
-      return await FirebaseAuth.instance.signInWithCredential(credential);
+      _accessToken = result.accessToken;
+
+      _printCredentials();
+      // get the user data
+      // by default we get the userId, email,name and picture
+      final userData = await FacebookAuth.instance.getUserData();
+
+      // final userData = await FacebookAuth.instance.getUserData(fields: "email,birthday,friends,gender,link");
+      _userData = userData;
+      print('_userData: $userData');
+      log(_accessToken!.grantedPermissions![2]);
+    } else {
+      print(result.status);
+      print(result.message);
     }
-    return null;
+
+    setState(() {
+      _checking = false;
+    });
+  }
+
+  Future<void> _logOut() async {
+    await FacebookAuth.instance.logOut();
+    _accessToken = null;
+    _userData = null;
+  }
+
+  Future<void> _checkIfIsLogged() async {
+    final accessToken = await FacebookAuth.instance.accessToken;
+    setState(() {
+      _checking = false;
+    });
+    if (accessToken != null) {
+      print("is Logged:::: ${(accessToken.toJson())}");
+      // now you can call to  FacebookAuth.instance.getUserData();
+      final userData = await FacebookAuth.instance.getUserData();
+      // final userData = await FacebookAuth.instance.getUserData(fields: "email,birthday,friends,gender,link");
+      _accessToken = accessToken;
+      setState(() {
+        _userData = userData;
+      });
+    }
+  }
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<void> _signInWithGoogle() async {
+    try {
+      // Sign in with Google
+      await _googleSignIn.signOut();
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+      // Use the credential to authenticate with your backend server
+      if (googleUser != null && googleUser.email.isNotEmpty) {
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication.whenComplete(
+          () {
+            provider!
+                .registerNewUser(googleUser.email, googleUser.id.toString(),
+                    googleUser.displayName ?? 'Google User')
+                .then((value) async {
+              print('kakar $value');
+              if (provider!.msg == 'The email has already been taken.') {
+                final GoogleSignInAccount? googleUser =
+                    await _googleSignIn.signInSilently().then((value) {
+                  print('sher khan $value');
+                  if (value != null) {
+                    loginWithGoogle(
+                      gEmail: value.email,
+                      gPass: value.id.toString(),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Error while logging in with google'),
+                      ),
+                    );
+                  }
+                  return null;
+                });
+                print(googleUser);
+              } else {
+                loginWithGoogle(
+                  gEmail: googleUser.email,
+                  gPass: googleUser.id.toString(),
+                );
+              }
+            });
+          },
+        );
+
+        final String? accessToken = googleAuth.accessToken;
+        final String? idToken = googleAuth.idToken;
+
+        print(accessToken);
+        print(idToken);
+      }
+
+      print(googleUser);
+    } catch (error) {
+      // Handle the error
+    }
   }
 
   late DataModel _datamodel;
@@ -160,7 +259,6 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
   TextEditingController nameController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   ///Create function for registration with the help of internet
   late double width;
@@ -168,6 +266,12 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
 
   bool _obscureText = true;
   bool _obscureText2 = true;
+
+  @override
+  void initState() {
+    provider = Provider.of<loginController>(context, listen: false);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -298,13 +402,13 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                           color: Color.fromRGBO(100, 100, 100, 1), width: 1.2),
                     ),
                     hintText: 'Password',
-                    suffixIcon: GestureDetector(
-                      onTap: () {
+                    suffixIcon: IconButton(
+                      onPressed: () {
                         setState(() {
                           _obscureText = !_obscureText;
                         });
                       },
-                      child: new Icon(
+                      icon: new Icon(
                         _obscureText ? Icons.visibility_off : Icons.visibility,
                         color: Colors.grey,
                         size: 20,
@@ -332,7 +436,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
               height: MediaQuery.of(context).size.height * 0.053,
               child: TextFormField(
                 // autovalidateMode: AutovalidateMode.onUserInteraction,
-                obscureText: true,
+                obscureText: _obscureText2,
                 cursorColor: Color.fromRGBO(100, 100, 100, 1),
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(
@@ -348,13 +452,13 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                           color: Color.fromRGBO(100, 100, 100, 1), width: 1.2),
                     ),
                     hintText: 'Confirm Password',
-                    suffixIcon: GestureDetector(
-                      onTap: () {
+                    suffixIcon: IconButton(
+                      onPressed: () {
                         setState(() {
                           _obscureText2 = !_obscureText2;
                         });
                       },
-                      child: new Icon(
+                      icon: new Icon(
                         _obscureText2 ? Icons.visibility_off : Icons.visibility,
                         color: Colors.grey,
                         size: 20,
@@ -449,12 +553,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                 SizedBox(width: 20),
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () {
-                      _googleSignIn.signIn().then((value) {
-                        String userName = value!.displayName!;
-                        String profilePicture = value.photoUrl!;
-                      });
-                    },
+                    onPressed: _signInWithGoogle,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -478,10 +577,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                     ),
-                    onPressed: () async {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => LoginWithFacebook()));
-                    },
+                    onPressed: _login,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -549,7 +645,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
               MaterialPageRoute(
                 builder: (context) => signin1(),
               ),
-                  (route) => false);
+              (route) => false);
         } else {
           WidgetConstants.hideSnackBar(context);
           WidgetConstants.showSnackBar(context, provider.msg);
@@ -563,5 +659,24 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
         ),
       );
     }
+  }
+
+  void loginWithGoogle({String? gEmail, String? gPass}) async {
+    ///ye login ki api ka link ha
+
+    await provider!.login(gEmail!, gPass!).whenComplete(
+      () {
+        if (provider!.msg == 'Successful') {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => BottomBar(),
+              ),
+              (route) => false);
+        } else {
+          WidgetConstants.hideSnackBar(context);
+          WidgetConstants.showSnackBar(context, provider!.msg);
+        }
+      },
+    );
   }
 }

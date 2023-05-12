@@ -310,7 +310,7 @@ class ListProvider with ChangeNotifier {
       _msg = 'List updated successfully';
       notifyListeners();
     } else {
-      _msg = data['errors']['gros_list_id'][0];
+      _msg = data['errors']['gros_list_id'];
       notifyListeners();
       throw Exception(data['errors']['gros_list_id'][0]);
     }
