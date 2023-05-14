@@ -7,6 +7,8 @@ class Apiserviceconstant {
   static final forgortPassword = Uri.parse(baseUrl + 'password/forget');
   static final resetPassword = Uri.parse(baseUrl + 'password/reset');
   static final verifyPassword = Uri.parse(baseUrl + 'password/verify_reset');
+  static final updatePassword = Uri.parse(baseUrl + 'updatePassword');
+  static final updateUser = Uri.parse(baseUrl + 'updateUser');
 
   //list urls
   static final list = Uri.parse(baseUrl + 'list');

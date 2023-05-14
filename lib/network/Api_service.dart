@@ -14,7 +14,7 @@ class AuthenticationServices {
       }
     } catch (e) {
       log(e.toString());
-      throw Exception('error occured while dealing with the api');
+      throw Exception(e);
     }
   }
 

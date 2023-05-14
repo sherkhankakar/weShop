@@ -186,4 +186,71 @@ class loginController with ChangeNotifier {
     }
     print(result);
   }
+
+  Future<void> updatePassword(String currPass, String newPass) async {
+    _isLoading = true;
+    notifyListeners();
+
+    final prefs = await SharedPreferences.getInstance();
+
+    final result = await AuthenticationServices.baseFunction(
+      Apiserviceconstant.updatePassword,
+      {
+        'user_id': prefs.getString('user_id'),
+        'cur_pass': currPass,
+        'new_pass': newPass
+      },
+    ).whenComplete(() {
+      _isLoading = false;
+      notifyListeners();
+    }).catchError((e) {
+      _msg = e.toString();
+      notifyListeners();
+    });
+    log(result.statusCode.toString());
+    final data = jsonDecode(result.body) as Map<String, dynamic>;
+    print(data);
+    if (result.statusCode == 200) {
+      _msg = 'Password Updated Successfully';
+      notifyListeners();
+    } else {
+      _msg = data['errors']['email'][0] ??
+          data['errors']['cur_pass'][0] ??
+          data['erros']['new_pass'][0];
+      notifyListeners();
+    }
+    print(result);
+  }
+
+  Future<void> updateUserRecord(String userName, String email) async {
+    _isLoading = true;
+    notifyListeners();
+
+    final prefs = await SharedPreferences.getInstance();
+
+    final result = await AuthenticationServices.baseFunction(
+      Apiserviceconstant.updateUser,
+      {
+        'user_id': prefs.getString('user_id'),
+        'email': email,
+        'name': userName,
+      },
+    ).whenComplete(() {
+      _isLoading = false;
+      notifyListeners();
+      prefs.setString('email', email);
+      prefs.setString('name', userName);
+    });
+    log(result.statusCode.toString());
+    final data = jsonDecode(result.body) as Map<String, dynamic>;
+    print(data);
+    if (result.statusCode == 200) {
+      _msg = 'User Record Updated Successfully';
+      notifyListeners();
+    } else {
+      _msg = data['errors']['email'][0] ?? data['errors']['name'][0];
+      notifyListeners();
+    }
+    print(result);
+  }
 }
