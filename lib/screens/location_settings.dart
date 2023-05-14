@@ -1,7 +1,9 @@
 
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:weshop/screens/home_location.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 
 class LocationSettings extends StatefulWidget {
   const LocationSettings({Key? key}) : super(key: key);
@@ -23,7 +25,7 @@ class _LocationSettingsState extends State<LocationSettings> {
     return SafeArea(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-        title: const Text('Location Settings',
+        title: Text(LocaleKeys.location_setting.tr(),
           style: TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.w600,
@@ -43,7 +45,7 @@ class _LocationSettingsState extends State<LocationSettings> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Location',
+                Text(LocaleKeys.location.tr(),
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,
@@ -78,7 +80,7 @@ class _LocationSettingsState extends State<LocationSettings> {
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeLocation()));
                 },
-                child: Text('Home Location',
+                child: Text(LocaleKeys.home_location.tr(),
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,

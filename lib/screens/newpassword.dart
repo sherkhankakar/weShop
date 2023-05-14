@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:weshop/providers/logincontroller.dart';
 import 'package:weshop/screens/bottom_bar.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 
 import '../constant/widget_constants.dart';
 import 'Sign_In.dart';
@@ -85,7 +87,7 @@ class _NewPasswordSTFState extends State<NewPasswordSTF> {
                     left: 15.0,
                   ),
                   child: Text(
-                    'New Password',
+                    LocaleKeys.new_password.tr(),
                     style: TextStyle(
                         fontSize: 24.0,
                         fontWeight: FontWeight.w600,

@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 
 import '../constant/widget_constants.dart';
 import '../screens/bottom_bar.dart';
@@ -84,7 +86,7 @@ class _signin1STFState extends State<signin1STF> {
               right: 15.0,
             ),
             child: Text(
-              "logout",
+              LocaleKeys.logout.tr(),
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -188,7 +190,6 @@ class _signin1STFState extends State<signin1STF> {
     await FacebookAuth.instance.logOut();
     _accessToken = null;
     _userData = null;
-    setState(() {});
   }
 
   loginController? provider;
@@ -303,7 +304,7 @@ class _signin1STFState extends State<signin1STF> {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Sign In',
+                        LocaleKeys.sign_in.tr(),
                         style: TextStyle(
                           fontSize: 24.0,
                           fontWeight: FontWeight.w600,
@@ -330,7 +331,7 @@ class _signin1STFState extends State<signin1STF> {
                                 SizedBox(width: 12),
                                 Expanded(
                                   child: Text(
-                                    'Google',
+                                    LocaleKeys.google.tr(),
                                     style: TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w600,
@@ -364,7 +365,7 @@ class _signin1STFState extends State<signin1STF> {
                               Image.asset('assets/images/facebook-alt.png'),
                               SizedBox(width: 10),
                               Text(
-                                'Facebook',
+                                LocaleKeys.facebook.tr(),
                                 style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w600,
@@ -398,7 +399,7 @@ class _signin1STFState extends State<signin1STF> {
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 6),
                         child: Text(
-                          'Or',
+                          LocaleKeys.or.tr(),
                           style: TextStyle(
                             fontSize: 12.0,
                             fontWeight: FontWeight.w400,
@@ -455,7 +456,7 @@ class _signin1STFState extends State<signin1STF> {
                                     color: Color.fromRGBO(100, 100, 100, 1),
                                     width: 1.2),
                               ),
-                              hintText: 'Email',
+                              hintText: LocaleKeys.Email.tr(),
                             ),
                           ),
                         ),
@@ -491,7 +492,7 @@ class _signin1STFState extends State<signin1STF> {
                                       color: Color.fromRGBO(100, 100, 100, 1),
                                       width: 1.2),
                                 ),
-                                hintText: 'Password',
+                                hintText: LocaleKeys.password.tr(),
                                 suffixIcon: GestureDetector(
                                   onTap: () {
                                     setState(() {
@@ -525,7 +526,7 @@ class _signin1STFState extends State<signin1STF> {
                               builder: (context) => ForgotPassword()));
                         },
                         child: Text(
-                          'Forgot password?',
+                          LocaleKeys.forgot_password.tr(),
                           style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 13,
@@ -559,7 +560,7 @@ class _signin1STFState extends State<signin1STF> {
                             return provider!.isLoading == true
                                 ? CircularProgressIndicator()
                                 : Text(
-                              'Sign In',
+                              LocaleKeys.sign_in.tr(),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 14.0,
@@ -581,7 +582,7 @@ class _signin1STFState extends State<signin1STF> {
                           builder: (context) => GetStarted()));
                     },
                     child: Text(
-                      'Don\'t have an account?',
+                      LocaleKeys.dont_have_account.tr(),
                       style: TextStyle(
                         color: Color.fromRGBO(20, 20, 20, 1),
                         fontSize: 14.0,

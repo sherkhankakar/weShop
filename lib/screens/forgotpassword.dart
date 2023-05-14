@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:weshop/constant/widget_constants.dart';
 import 'package:weshop/providers/logincontroller.dart';
 import 'package:email_otp/email_otp.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 
 // import 'package:emailotp/otp_screen.dart';
 import 'Sign_In.dart';
@@ -75,7 +77,7 @@ class _forgotSTFState extends State<forgotSTF> {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Forgot Password',
+                  LocaleKeys.forgot_password.tr(),
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.w600,
@@ -92,7 +94,7 @@ class _forgotSTFState extends State<forgotSTF> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                'Enter email associated with your account and well send you a verification code to reset your password',
+                LocaleKeys.forgot_password_description.tr(),
                 style: TextStyle(
                   fontSize: 12.0,
                   fontWeight: FontWeight.w400,
@@ -193,7 +195,7 @@ class _forgotSTFState extends State<forgotSTF> {
                       color: Colors.white,
                     )
                         : Text(
-                            'Continue',
+                            LocaleKeys.continue_word.tr(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 14.0,

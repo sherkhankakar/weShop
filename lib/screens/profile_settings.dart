@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 class ProfileSetting extends StatefulWidget {
   const ProfileSetting({Key? key}) : super(key: key);
 
@@ -20,7 +22,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-          title: const Text('Profile Settings',
+          title: Text(LocaleKeys.profile_settings.tr(),
             style: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.w600,
@@ -57,7 +59,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
                           borderSide: BorderSide(
                             color: Colors.black54
                           )),
-                      hintText: 'Name',
+                      hintText: LocaleKeys.full_name.tr(),
                       hintStyle: TextStyle(
                         color: Colors.black45
                       )),
@@ -82,7 +84,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
                           borderSide: BorderSide(
                               color: Colors.black54
                           )),
-                      hintText: 'Email',
+                      hintText: LocaleKeys.Email.tr(),
                       hintStyle: TextStyle(
                           color: Colors.black45
                       )),
@@ -95,7 +97,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: ElevatedButton(onPressed: (){},style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-              ), child: Text('Save')),
+              ), child: Text(LocaleKeys.save.tr())),
             )
 
           ],

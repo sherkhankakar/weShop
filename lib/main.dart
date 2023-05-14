@@ -1,4 +1,6 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weshop/screens/Sign_In.dart';
 import 'package:weshop/screens/bottom_bar.dart';
 import 'package:weshop/screens/getstarted.dart';
+import 'package:weshop/translations/codegen_loader.g.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 
 import 'firebase_options.dart';
 import 'providers/list_provider.dart';
@@ -13,13 +17,26 @@ import 'providers/logincontroller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
     DevicePreview(
-      enabled: false,
-      builder: (context) => const MyApp(),
+      enabled: !kReleaseMode,
+      builder: (context) => EasyLocalization(
+        path: 'assets/translations',
+          supportedLocales: [
+            Locale('en', 'US'),
+            Locale('ur', 'PAK'),
+            Locale('ar', 'SAU'),
+            Locale('fr', 'FRA'),
+            Locale('zh', 'CHN'),
+          ],
+          fallbackLocale: const Locale('en', 'US'),
+          assetLoader: const CodegenLoader(),
+
+          child: const MyApp()),
     ),
   );
 }
@@ -72,6 +89,8 @@ class _MyAppState extends State<MyApp> {
         )
       ],
       child: MaterialApp(
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
         useInheritedMediaQuery: false,
         locale: DevicePreview.locale(context),
         builder: DevicePreview.appBuilder,
@@ -110,16 +129,10 @@ class _MyappSTFState extends State<MyappSTF> {
             SizedBox(
               height: 60,
             ),
-            Text(
-              'Welcome to',
-              style: TextStyle(
-                  fontSize: 40.0,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black),
-            ),
             RichText(
               text: TextSpan(
-                  text: 'the',
+                  text: LocaleKeys.welcome.tr(),
+                  //text: 'Welcome to\nthe',
                   style: TextStyle(
                       fontSize: 40.0,
                       fontWeight: FontWeight.w700,
@@ -138,7 +151,7 @@ class _MyappSTFState extends State<MyappSTF> {
             SizedBox(height: 30),
 
             Text(
-              'Simple Shopping list app for pantry check and quick shopping. Make list in seconds and share it and see changes live.',
+              LocaleKeys.description.tr(),
               textAlign: TextAlign.start,
               style: TextStyle(
                   fontWeight: FontWeight.w400,
@@ -162,7 +175,7 @@ class _MyappSTFState extends State<MyappSTF> {
                       MaterialPageRoute(builder: (context) => GetStarted()));
                 },
                 child: Text(
-                  'Get Started',
+                  LocaleKeys.get_started.tr(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14.0,
@@ -191,7 +204,7 @@ class _MyappSTFState extends State<MyappSTF> {
                         MaterialPageRoute(builder: (context) => signin1()));
                   },
                   child: Text(
-                    'I\'m already a member',
+                    LocaleKeys.Already_member.tr(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14.0,

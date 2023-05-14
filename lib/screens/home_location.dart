@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 
 class HomeLocation extends StatefulWidget {
   const HomeLocation({Key? key}) : super(key: key);
@@ -18,8 +20,8 @@ class _HomeLocationState extends State<HomeLocation> {
     height = MediaQuery.of(context).size.height;
     return SafeArea(child: Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
-        title: const Text('Home Location',
+        backgroundColor: Color.fromRGBO(0, 173, 25, 1),
+        title: Text(LocaleKeys.home_location.tr(),
           style: TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.w600,
@@ -39,7 +41,7 @@ class _HomeLocationState extends State<HomeLocation> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('+Add Location',
+                Text('+ ${LocaleKeys.add_location.tr()}',
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,

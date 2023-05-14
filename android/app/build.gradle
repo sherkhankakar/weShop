@@ -68,14 +68,17 @@ android {
         }
         release {
             storeFile file('weShopUpload-keystore.jks')
-            storePassword '123456'
             keyAlias 'weshopUpload'
             keyPassword '123456'
+            storePassword '123456'
         }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+        }
+        release {
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -86,5 +89,5 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 }

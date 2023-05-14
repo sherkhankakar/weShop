@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
+
 class QrCode extends StatefulWidget {
   const QrCode({Key? key}) : super(key: key);
 
@@ -17,15 +19,21 @@ class _QrCodeState extends State<QrCode> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.green,
+          backgroundColor: Color.fromRGBO(0, 173, 25, 1),
           title: Row(
             children: [
-              Container(
-                child: Icon(Icons.close),
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: Icon(Icons.close),
               ),
               Container(
-                margin: EdgeInsets.only(left: 30.0,),
-                child: const Text('Add Contributor',
+                margin: EdgeInsets.only(
+                  left: 30.0,
+                ),
+                child: Text(
+                  LocaleKeys.add_contributer.tr(),
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
@@ -33,71 +41,26 @@ class _QrCodeState extends State<QrCode> {
                   ),
                 ),
               ),
-
             ],
           ),
           automaticallyImplyLeading: false,
         ),
-        body: (
-        Container(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 120.0,
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 37.0,),
-                height: height*0.13,
-                width: width*0.8,
-                color: Colors.blueAccent,
-               child: Column(
-                 children: [
-                   Container(
-                     child: Row(
-                       mainAxisAlignment: MainAxisAlignment.center,
-                       children: [
-                         Container(
-                           margin: EdgeInsets.only(top: 20.0,),
-                           child: Text('Scan QR Code',
-                             style: TextStyle(
-                               fontSize: 16.0,
-                               fontWeight: FontWeight.w600,
-                             ),
-                           ),
-                         ),
-                       ],
-                     ),
-                   ),
-                   Container(
-                     margin: EdgeInsets.only(top: 10.0,),
-                     child: Row(
-                       mainAxisAlignment: MainAxisAlignment.center,
-                       children: [
-                         Container(
-                           child: Text('Scan this code to access list name',
-                             style: TextStyle(
-                               fontSize: 14.0,
-                               fontWeight: FontWeight.w400,
-                             ),
-                           ),
-                         ),
-                       ],
-                     ),
-                   ),
-                 ],
-               ),
-
-
-              ),
-              ///qr code
-
-            ],
+        body: Center(
+          child: Container(
+            height: 150,
+            padding: EdgeInsets.symmetric(vertical: 20,horizontal: 10),
+            width: 300,
+            color: Colors.blueAccent,
+            child: Column(
+              children: [
+                Text(LocaleKeys.scan_qr_code.tr(),style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20),),
+                SizedBox(height: 15),
+                Text(LocaleKeys.scan_this_code_to_access.tr(),style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15)),
+              ],
+            ),
           ),
         )
-        ),
-
       ),
-
     );
   }
 }

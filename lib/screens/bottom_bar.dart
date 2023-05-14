@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:weshop/screens/notification_screen.dart';
 import 'package:weshop/screens/settings_screen.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 
 import 'home_screen.dart';
 
@@ -39,15 +41,15 @@ class _BottomBarState extends State<BottomBar> {
             fontSize: 14,
               fontWeight: FontWeight.w500),
           type: BottomNavigationBarType.fixed,
-          items: const [
+          items: [
             BottomNavigationBarItem(
                 icon: ImageIcon(AssetImage(
                   'assets/images/list.png',
-                )), label: 'My Lists'),
+                )), label: LocaleKeys.my_list.tr()),
             BottomNavigationBarItem(
-                icon: Icon(Icons.notifications), label: 'Notifications'),
+                icon: Icon(Icons.notifications), label: LocaleKeys.notifications.tr()),
             BottomNavigationBarItem(
-                icon: Icon(Icons.settings), label: 'Settings'),
+                icon: Icon(Icons.settings), label: LocaleKeys.settings.tr()),
           ],
           onTap: _onTappedBar,
           currentIndex: _selectedIndex,
@@ -69,7 +71,4 @@ class _BottomBarState extends State<BottomBar> {
     ),
     );
   }
-
-
-
 }

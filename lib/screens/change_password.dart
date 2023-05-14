@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({Key? key}) : super(key: key);
@@ -21,7 +23,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-          title: const Text('Change Password',
+          title: Text(LocaleKeys.change_password.tr(),
             style: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.w600,
@@ -36,18 +38,18 @@ class _ChangePasswordState extends State<ChangePassword> {
         body: Column(
           children: [
             SizedBox(height: 20),
-            textfieldContainer('Current Password'),
+            textfieldContainer(LocaleKeys.change_password.tr()),
             SizedBox(height: 15),
-            textfieldContainer('New Password'),
+            textfieldContainer(LocaleKeys.new_password.tr()),
             SizedBox(height: 15),
-            textfieldContainer('Confirm Password'),
+            textfieldContainer(LocaleKeys.confirm_password.tr()),
             Expanded(child: SizedBox()),
             Container(
               width: width,
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: ElevatedButton(onPressed: (){},style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-              ), child: Text('Save')),
+              ), child: Text(LocaleKeys.save.tr())),
             )
           ],
         ),

@@ -83,6 +83,7 @@ class ListProvider with ChangeNotifier {
       {'user_id': prefs.getString('user_id')},
     );
     final data = jsonDecode(result.body) as Map<String, dynamic>;
+
     if (result.statusCode == 200) {
       List<GlistModel> myData = [];
       List<String> len = [];
@@ -202,7 +203,7 @@ class ListProvider with ChangeNotifier {
     );
 
     final data = jsonDecode(result.body) as Map<String, dynamic>;
-    log(result.body);
+
     return data;
   }
 
@@ -254,7 +255,7 @@ class ListProvider with ChangeNotifier {
     log(result.statusCode.toString());
     if (result.statusCode == 200) {
       _msg = 'List fetched successfully';
-
+      log(result.body);
       List<AddedItemsModel> myData = [];
       for (var d in data['data']) {
         myData.add(AddedItemsModel.fromJson(d));
@@ -288,6 +289,30 @@ class ListProvider with ChangeNotifier {
       _msg = data['errors']['name'][0];
       notifyListeners();
       throw Exception(data['errors']['name'][0]);
+    }
+  }
+
+  Future<dynamic> updateListItem(
+      String listId, String itemId, String price, String qty) async {
+    final result = await AuthenticationServices.baseFunction(
+      Uri.parse('https://weshop.quitbug.com/public/api/listitemupdate'),
+      {
+        'gros_list_id': listId,
+        'item_id': itemId,
+        'item_qty': qty,
+        'item_price': price,
+      },
+    );
+    final data = jsonDecode(result.body) as Map<String, dynamic>;
+    log(result.statusCode.toString());
+    log(result.body);
+    if (result.statusCode == 200) {
+      _msg = 'List updated successfully';
+      notifyListeners();
+    } else {
+      _msg = data['errors']['gros_list_id'];
+      notifyListeners();
+      throw Exception(data['errors']['gros_list_id'][0]);
     }
   }
 }
