@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 
 import '../../screens/qr_code.dart';
 import '../constant/widget_constants.dart';
@@ -60,7 +62,7 @@ class _ListLabelState extends State<ListLabel> {
                 children: [
                   Container(
                     child: Text(
-                      'Add Contributor',
+                      LocaleKeys.add_contributer.tr(),
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500,
@@ -81,7 +83,7 @@ class _ListLabelState extends State<ListLabel> {
               children: [
                 Container(
                   child: Text(
-                    displayText,
+                    LocaleKeys.select_access.tr(),
                     style: TextStyle(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w400,
@@ -100,23 +102,24 @@ class _ListLabelState extends State<ListLabel> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Expanded(
-                  child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                          side: BorderSide(
-                        color: Color.fromRGBO(0, 173, 25, 1),
-                      )),
-                      onPressed: () {
-                        // changeText();
-                      },
-                      child: Text(
-                        'Limited Access',
-                        style: TextStyle(
-                          fontSize: 11.0,
-                          fontWeight: FontWeight.w300,
-                          color: Color.fromRGBO(100, 100, 100, 1),
-                        ),
-                      )),
-                ),
+                    child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                      side: BorderSide(
+                    color: Color.fromRGBO(0, 173, 25, 1),
+                  )),
+
+                  // changeText();
+
+                  onPressed: () {},
+                  child: Text(
+                    LocaleKeys.limited_acces.tr(),
+                    style: TextStyle(
+                      fontSize: 11.0,
+                      fontWeight: FontWeight.w300,
+                      color: Color.fromRGBO(100, 100, 100, 1),
+                    ),
+                  ),
+                )),
                 SizedBox(width: 15),
                 Expanded(
                   child: OutlinedButton(
@@ -128,7 +131,7 @@ class _ListLabelState extends State<ListLabel> {
                         // changeText2();
                       },
                       child: Text(
-                        'Full Access',
+                        LocaleKeys.full_access.tr(),
                         style: TextStyle(
                           fontSize: 11.0,
                           fontWeight: FontWeight.w300,
@@ -157,7 +160,7 @@ class _ListLabelState extends State<ListLabel> {
                         MaterialPageRoute(builder: (context) => QrCode()));
                   },
                   child: Text(
-                    'Continue',
+                    LocaleKeys.continue_word.tr(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14.0,
@@ -199,7 +202,7 @@ class _ListLabelState extends State<ListLabel> {
   bool _isVisible5 = false;
 
   ///changing text 1
-  var displayText = "Select Access Type ";
+
   ValueNotifier<bool> title = ValueNotifier(false);
 
   @override
@@ -278,7 +281,7 @@ class _ListLabelState extends State<ListLabel> {
             children: [
               Expanded(
                 child: Text(
-                  'List Label',
+                  LocaleKeys.list_label.tr(),
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
@@ -316,7 +319,7 @@ class _ListLabelState extends State<ListLabel> {
                               left: 10.0,
                             ),
                             child: Text(
-                              'Delete',
+                              LocaleKeys.delete.tr(),
                               style: TextStyle(
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w400,
@@ -402,7 +405,7 @@ class _ListLabelState extends State<ListLabel> {
                                 // Navigator.of(context).push(MaterialPageRoute(builder: (context) => mylist2()));
                               },
                               child: Text(
-                                'Share',
+                                LocaleKeys.share.tr(),
                                 style: TextStyle(
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w400,
@@ -429,7 +432,7 @@ class _ListLabelState extends State<ListLabel> {
                               left: 10.0,
                             ),
                             child: Text(
-                              'Scan QR Code',
+                              LocaleKeys.scan_qr_code.tr(),
                               style: TextStyle(
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w400,
@@ -476,7 +479,7 @@ class _ListLabelState extends State<ListLabel> {
                     left: 16.0,
                   ),
                   child: Text(
-                    'Total',
+                    LocaleKeys.total.tr(),
                     style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w600,
@@ -513,7 +516,7 @@ class _ListLabelState extends State<ListLabel> {
                   } else if (snapshot.hasData) {
                     if (snapshot.data['data'].isEmpty) {
                       return Center(
-                        child: Text('No data found'),
+                        child: Text(LocaleKeys.no_data_found.tr()),
                       );
                     }
                     return ListView.builder(
@@ -865,7 +868,7 @@ class _ListLabelState extends State<ListLabel> {
                   rightContainer('pkr', '180', ctr2, index,
                       value: data['item_price']),
                   SizedBox(width: 12),
-                  rightContainer('total', '180', ctr3, index,
+                  rightContainer(LocaleKeys.total.tr(), '180', ctr3, index,
                       isTotal: true,
                       value: data['item_price'] != null &&
                               data['item_qty'] != null
@@ -887,7 +890,7 @@ class _ListLabelState extends State<ListLabel> {
                             isEdit.value = !isEdit.value;
                             currentIndex = -1;
                           },
-                          child: Text('Cancel'),
+                          child: Text(LocaleKeys.cancel_word.tr()),
                           style: OutlinedButton.styleFrom(
                               foregroundColor: Colors.green,
                               side: BorderSide(
@@ -929,7 +932,7 @@ class _ListLabelState extends State<ListLabel> {
                             isEdit.value = !isEdit.value;
                             currentIndex = -1;
                           },
-                          child: Text('Update'),
+                          child: Text(LocaleKeys.update.tr()),
                           style: OutlinedButton.styleFrom(
                               backgroundColor: Colors.green,
                               foregroundColor: Colors.white,

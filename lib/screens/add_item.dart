@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weshop/providers/list_provider.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 
 import '../constant/widget_constants.dart';
 
@@ -74,8 +76,8 @@ class _AddItemState extends State<AddItem> {
                 margin: EdgeInsets.only(
                   left: 30.0,
                 ),
-                child: const Text(
-                  'Add Item',
+                child: Text(
+                  LocaleKeys.add_item.tr(),
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
@@ -116,7 +118,7 @@ class _AddItemState extends State<AddItem> {
                       color: Color.fromRGBO(100, 100, 100, 1),
                     )),
                     contentPadding: EdgeInsets.only(top: 8.0),
-                    hintText: 'Search',
+                    hintText: LocaleKeys.search.tr(),
                     hintStyle: TextStyle(
                       color: Color.fromRGBO(100, 100, 100, 1),
                       fontSize: 18.0,
@@ -149,7 +151,7 @@ class _AddItemState extends State<AddItem> {
                   } else if (snapshot.hasData) {
                     if (snapshot.data['data'].isEmpty) {
                       return Center(
-                        child: Text('No data found'),
+                        child: Text(LocaleKeys.no_data_found.tr()),
                       );
                     }
                     return ListView.builder(
@@ -216,7 +218,7 @@ class _AddItemState extends State<AddItem> {
                 child: Row(
                   children: [
                     Text(
-                      'Select Unit:',
+                      LocaleKeys.select_unit.tr(),
                       style: TextStyle(color: Colors.black54),
                     ),
                     SizedBox(width: 20),
@@ -259,7 +261,7 @@ class _AddItemState extends State<AddItem> {
               Align(
                 alignment: Alignment.bottomRight,
                 child: Container(
-                  height: 25,
+                  height: 30,
                   margin: EdgeInsets.only(bottom: 10, right: 5, top: 5),
                   child: ElevatedButton(
                     onPressed: () async {
@@ -288,7 +290,7 @@ class _AddItemState extends State<AddItem> {
                           borderRadius: BorderRadius.circular(20),
                           side: BorderSide.none),
                     ),
-                    child: Text('Add Item'),
+                    child: Text(LocaleKeys.add_item.tr()),
                   ),
                 ),
               ),

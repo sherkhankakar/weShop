@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 
 class NotificationSettings extends StatefulWidget {
   const NotificationSettings({Key? key}) : super(key: key);
@@ -21,7 +23,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
     return SafeArea(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-        title: const Text('Notification Settings',
+        title: Text(LocaleKeys.notification_settings.tr(),
           style: TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.w600,
@@ -41,7 +43,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('List Request Notifications',
+                Text(LocaleKeys.list_request_notification.tr(),
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,
@@ -72,7 +74,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('List Changes Notifications',
+                Text(LocaleKeys.list_changes_notifications.tr(),
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,

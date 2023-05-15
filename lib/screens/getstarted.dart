@@ -1,8 +1,10 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 import '../constant/widget_constants.dart';
 import '../main.dart';
 import 'Sign_In.dart';
@@ -85,7 +87,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
               right: 15.0,
             ),
             child: Text(
-              "logout",
+              LocaleKeys.logout.tr(),
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -303,7 +305,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Get Started',
+                  LocaleKeys.get_started.tr(),
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.w600,
@@ -325,7 +327,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                 controller: nameController,
                 // autovalidateMode: AutovalidateMode.onUserInteraction,
                 cursorColor: Color.fromRGBO(100, 100, 100, 1),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   contentPadding: EdgeInsets.only(left: 15.0),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -335,7 +337,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                     borderSide: BorderSide(
                         color: Color.fromRGBO(100, 100, 100, 1), width: 1.2),
                   ),
-                  hintText: 'Full Name',
+                  hintText: LocaleKeys.full_name.tr(),
                 ),
               ),
               // validator: (password) {
@@ -367,7 +369,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                     borderSide: BorderSide(
                         color: Color.fromRGBO(100, 100, 100, 1), width: 1.2),
                   ),
-                  hintText: 'Email',
+                  hintText: LocaleKeys.Email.tr(),
                 ),
                 keyboardType: TextInputType.emailAddress,
               ),
@@ -401,7 +403,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                       borderSide: BorderSide(
                           color: Color.fromRGBO(100, 100, 100, 1), width: 1.2),
                     ),
-                    hintText: 'Password',
+                    hintText: LocaleKeys.password.tr(),
                     suffixIcon: IconButton(
                       onPressed: () {
                         setState(() {
@@ -451,7 +453,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                       borderSide: BorderSide(
                           color: Color.fromRGBO(100, 100, 100, 1), width: 1.2),
                     ),
-                    hintText: 'Confirm Password',
+                    hintText: LocaleKeys.confirm_password.tr(),
                     suffixIcon: IconButton(
                       onPressed: () {
                         setState(() {
@@ -496,7 +498,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                 },
                 // Navigator.of(context).push(MaterialPageRoute(builder: (context) => mylist()));
                 child: Text(
-                  'Get Started',
+                  LocaleKeys.get_started.tr(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14.0,
@@ -523,7 +525,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                 ),
                 Container(
                   child: Text(
-                    'Or',
+                    LocaleKeys.or.tr(),
                     style: TextStyle(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w400,
@@ -560,7 +562,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                         Image.asset('assets/images/google.png'),
                         SizedBox(width: 15),
                         Text(
-                          'Google',
+                          LocaleKeys.google.tr(),
                           style: TextStyle(
                             fontSize: 14.0,
                             fontWeight: FontWeight.w600,
@@ -584,7 +586,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                         Image.asset('assets/images/facebook-alt.png'),
                         SizedBox(width: 10),
                         Text(
-                          'Facebook',
+                          LocaleKeys.facebook.tr(),
                           style: TextStyle(
                             fontSize: 14.0,
                             fontWeight: FontWeight.w600,
@@ -609,7 +611,7 @@ class _GetStartedSTFState extends State<GetStartedSTF> {
                     .push(MaterialPageRoute(builder: (context) => signin1()));
               },
               child: Text(
-                'Already have an account?',
+                LocaleKeys.already_have_account.tr(),
                 style: TextStyle(
                   color: Color.fromRGBO(20, 20, 20, 1),
                   fontSize: 14.0,

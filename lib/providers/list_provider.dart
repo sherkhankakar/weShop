@@ -315,4 +315,8 @@ class ListProvider with ChangeNotifier {
       throw Exception(data['errors']['gros_list_id'][0]);
     }
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e1ef79a7e863ae91152bb0389e7f1a31c4b783e7

@@ -1,8 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../providers/logincontroller.dart';
+
+import 'package:weshop/translations/locale_keys.g.dart';
 
 class ProfileSetting extends StatefulWidget {
   const ProfileSetting({Key? key}) : super(key: key);
@@ -44,8 +47,8 @@ class _ProfileSettingState extends State<ProfileSetting> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-          title: const Text(
-            'Profile Settings',
+          title: Text(
+            LocaleKeys.profile_settings.tr(),
             style: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.w600,
@@ -85,7 +88,9 @@ class _ProfileSettingState extends State<ProfileSetting> {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8)),
                           borderSide: BorderSide(color: Colors.black54)),
-                      hintText: nameCtr == null ? 'Name' : nameCtr!.text,
+                      hintText: nameCtr == null
+                          ? LocaleKeys.full_name.tr()
+                          : nameCtr!.text,
                       hintStyle: TextStyle(color: Colors.black45),
                     ),
                     validator: (value) {
@@ -116,7 +121,9 @@ class _ProfileSettingState extends State<ProfileSetting> {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8)),
                           borderSide: BorderSide(color: Colors.black54)),
-                      hintText: emailCtr == null ? 'Email' : emailCtr!.text,
+                      hintText: emailCtr == null
+                          ? LocaleKeys.Email.tr()
+                          : emailCtr!.text,
                       hintStyle: TextStyle(color: Colors.black45),
                     ),
                     validator: (value) {
@@ -166,7 +173,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
                     builder: (context, isLoading, child) {
                       return isLoading == true
                           ? CircularProgressIndicator()
-                          : Text('Save');
+                          : Text(LocaleKeys.save.tr());
                     },
                   ),
                 ),

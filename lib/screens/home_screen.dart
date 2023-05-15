@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 import '../constant/widget_constants.dart';
 import '../providers/list_provider.dart';
 import 'list_label.dart';
@@ -40,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ///for active button
   bool isButtonActive = true;
 
-  String datatochange = "Delete";
+  String datatochange = LocaleKeys.delete.tr();
 
   ///ya function check box ma use ho raha text ko update karna k lie
   void changedata() {
@@ -49,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  String datatochange1 = "Share";
+  String datatochange1 = LocaleKeys.share.tr();
 
   ///ya function check box ma use ho raha text ko update karna k lie
   void changedata1() {
@@ -125,7 +127,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Center(
                 child: Text(
-              isEditing == true ? "Update List" : "New List",
+              isEditing == true
+                  ? LocaleKeys.update_list.tr()
+                  : LocaleKeys.new_list.tr(),
               style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w600,
@@ -138,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               child: Center(
                   child: Text(
-                "Enter new list name",
+                LocaleKeys.new_list_description.tr(),
                 style: TextStyle(
                   fontSize: 12.0,
                   fontWeight: FontWeight.w400,
@@ -176,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderSide: BorderSide(
                           color: Color.fromRGBO(100, 100, 100, 1), width: 1.2),
                     ),
-                    hintText: listName ?? 'List Name',
+                    hintText: listName ?? LocaleKeys.list_name.tr(),
                   ),
                 ),
 
@@ -243,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                 },
                 child: Text(
-                  'Continue',
+                  LocaleKeys.continue_word.tr(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14.0,
@@ -285,7 +289,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   left: 10.0,
                 ),
                 child: Text(
-                  'Delete',
+                  LocaleKeys.delete.tr(),
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,
@@ -311,7 +315,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   left: 10.0,
                 ),
                 child: Text(
-                  'Scan QR Code',
+                  LocaleKeys.scan_qr_code.tr(),
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,
@@ -683,15 +687,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Container(
                         child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                if (_isVisible4 = false) {}
-                                if (_isVisible6 = false) {}
-                                if (_isVisible5 = true) {}
-                                if (_isVisible3 = true) {}
-                                if (_isVisible9 = true) {}
-                              });
-                            },
+                            onTap: () {},
                             child: Icon(
                               Icons.close,
                               color: Color.fromRGBO(255, 255, 255, 1),
@@ -724,19 +720,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: Row(
                     children: [
                       Container(
-                        child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                if (_isVisible7 = false) {}
-                                if (_isVisible10 = false) {}
-                                if (_isVisible8 = false) {}
-                                if (_isVisible12 = false) {}
-                                if (_isVisible9 = true) {}
-                                if (_isVisible5 = true) {}
-                                if (_isVisible3 = true) {}
-                              });
-                            },
-                            child: Icon(Icons.close)),
+                        child: InkWell(onTap: () {}, child: Icon(Icons.close)),
                       ),
                       Container(
                         margin: EdgeInsets.only(
@@ -789,7 +773,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   } else if (snapshot.hasData) {
                     if (snapshot.data['data']['glists'].isEmpty) {
                       return Center(
-                        child: Text('No data found'),
+                        child: Text(LocaleKeys.no_data_found.tr()),
                       );
                     }
                     return ListView.builder(
@@ -923,7 +907,7 @@ class _HomeScreenState extends State<HomeScreen> {
             valueListenable: isEmptyList,
             builder: (BuildContext context, bool value, Widget? child) {
               return Text(
-                'items: ${provider!.gListLength[index]}',
+                '${LocaleKeys.items.tr()} ${provider!.gListLength[index]}',
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 13.0,

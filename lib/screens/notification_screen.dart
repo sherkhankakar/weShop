@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
@@ -21,8 +23,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
         child: Scaffold(
             appBar: AppBar(
               backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-              title: const Text(
-                'Notification',
+              title: Text(
+                LocaleKeys.notifications.tr(),
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w600,
@@ -42,7 +44,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     children: [
                       const SizedBox(height: 10),
                       notificationCard(index, 'Name',
-                          'Requested to add an item to list name', '5 min'),
+                          LocaleKeys.notification_description.tr(), '5 min'),
                     ],
                   );
                 },

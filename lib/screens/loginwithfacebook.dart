@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 
 class LoginWithFacebook extends StatefulWidget {
   const LoginWithFacebook({Key? key}) : super(key: key);
@@ -42,7 +44,7 @@ class _LoginWithFacebookState extends State<LoginWithFacebook> {
               await FacebookAuth.instance.logOut();
               setState(() {
               });
-            }, child: Text("Logout"))
+            }, child: Text(LocaleKeys.logout.tr()))
           ],
         ),
       ),

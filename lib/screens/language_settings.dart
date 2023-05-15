@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 
 class LanguageSettings extends StatefulWidget {
   const LanguageSettings({Key? key}) : super(key: key);
@@ -8,7 +10,6 @@ class LanguageSettings extends StatefulWidget {
 }
 
 class _LanguageSettingsState extends State<LanguageSettings> {
-
   late double width;
   late double height;
   int _value = 1;
@@ -17,19 +18,23 @@ class _LanguageSettingsState extends State<LanguageSettings> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    return SafeArea(child: Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-        title: const Text('Language Settings',
+        title: Text(
+          LocaleKeys.language_settings.tr(),
           style: TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.w600,
             color: Colors.white,
           ),
         ),
-        leading: IconButton(onPressed: (){
-          Navigator.of(context).pop();
-        },icon: Icon(Icons.arrow_back_ios_rounded)),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(Icons.arrow_back_ios_rounded)),
         centerTitle: true,
       ),
       body: Padding(
@@ -39,7 +44,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
             SizedBox(
               height: 21.0,
             ),
-            rowTiles('English', 1),
+            rowTiles('English', 1, 'en', 'US'),
             Divider(
               color: Colors.grey,
               height: 1,
@@ -47,7 +52,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
               indent: 0,
               endIndent: 1,
             ),
-            rowTiles('Urdu', 2),
+            rowTiles('Urdu', 2, 'ur', 'PAK'),
             Divider(
               color: Colors.grey,
               height: 1,
@@ -55,7 +60,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
               indent: 0,
               endIndent: 1,
             ),
-            rowTiles('Roman', 3),
+            rowTiles('Chinese', 3, 'zh', 'CHN'),
             Divider(
               color: Colors.grey,
               height: 1,
@@ -63,7 +68,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
               indent: 0,
               endIndent: 1,
             ),
-            rowTiles('Chinese', 4),
+            rowTiles('French', 4, 'fr', 'FRA'),
             Divider(
               color: Colors.grey,
               height: 1,
@@ -71,7 +76,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
               indent: 0,
               endIndent: 1,
             ),
-            rowTiles('Hindi', 5),
+            rowTiles('Arabic', 5, 'ar', 'SAU'),
             Divider(
               color: Colors.grey,
               height: 1,
@@ -79,61 +84,36 @@ class _LanguageSettingsState extends State<LanguageSettings> {
               indent: 0,
               endIndent: 1,
             ),
-            rowTiles('French', 6),
-            Divider(
-              color: Colors.grey,
-              height: 1,
-              thickness: 0,
-              indent: 0,
-              endIndent: 1,
+            SizedBox(
+              height: 40,
             ),
-            rowTiles('Spanish', 7),
-            Divider(
-              color: Colors.grey,
-              height: 1,
-              thickness: 0,
-              indent: 0,
-              endIndent: 1,
-            ),
-            rowTiles('Arabic', 8),
-            Divider(
-              color: Colors.grey,
-              height: 1,
-              thickness: 0,
-              indent: 0,
-              endIndent: 1,
-            ),
-
           ],
         ),
       ),
     ));
   }
 
-  rowTiles(String title, int i) {
+  rowTiles(String title, int i, String selectedLang, String selectedCountry) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title,
+        Text(
+          title,
           style: TextStyle(
-            fontSize: 16.0,
-            fontWeight: FontWeight.w400,
-            color: Colors.black
-          ),),
+              fontSize: 16.0, fontWeight: FontWeight.w400, color: Colors.black),
+        ),
         Radio(
           activeColor: Color.fromRGBO(0, 173, 25, 1),
           value: i,
           groupValue: _value,
-          onChanged: (value){
+          onChanged: (value) {
             setState(() {
+              context.locale = Locale(selectedLang, selectedCountry);
               _value = value!;
             });
           },
-
         ),
-
       ],
     );
   }
-
 }

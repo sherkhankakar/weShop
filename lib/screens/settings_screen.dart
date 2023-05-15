@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weshop/screens/profile_settings.dart';
+import 'package:weshop/translations/locale_keys.g.dart';
 
 import '../main.dart';
 import 'change_password.dart';
@@ -39,8 +41,8 @@ class _SettingScreenState extends State<SettingScreen> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-            title: const Text(
-              'Settings',
+            title: Text(
+              LocaleKeys.settings.tr(),
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.w600,
@@ -85,7 +87,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     color: Color.fromRGBO(52, 107, 33, 1),
                     size: 25.0,
                   ),
-                  'Profile Settings'),
+                  LocaleKeys.profile_settings.tr()),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Divider(
@@ -103,7 +105,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     color: Color.fromRGBO(52, 107, 33, 1),
                     size: 25.0,
                   ),
-                  'Change Password'),
+                  LocaleKeys.change_password.tr()),
 
               ///line
               Padding(
@@ -123,7 +125,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     color: Color.fromRGBO(52, 107, 33, 1),
                     size: 25.0,
                   ),
-                  'Notification Settings'),
+                  LocaleKeys.notification_settings.tr()),
 
               ///line
               Padding(
@@ -144,7 +146,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     color: Color.fromRGBO(52, 107, 33, 1),
                     size: 25.0,
                   ),
-                  'Location Settings'),
+                  LocaleKeys.location_setting.tr()),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Divider(
@@ -162,7 +164,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     color: Color.fromRGBO(52, 107, 33, 1),
                     size: 25.0,
                   ),
-                  'Language Settings'),
+                  LocaleKeys.language_settings.tr()),
 
               ///line
               Padding(
@@ -183,7 +185,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     color: Color.fromRGBO(52, 107, 33, 1),
                     size: 25.0,
                   ),
-                  'Share App'),
+                  LocaleKeys.share_app.tr()),
               SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -202,7 +204,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     color: Color.fromRGBO(52, 107, 33, 1),
                     size: 25.0,
                   ),
-                  'Rate  Us'),
+                  LocaleKeys.rate_us.tr()),
               SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -221,7 +223,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     color: Color.fromRGBO(52, 107, 33, 1),
                     size: 25.0,
                   ),
-                  'Logout', ontap: () async {
+                  LocaleKeys.logout.tr(), ontap: () async {
                 final prefs = await SharedPreferences.getInstance();
                 await GoogleSignIn().signOut();
                 prefs.clear().whenComplete(
