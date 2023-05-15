@@ -197,8 +197,8 @@ class loginController with ChangeNotifier {
       Apiserviceconstant.updatePassword,
       {
         'user_id': prefs.getString('user_id'),
-        'cur_pass': currPass,
-        'new_pass': newPass
+        'current_password': currPass,
+        'new_password': newPass
       },
     ).whenComplete(() {
       _isLoading = false;
@@ -214,9 +214,9 @@ class loginController with ChangeNotifier {
       _msg = 'Password Updated Successfully';
       notifyListeners();
     } else {
-      _msg = data['errors']['email'][0] ??
-          data['errors']['cur_pass'][0] ??
-          data['erros']['new_pass'][0];
+      _msg = data['errors']['user_id'][0] ??
+          data['errors']['current_password'][0] ??
+          data['erros']['new_password'][0];
       notifyListeners();
     }
     print(result);
