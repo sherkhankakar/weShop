@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../network/Api_service.dart';
 import '../models/glist_model.dart';
+import '../models/list_model.dart';
 import '../network/Api_service_constant.dart';
 
 class ListProvider with ChangeNotifier {
@@ -19,6 +20,23 @@ class ListProvider with ChangeNotifier {
 
   String _selectedValue = 'Dozen';
 
+  bool _isEdit = false;
+  bool get isEdit => _isEdit;
+
+  bool _title = false;
+  bool get title => _title;
+
+  void getEditValue(bool value) {
+    _isEdit = value;
+    log(_isEdit.toString());
+    notifyListeners();
+  }
+
+  void getTitle(bool value) {
+    _title = value;
+    notifyListeners();
+  }
+
   String get selectedValue => _selectedValue;
 
   void setSelectedValue(String value) {
@@ -26,9 +44,8 @@ class ListProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  set currentIndex(int newValue) {
-    _currentIndex = newValue;
-    log(newValue.toString());
+  void setCurrentIndex(int value) {
+    _currentIndex = value;
     notifyListeners();
   }
 
@@ -75,32 +92,68 @@ class ListProvider with ChangeNotifier {
     }
   }
 
-  Stream<dynamic> getLists() async* {
+  Map<String, String> _grandTotal = {};
+  Map<String, String> get grandTotal => _grandTotal;
+
+  Future<dynamic> getLists() async {
     final prefs = await SharedPreferences.getInstance();
 
     final result = await AuthenticationServices.baseFunction(
       Apiserviceconstant.list,
       {'user_id': prefs.getString('user_id')},
     );
+
     final data = jsonDecode(result.body) as Map<String, dynamic>;
 
     if (result.statusCode == 200) {
       List<GlistModel> myData = [];
       List<String> len = [];
       List<Item> sortedList = [];
-      for (var d in data['data']['glists']) {
+      for (var d
+          in (data['data']['glists'] + data['data']['listcontributers'])) {
         myData.add(GlistModel.fromJson(d));
         sortedList.add(Item.fromJson(d));
         len.add(d['list_item'].length.toString());
+      }
+      _totalPrice.clear();
+      _grandTotal.clear();
+      for (int i = 0; i < data['data']['glists'].length; i++) {
+        for (int j = 0;
+            j < data['data']['glists'][i]['list_item'].length;
+            j++) {
+          print(
+              'for loop:  ${data['data']['glists'][i]['list_item'][j]['item_price']}');
+
+          if (data['data']['glists'][i]['list_item'][j]['item_price'] != null &&
+              data['data']['glists'][i]['list_item'][j]['item_qty'] != null) {
+            calculateTotalPrice(
+              data['data']['glists'][i]['list_item'][j]['item_price']
+                  .toString(),
+              data['data']['glists'][i]['list_item'][j]['item_qty'].toString(),
+              data['data']['glists'][i]['list_item'][j]['item_id'].toString(),
+            );
+            if (_grandTotal.containsKey(data['data']['glists'][i]['name'])) {
+              _grandTotal.update(
+                  data['data']['glists'][i]['name'],
+                  (value) =>
+                      '${(int.parse(data['data']['glists'][i]['list_item'][j]['item_price']) * int.parse(data['data']['glists'][i]['list_item'][j]['item_qty']))}');
+            } else {
+              _grandTotal.addAll({
+                '${data['data']['glists'][i]['name']}':
+                    '${(int.parse(data['data']['glists'][i]['list_item'][j]['item_price']) * int.parse(data['data']['glists'][i]['list_item'][j]['item_qty']))}'
+              });
+            }
+          }
+        }
       }
 
       myDataList = myData;
       _glistLength = len;
       _items = sortedList;
       notifyListeners();
-      yield data;
+      return data;
     } else {
-      yield data;
+      return data;
     }
   }
 
@@ -132,7 +185,6 @@ class ListProvider with ChangeNotifier {
       }
       _idsList = ids;
       notifyListeners();
-      print(_idsList);
     }
   }
 
@@ -150,7 +202,7 @@ class ListProvider with ChangeNotifier {
       {'user_id': prefs.getString('user_id'), 'name': listName},
     );
     final data = jsonDecode(result.body) as Map<String, dynamic>;
-    log(result.statusCode.toString());
+
     if (result.statusCode == 200) {
       _msg = 'List added successfully';
       notifyListeners();
@@ -166,7 +218,7 @@ class ListProvider with ChangeNotifier {
       {'gros_list_id': listId, 'item_id': itemId},
     );
     final data = jsonDecode(result.body) as Map<String, dynamic>;
-    log(result.statusCode.toString());
+
     if (result.statusCode == 200) {
       _msg = 'List added successfully';
       notifyListeners();
@@ -244,35 +296,34 @@ class ListProvider with ChangeNotifier {
     }
   }
 
-  Future<dynamic> fetchListedItems(String listId) async {
+  Future<ListModel> fetchListedItems(String listId) async {
     final result = await AuthenticationServices.baseFunction(
       Apiserviceconstant.getListedItems,
       {
         'gros_list_id': listId,
       },
     );
-    final data = jsonDecode(result.body) as Map<String, dynamic>;
-    log(result.statusCode.toString());
+    final data = ListModel.fromJson(jsonDecode(result.body));
+    final mapData = jsonDecode(result.body) as Map<String, dynamic>;
     if (result.statusCode == 200) {
       _msg = 'List fetched successfully';
-      log(result.body);
+
       List<AddedItemsModel> myData = [];
-      for (var d in data['data']) {
+      for (var d in mapData['data']) {
         myData.add(AddedItemsModel.fromJson(d));
       }
-
       myDataList = myData;
 
       notifyListeners();
       return data;
     } else {
-      _msg = data['errors']['name'][0];
+      _msg = data.success.toString();
       notifyListeners();
       return data;
     }
   }
 
-  Future<String> getSingleItem(String itemId) async {
+  Future<dynamic> getSingleItem(String itemId, String price, String qty) async {
     final result = await AuthenticationServices.baseFunction(
       Apiserviceconstant.getItem,
       {
@@ -280,11 +331,12 @@ class ListProvider with ChangeNotifier {
       },
     );
     final data = jsonDecode(result.body) as Map<String, dynamic>;
-    log(result.statusCode.toString());
+
     if (result.statusCode == 200) {
       _msg = 'List fetched successfully';
       notifyListeners();
-      return data['data']['name'];
+      print(data);
+      return data;
     } else {
       _msg = data['errors']['name'][0];
       notifyListeners();
@@ -293,9 +345,9 @@ class ListProvider with ChangeNotifier {
   }
 
   Future<dynamic> updateListItem(
-      String listId, String itemId, String price, String qty) async {
+      String listId, String itemId, String price, String qty, int index) async {
     final result = await AuthenticationServices.baseFunction(
-      Uri.parse('https://weshop.quitbug.com/public/api/listitemupdate'),
+      Uri.parse('http://weshop.kretivetech.com/public/api/listitemupdate'),
       {
         'gros_list_id': listId,
         'item_id': itemId,
@@ -305,9 +357,11 @@ class ListProvider with ChangeNotifier {
     );
     final data = jsonDecode(result.body) as Map<String, dynamic>;
     log(result.statusCode.toString());
-    log(result.body);
+
     if (result.statusCode == 200) {
       _msg = 'List updated successfully';
+      // calculateTotalPrice(price, qty, itemId);
+      getLists();
       notifyListeners();
     } else {
       _msg = data['errors']['gros_list_id'];
@@ -315,8 +369,41 @@ class ListProvider with ChangeNotifier {
       throw Exception(data['errors']['gros_list_id'][0]);
     }
   }
-<<<<<<< HEAD
+
+  Map<String, dynamic> _totalPrice = {};
+
+  Map<String, dynamic> get totalPrice => _totalPrice;
+
+  void calculateTotalPrice(String? price, String qty, String itemId) {
+    if (_totalPrice.containsKey(itemId)) {
+      _totalPrice.update(
+          itemId, (value) => '${int.parse(price!) * int.parse(qty)}');
+
+      log('grandTotal: $_grandTotal');
+    } else {
+      _totalPrice.addAll({itemId: '${int.parse(price!) * int.parse(qty)}'});
+    }
+    notifyListeners();
+  }
+
+  Future<void> addContributor(String listId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final result = await AuthenticationServices.baseFunction(
+        Apiserviceconstant.addContributor, {
+      'user_id': prefs.getString('user_id'),
+      'gros_list_id': listId,
+    }).catchError((e) {
+      _msg = e.toString();
+      notifyListeners();
+    });
+
+    if (result.statusCode == 200) {
+      _msg = 'Added as a Contributor successfully';
+      notifyListeners();
+    } else {
+      _msg = result['errors']['gros_list_id'][0];
+      notifyListeners();
+      throw Exception(result['errors']['gros_list_id'][0]);
+    }
+  }
 }
-=======
-}
->>>>>>> e1ef79a7e863ae91152bb0389e7f1a31c4b783e7

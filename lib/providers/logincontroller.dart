@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -52,9 +51,9 @@ class loginController with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     });
-    log(result.statusCode.toString());
+
     final data = jsonDecode(result.body) as Map<String, dynamic>;
-    log(result.body);
+
     if (result.statusCode == 200 && data['success'] == true) {
       prefs.setString('user_id', data['user']['id'].toString());
       prefs.setString('token', data['token']);
@@ -67,7 +66,6 @@ class loginController with ChangeNotifier {
       _msg = data['message'];
       notifyListeners();
     }
-    print(result);
   }
 
   Future<dynamic> registerNewUser(
@@ -78,16 +76,14 @@ class loginController with ChangeNotifier {
       {'name': name, 'email': email, 'password': password},
     );
 
-    log(result.statusCode.toString());
     final data = jsonDecode(result.body) as Map<String, dynamic>;
     if (result.statusCode == 201) {
       prefs.setString('token', data['token']);
       _msg = 'Successfully registered';
-      print(data);
+
       notifyListeners();
       return data;
     } else {
-      print(data);
       _msg = data['errors']['email'][0];
       notifyListeners();
       return data;
@@ -104,7 +100,7 @@ class loginController with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     });
-    log(result.statusCode.toString());
+
     final data = jsonDecode(result.body) as Map<String, dynamic>;
     if (result.statusCode == 200) {
       _msg = 'Successful';
@@ -127,7 +123,6 @@ class loginController with ChangeNotifier {
       notifyListeners();
     });
     final data = jsonDecode(result.body) as Map<String, dynamic>;
-    log(result.statusCode.toString());
 
     if (result.statusCode == 200) {
       _msg = 'Successful';
@@ -150,9 +145,9 @@ class loginController with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     });
-    log(result.statusCode.toString());
+
     final data = jsonDecode(result.body) as Map<String, dynamic>;
-    print(data);
+
     if (result.statusCode == 200) {
       _msg = 'Successful';
       notifyListeners();
@@ -174,9 +169,9 @@ class loginController with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     });
-    log(result.statusCode.toString());
+
     final data = jsonDecode(result.body) as Map<String, dynamic>;
-    print(data);
+
     if (result.statusCode == 200) {
       _msg = 'Password Changed Successfully';
       notifyListeners();
@@ -207,9 +202,9 @@ class loginController with ChangeNotifier {
       _msg = e.toString();
       notifyListeners();
     });
-    log(result.statusCode.toString());
+
     final data = jsonDecode(result.body) as Map<String, dynamic>;
-    print(data);
+
     if (result.statusCode == 200) {
       _msg = 'Password Updated Successfully';
       notifyListeners();
@@ -241,9 +236,9 @@ class loginController with ChangeNotifier {
       prefs.setString('email', email);
       prefs.setString('name', userName);
     });
-    log(result.statusCode.toString());
+
     final data = jsonDecode(result.body) as Map<String, dynamic>;
-    print(data);
+
     if (result.statusCode == 200) {
       _msg = 'User Record Updated Successfully';
       notifyListeners();

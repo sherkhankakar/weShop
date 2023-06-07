@@ -1,5 +1,5 @@
 class Apiserviceconstant {
-  static const String baseUrl = "https://weshop.quitbug.com/public/api/";
+  static const String baseUrl = "http://weshop.kretivetech.com/public/api/";
 
   //authentication urls
   static final register = Uri.parse(baseUrl + "register");
@@ -18,6 +18,9 @@ class Apiserviceconstant {
   static final getItem = Uri.parse(baseUrl + 'getitem');
   static final addListItem = Uri.parse(baseUrl + 'addlistitem');
   static final deleteListItem = Uri.parse(baseUrl + 'listitemdelete');
+
+  //contributor api
+  static final addContributor = Uri.parse(baseUrl + 'addcontrilist');
 
   //get items apis
   static final getAllItems = Uri.parse(baseUrl + 'getalltitems');

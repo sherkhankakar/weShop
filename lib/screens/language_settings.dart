@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:weshop/main.dart';
 import 'package:weshop/translations/locale_keys.g.dart';
 
 class LanguageSettings extends StatefulWidget {
@@ -12,12 +16,27 @@ class LanguageSettings extends StatefulWidget {
 class _LanguageSettingsState extends State<LanguageSettings> {
   late double width;
   late double height;
-  int _value = 1;
+  int? _value;
+  SharedPreferences? prefs;
+
+  Future<void> initSharedPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _value = prefs!.getInt('lang');
+    });
+  }
+
+  @override
+  void initState() {
+    initSharedPrefs();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
@@ -106,10 +125,22 @@ class _LanguageSettingsState extends State<LanguageSettings> {
           activeColor: Color.fromRGBO(0, 173, 25, 1),
           value: i,
           groupValue: _value,
-          onChanged: (value) {
+          onChanged: (value) async {
+            prefs!.setInt('lang', value!);
+            log(prefs!.getInt('lang').toString());
             setState(() {
-              context.locale = Locale(selectedLang, selectedCountry);
-              _value = value!;
+              // context.locale = Locale(selectedLang, selectedCountry);
+              EasyLocalization.of(context)!
+                  .setLocale(
+                    Locale(
+                      selectedLang,
+                      selectedCountry,
+                    ),
+                  )
+                  .whenComplete(() => Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (ctx) => MyApp()),
+                      (route) => false));
+              _value = value;
             });
           },
         ),

@@ -9,6 +9,7 @@ import '../../screens/qr_code.dart';
 import '../constant/widget_constants.dart';
 import '../providers/list_provider.dart';
 import 'add_item.dart';
+import 'qr_scanner_screen.dart';
 
 class ListLabel extends StatefulWidget {
   const ListLabel({Key? key, required this.listId, required this.totoalPrice})
@@ -157,7 +158,12 @@ class _ListLabelState extends State<ListLabel> {
                     Navigator.pop(context);
 
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => QrCode()));
+                      MaterialPageRoute(
+                        builder: (context) => QrCodeScreen(
+                          grosListId: widget.listId,
+                        ),
+                      ),
+                    );
                   },
                   child: Text(
                     LocaleKeys.continue_word.tr(),
@@ -209,6 +215,9 @@ class _ListLabelState extends State<ListLabel> {
   void initState() {
     provider = Provider.of<ListProvider>(context, listen: false);
     super.initState();
+    ctr1 = TextEditingController(text: '0');
+    ctr2 = TextEditingController(text: '0');
+    ctr3 = TextEditingController();
   }
 
   @override
@@ -418,29 +427,38 @@ class _ListLabelState extends State<ListLabel> {
                       ),
                     ),
                     PopupMenuItem(
-                      child: Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: const Icon(
-                              Icons.qr_code_scanner_rounded,
-                              color: Color.fromRGBO(52, 107, 33, 1),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (ctx) => QRViewExample(),
                             ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              left: 10.0,
-                            ),
-                            child: Text(
-                              LocaleKeys.scan_qr_code.tr(),
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w400,
-                                color: Color.fromRGBO(20, 20, 20, 1),
+                          );
+                        },
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              child: const Icon(
+                                Icons.qr_code_scanner_rounded,
+                                color: Color.fromRGBO(52, 107, 33, 1),
                               ),
                             ),
-                          ),
-                        ],
+                            Container(
+                              margin: EdgeInsets.only(
+                                left: 10.0,
+                              ),
+                              child: Text(
+                                LocaleKeys.scan_qr_code.tr(),
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color.fromRGBO(20, 20, 20, 1),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ];
@@ -522,7 +540,13 @@ class _ListLabelState extends State<ListLabel> {
                     return ListView.builder(
                         itemCount: snapshot.data['data'].length,
                         itemBuilder: (context, index) {
-                          return tileCard(snapshot.data['data'][index], index);
+                          ctr1 = TextEditingController(
+                              text: snapshot.data['data'][index]['item_qty']);
+                          ctr2 = TextEditingController(
+                              text: snapshot.data['data'][index]['item_price']);
+
+                          return tileCard(
+                              snapshot.data['data'][index], index, context);
                         });
                   } else {
                     return Center(
@@ -757,7 +781,7 @@ class _ListLabelState extends State<ListLabel> {
   ValueNotifier isEdit = ValueNotifier(false);
   int currentIndex = -1;
 
-  Widget tileCard(dynamic data, int index) {
+  Widget tileCard(dynamic data, int index, BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: isEdit,
       builder: (BuildContext context, dynamic value, Widget? child) {
@@ -797,84 +821,105 @@ class _ListLabelState extends State<ListLabel> {
                       );
                     },
                   ),
-                  Container(
-                      margin: EdgeInsets.only(
-                        top: 4.0,
-                      ),
-                      child: FutureBuilder<String>(
-                        future: provider!.getSingleItem(data['item_id']),
-                        builder: (context, snapshot) {
-                          log('future builder');
-                          if (snapshot.hasError) {
-                            return Text(
-                              snapshot.error.toString(),
-                            );
-                          } else if (snapshot.hasData) {
-                            return Text(
-                              snapshot.data!,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16.0,
-                              ),
-                            );
-                          } else {
-                            return Text('Loading...');
-                          }
-                        },
-                      )),
-                  Container(
-                    margin: EdgeInsets.only(top: 16.0, left: 3),
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(52, 107, 33, 1),
-                        borderRadius: BorderRadius.circular(4)),
-                    width: 13,
-                    height: 15,
-                    child: Center(
-                      child: Text(
-                        'L',
-                        style: TextStyle(
-                          fontSize: 9,
-                          color: Colors.white,
+                  Expanded(
+                    child: Container(
+                        margin: EdgeInsets.only(
+                          top: 4.0,
                         ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 10),
-                    height: 25,
-                    width: 25,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color.fromRGBO(52, 107, 33, 1),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        isEdit.value = !isEdit.value;
-                        currentIndex = index;
-                      },
-                      child: Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                        size: 15,
-                      ),
-                    ),
+                        child: FutureBuilder<dynamic>(
+                          future:
+                              provider!.getSingleItem(data['item_id'], '', ''),
+                          builder: (context, snapshot) {
+                            log('future builder');
+                            if (snapshot.hasError) {
+                              return Text(
+                                snapshot.error.toString(),
+                              );
+                            } else if (snapshot.hasData) {
+                              return Row(
+                                children: [
+                                  Text(
+                                    snapshot.data!['data']['name'],
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(top: 16.0, left: 3),
+                                    decoration: BoxDecoration(
+                                        color: Color.fromRGBO(52, 107, 33, 1),
+                                        borderRadius: BorderRadius.circular(4)),
+                                    width: 13,
+                                    height: 15,
+                                    child: Center(
+                                      child: Text(
+                                        'L',
+                                        style: TextStyle(
+                                          fontSize: 9,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 10),
+                                    height: 25,
+                                    width: 25,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color.fromRGBO(52, 107, 33, 1),
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+                                        isEdit.value = !isEdit.value;
+                                        currentIndex = index;
+                                      },
+                                      child: Icon(
+                                        Icons.edit,
+                                        color: Colors.white,
+                                        size: 15,
+                                      ),
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  rightContainer('qty', '01', ctr1!, index,
+                                      value: data['item_qty']),
+                                  SizedBox(width: 12),
+                                  rightContainer('pkr', '180', ctr2!, index,
+                                      value: data['item_price']),
+                                  SizedBox(width: 12),
+                                  // Selector<ListProvider, PriceModel>(
+                                  //   selector: (_, total) => total.totalPrice,
+                                  //   builder: (context, price, child) {
+                                  //     print(int.parse(data['item_id']) ==
+                                  //         snapshot.data!['data']['id']);
+                                  //     return rightContainer(
+                                  //         LocaleKeys.total.tr(),
+                                  //         '180',
+                                  //         ctr3!,
+                                  //         index,
+                                  //         isTotal: true,
+                                  //         value: data['item_price'] != null &&
+                                  //                 data['item_qty'] != null &&
+                                  //                 int.parse(data['item_id']) ==
+                                  //                     price.itemId
+                                  //             ? price.totalPrice.toString()
+                                  //             : '0');
+                                  //   },
+                                  // ),
+
+                                  SizedBox(width: 25)
+                                ],
+                              );
+                            } else {
+                              return Text('Loading...');
+                            }
+                          },
+                        )),
                   ),
 
                   ///Stack1
-                  Spacer(),
-                  rightContainer('qty', '01', ctr1, index,
-                      value: data['item_qty']),
-                  SizedBox(width: 12),
-                  rightContainer('pkr', '180', ctr2, index,
-                      value: data['item_price']),
-                  SizedBox(width: 12),
-                  rightContainer(LocaleKeys.total.tr(), '180', ctr3, index,
-                      isTotal: true,
-                      value: data['item_price'] != null &&
-                              data['item_qty'] != null
-                          ? '${int.parse(data['item_price']) * int.parse(data['item_qty'])}'
-                          : '0'),
-                  SizedBox(width: 25)
                 ],
               ),
               if (currentIndex == index) SizedBox(height: 20),
@@ -912,7 +957,7 @@ class _ListLabelState extends State<ListLabel> {
                           onPressed: () {
                             provider!
                                 .updateListItem(widget.listId, data['item_id'],
-                                    ctr1.text, ctr2.text)
+                                    ctr1!.text, ctr2!.text, 0)
                                 .whenComplete(() {
                               if (provider!.msg ==
                                   'List updated successfully') {
@@ -921,6 +966,8 @@ class _ListLabelState extends State<ListLabel> {
                                     content: Text(provider!.msg),
                                   ),
                                 );
+                                provider!.calculateTotalPrice(
+                                    ctr1!.text, ctr2!.text, data['item_id']);
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
@@ -951,9 +998,9 @@ class _ListLabelState extends State<ListLabel> {
     );
   }
 
-  TextEditingController ctr1 = TextEditingController();
-  TextEditingController ctr2 = TextEditingController();
-  TextEditingController ctr3 = TextEditingController();
+  TextEditingController? ctr1;
+  TextEditingController? ctr2;
+  TextEditingController? ctr3;
 
   Widget rightContainer(
       String type, String text, TextEditingController ctr, int index,
@@ -964,23 +1011,43 @@ class _ListLabelState extends State<ListLabel> {
         SizedBox(
           height: 8,
         ),
-        // Container(
-        //   decoration: BoxDecoration(
-        //       border: Border.all(color: Colors.black54),
-        //       borderRadius: BorderRadius.circular(7)),
-        //   width: 45,
-        //   height: 30,
-        //   child: Center(
-        //     child: Text(
-        //       text,
-        //       style: TextStyle(
-        //         fontSize: 12.0,
-        //         fontWeight: FontWeight.w400,
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        customTextField(text, ctr, index, value: value, isTotal: isTotal),
+        Container(
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.black54),
+              borderRadius: BorderRadius.circular(7)),
+          width: 45,
+          height: 30,
+          child: Center(
+            child: TextFormField(
+              readOnly: isTotal == true
+                  ? true
+                  : isEdit.value == true && currentIndex == index
+                      ? false
+                      : true,
+              controller: currentIndex == index ? ctr : null,
+              style: TextStyle(
+                fontSize: 12.0,
+                fontWeight: FontWeight.w400,
+              ),
+              decoration: InputDecoration(
+                hintText: value ?? text,
+                contentPadding: EdgeInsets.only(left: 8),
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black54),
+                    borderRadius: BorderRadius.circular(7)),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.green),
+                    borderRadius: BorderRadius.circular(7)),
+              ),
+              validator: (value) {
+                if (value == null && value!.isEmpty) {
+                  return 'Please enter this value';
+                }
+                return null;
+              },
+            ),
+          ),
+        ),
         Transform.translate(
           offset: Offset(20, -5),
           child: Container(
@@ -1040,10 +1107,6 @@ class _ListLabelState extends State<ListLabel> {
               return 'Please enter this value';
             }
             return null;
-          },
-          onSaved: (value) {
-            priceAndQtyValues.add(value!);
-            log('list values :$priceAndQtyValues');
           },
         ),
       ),

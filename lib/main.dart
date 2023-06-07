@@ -25,17 +25,18 @@ Future<void> main() async {
     DevicePreview(
       enabled: !kReleaseMode,
       builder: (context) => EasyLocalization(
-          path: 'assets/translations',
-          supportedLocales: [
-            Locale('en', 'US'),
-            Locale('ur', 'PAK'),
-            Locale('ar', 'SAU'),
-            Locale('fr', 'FRA'),
-            Locale('zh', 'CHN'),
-          ],
-          fallbackLocale: const Locale('en', 'US'),
-          assetLoader: const CodegenLoader(),
-          child: const MyApp()),
+        path: 'assets/translations',
+        supportedLocales: [
+          Locale('en', 'US'),
+          Locale('ur', 'PAK'),
+          Locale('ar', 'SAU'),
+          Locale('fr', 'FRA'),
+          Locale('zh', 'CHN'),
+        ],
+        fallbackLocale: const Locale('en', 'US'),
+        assetLoader: const CodegenLoader(),
+        child: const MyApp(),
+      ),
     ),
   );
 }

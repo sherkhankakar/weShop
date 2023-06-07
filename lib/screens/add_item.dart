@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,11 +12,11 @@ import '../constant/widget_constants.dart';
 class AddItem extends StatefulWidget {
   const AddItem({
     Key? key,
-    required bool isVisible,
-    required bool isVisible2,
-    required bool isVisible3,
-    required bool isVisible4,
-    required bool isVisible5,
+    bool? isVisible,
+    bool? isVisible2,
+    bool? isVisible3,
+    bool? isVisible4,
+    bool? isVisible5,
     required this.listId,
   }) : super(key: key);
   final String listId;
@@ -158,16 +160,6 @@ class _AddItemState extends State<AddItem> {
                       itemBuilder: (context, index) {
                         return containerTile(
                           snapshot.data['data'][index]['name'],
-                          'Dozen',
-                          'Half Dozen',
-                          () {
-                            // handleLeftContainerTap();
-                            return null;
-                          },
-                          () {
-                            // handleRightContainerTap();
-                            return null;
-                          },
                           index,
                           snapshot.data['data'][index]['id'].toString(),
                         );
@@ -190,11 +182,7 @@ class _AddItemState extends State<AddItem> {
 
   containerTile(
     String title,
-    String largeQuantity,
-    String smallQuantity,
-    Function? tap1(),
-    Function? tap2(),
-    int currInd,
+    int outIndex,
     String itemId,
   ) {
     final provider = Provider.of<ListProvider>(context, listen: false);
@@ -251,7 +239,7 @@ class _AddItemState extends State<AddItem> {
                         itemCount: units.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          return unitsRow(index, currInd);
+                          return unitsRow(index, outIndex, itemId);
                         },
                       ),
                     )
@@ -299,13 +287,16 @@ class _AddItemState extends State<AddItem> {
     );
   }
 
-  Widget unitsRow(int index, int currInd) {
+  int itemId = 0;
+  Widget unitsRow(int innnerIndex, int outIndex, String itemId) {
     return ValueListenableBuilder(
       valueListenable: currentIndex,
       builder: (BuildContext context, dynamic value, Widget? child) {
         return GestureDetector(
           onTap: () {
-            currentIndex.value = index;
+            currentIndex.value = outIndex;
+            this.itemId = innnerIndex;
+            log(this.itemId.toString());
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 1),
@@ -313,15 +304,16 @@ class _AddItemState extends State<AddItem> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               border: Border.all(
-                color: currentIndex.value == index
-                    ? _selectedColor
-                    : _unselectedColor,
+                color:
+                    currentIndex.value == outIndex && this.itemId == innnerIndex
+                        ? _selectedColor
+                        : _unselectedColor,
                 width: 1,
               ),
             ),
             alignment: Alignment.center,
             child: Text(
-              units[index],
+              units[innnerIndex],
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 12,

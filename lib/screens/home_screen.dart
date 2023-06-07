@@ -5,7 +5,8 @@ import 'package:share_plus/share_plus.dart';
 import 'package:weshop/translations/locale_keys.g.dart';
 import '../constant/widget_constants.dart';
 import '../providers/list_provider.dart';
-import 'list_label.dart';
+import 'items_screen.dart';
+import 'qr_scanner_screen.dart';
 
 ///stf
 class HomeScreen extends StatefulWidget {
@@ -97,6 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String deletepost = "";
 
   ValueNotifier<bool> isEmptyList = ValueNotifier(false);
+  ValueNotifier<bool> isEmptyContr = ValueNotifier(false);
 
   ///popup menu 1
   Widget _showPopupMenu3({
@@ -275,14 +277,9 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           child: Row(
             children: [
-              Container(
-                margin: EdgeInsets.only(
-                  left: 8.0,
-                ),
-                child: const Icon(
-                  Icons.delete_outline,
-                  color: Color.fromRGBO(52, 107, 33, 1),
-                ),
+              const Icon(
+                Icons.delete_outline,
+                color: Color.fromRGBO(52, 107, 33, 1),
               ),
               Container(
                 margin: EdgeInsets.only(
@@ -301,29 +298,38 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         PopupMenuItem(
-          child: Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                child: const Icon(
-                  Icons.qr_code_scanner_rounded,
-                  color: Color.fromRGBO(52, 107, 33, 1),
+          child: InkWell(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (ctx) => QRViewExample(),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  left: 10.0,
-                ),
-                child: Text(
-                  LocaleKeys.scan_qr_code.tr(),
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                    color: Color.fromRGBO(0, 0, 0, 0.87),
+              );
+            },
+            child: Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  child: const Icon(
+                    Icons.qr_code_scanner_rounded,
+                    color: Color.fromRGBO(52, 107, 33, 1),
                   ),
                 ),
-              ),
-            ],
+                Container(
+                  margin: EdgeInsets.only(
+                    left: 10.0,
+                  ),
+                  child: Text(
+                    LocaleKeys.scan_qr_code.tr(),
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromRGBO(0, 0, 0, 0.87),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],
@@ -348,260 +354,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    // final tabs = [
-    //   ///List Screen
-    //   Column(
-    //     children: [
-    //       SizedBox(
-    //         height: 20.0,
-    //       ),
-    //       ///List card
-    //       Visibility(
-    //         visible: _isVisible2,
-    //         child: Container(
-    //           margin: EdgeInsets.symmetric(horizontal: 10),
-    //           width: MediaQuery.of(context).size.width,
-    //           height: MediaQuery.of(context).size.height * 0.096,
-    //           child: InkWell(
-    //             onDoubleTap: changedata1,
-    //             onTap: () {
-    //               Navigator.of(context).push(
-    //                   MaterialPageRoute(builder: (context) => ListLabel()));
-    //             },
-    //             child: Card(
-    //               elevation: 3.0,
-    //               child: Column(
-    //                 children: [
-    //                   Container(
-    //                     height: 40,
-    //                     child: Row(
-    //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //                       children: [
-    //                         Row(
-    //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //                           children: [
-    //                             ///check boxxxxxx
-    //                             Visibility(
-    //                               visible: _isVisible4,
-    //                               child: Container(
-    //                                 margin: EdgeInsets.only(),
-    //                                 child: Visibility(
-    //                                   child: InkWell(
-    //                                     onLongPress: changedata,
-    //                                     child: Checkbox(
-    //                                       side: BorderSide(color: Colors.green),
-    //                                       value: isChecked,
-    //                                       activeColor: Colors.green,
-    //                                       onChanged: (newBool) {
-    //                                         setState(() {
-    //                                           isChecked = newBool;
-    //                                           if (_isVisible6 = true) {}
-    //                                         });
-    //                                       },
-    //                                     ),
-    //                                   ),
-    //                                 ),
-    //                               ),
-    //                             ),
-    //                             ///checkbox 2
-    //                             Visibility(
-    //                               visible: _isVisible8,
-    //                               child: Container(
-    //                                 margin: EdgeInsets.only(),
-    //                                 child: Visibility(
-    //                                   child: InkWell(
-    //                                     onLongPress: changedata1,
-    //                                     child: Checkbox(
-    //                                       side: BorderSide(color: Colors.green),
-    //                                       value: isChecked,
-    //                                       activeColor: Colors.green,
-    //                                       onChanged: (newBool) {
-    //                                         setState(() {
-    //                                           isChecked = newBool;
-    //                                           if (_isVisible10 = true) {}
-    //                                         });
-    //                                       },
-    //                                     ),
-    //                                   ),
-    //                                 ),
-    //                               ),
-    //                             ),
-    //                             ///Visibility 3
-    //                             Visibility(
-    //                               visible: _isVisible12,
-    //                               child: Container(
-    //                                 margin: EdgeInsets.only(),
-    //                                 child: Visibility(
-    //                                   child: InkWell(
-    //                                     onDoubleTap: changedata2,
-    //                                     child: Checkbox(
-    //                                       side: BorderSide(color: Colors.green),
-    //                                       value: isChecked,
-    //                                       activeColor: Colors.green,
-    //                                       onChanged: (newBool) {
-    //                                         setState(() {
-    //                                           isChecked = newBool;
-    //                                           if (_isVisible13 = true) {}
-    //                                         });
-    //                                       },
-    //                                     ),
-    //                                   ),
-    //                                 ),
-    //                               ),
-    //                             ),
-    //                             Padding(
-    //                               padding: const EdgeInsets.only(left: 10),
-    //                               child: Text(
-    //                                 maxLines: 1,
-    //                                 overflow: TextOverflow.ellipsis,
-    //                                 UserPost,
-    //                                 style: TextStyle(
-    //                                   fontWeight: FontWeight.w500,
-    //                                   fontSize: 18.0,
-    //                                 ),
-    //                               ),
-    //                             ),
-    //                           ],
-    //                         ),
-    //                         Padding(
-    //                           padding: const EdgeInsets.only(right: 10),
-    //                           child: Text(
-    //                             'PKR 0.00',
-    //                             style: TextStyle(
-    //                               fontWeight: FontWeight.w400,
-    //                               fontSize: 14.0,
-    //                             ),
-    //                           ),
-    //                         ),
-    //                       ],
-    //                     ),
-    //                   ),
-    //                   Padding(
-    //                     padding: const EdgeInsets.only(left: 10),
-    //                     child: Align(
-    //                       alignment: Alignment.topLeft,
-    //                       child: Text(
-    //                         'items: 0',
-    //                         style: TextStyle(
-    //                           fontWeight: FontWeight.w400,
-    //                           fontSize: 13.0,
-    //                         ),
-    //                       ),
-    //                     ),
-    //                   ),
-    //                 ],
-    //               ),
-    //             ),
-    //           ),
-    //         ),
-    //       ),
-    //       SizedBox(
-    //         height: 140.0,
-    //       ),
-    //       /// apply visibilty
-    //       Visibility(
-    //         visible: _isVisible,
-    //         child: Center(
-    //           child: Column(
-    //             children: [
-    //               Image.asset('assets/images/Frame (1).png'),
-    //               SizedBox(
-    //                 height: 10,
-    //               ),
-    //               Text(
-    //                 'Create list to show here',
-    //                 style: TextStyle(
-    //                   fontSize: 13.0,
-    //                   fontWeight: FontWeight.w400,
-    //                   color: Color.fromRGBO(151, 151, 151, 1),
-    //                 ),
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //       ),
-    //       // SizedBox(
-    //       //   height: 200.0,
-    //       // ),
-    //       Visibility(
-    //         visible: _isVisible9,
-    //         child: Container(
-    //           margin: EdgeInsets.only(right: 30.0),
-    //           child: Row(
-    //             mainAxisAlignment: MainAxisAlignment.end,
-    //             children: [
-    //               ElevatedButton(
-    //                 style: ElevatedButton.styleFrom(
-    //                   backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-    //                   shape: CircleBorder(),
-    //                   padding: EdgeInsets.all(16),
-    //                 ),
-    //                 onPressed: () {
-    //                   _showPopupMenu3();
-    //                 },
-    //                 child: Icon(Icons.add),
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //       ),
-    //       ///Delete button
-    //       Visibility(
-    //         visible: true,
-    //         child: Container(
-    //           margin: EdgeInsets.only(top: 150.0, left: 20, right: 20),
-    //           width: width,
-    //           height: height * 0.05,
-    //           child:
-    //       ),
-    //       ///Share Button
-    //       Visibility(
-    //         visible: _isVisible10,
-    //         child: Container(
-    //           margin: EdgeInsets.only(top: 140.0, left: 20, right: 20),
-    //           width: width,
-    //           height: height * 0.05,
-    //           child: ElevatedButton(
-    //             style: ElevatedButton.styleFrom(
-    //               backgroundColor: Color.fromRGBO(0, 173, 25, 1),
-    //             ),
-    //             onPressed: () async {
-    //               ///ya kam phone ki gallery ma sa image kasa pick karni ha islie kia ha
-    //               // final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    //               // if(image == null)return;
-    //               // await Share.shareFiles([image.path]);
-    //               Share.share(
-    //                   "https://play.google.com/store/apps/details?id=com.instructivetech.testapp");
-    //             },
-    //             child: Text('Share'),
-    //           ),
-    //         ),
-    //       ),
-    //       ///Edit Button
-    //       Visibility(
-    //         visible: _isVisible13,
-    //         child: Container(
-    //           margin: EdgeInsets.only(top: 140.0, left: 20, right: 20),
-    //           width: width,
-    //           height: height * 0.05,
-    //           child: ElevatedButton(
-    //               style: ElevatedButton.styleFrom(
-    //                 backgroundColor: Colors.green,
-    //               ),
-    //               onPressed: () async {
-    //                 ///ya kam phone  ki gallery ma sa image kasa pick karni ha islie kia ha
-    //                 // final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    //                 // if(image == null)return;
-    //                 // await Share.shareFiles([image.path]);
-    //                 // Share.share("https://play.google.com/store/apps/details?id=com.instructivetech.testapp");
-    //                 _showPopupMenu3();
-    //               },
-    //               child: Text('Edit')),
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // ];
+
     ///popup menu phla yaha call hoti ha but humna uper menu ma kam kia ha to islie function ko bhi uper call kara gan
 
     return SafeArea(
@@ -763,27 +516,79 @@ class _HomeScreenState extends State<HomeScreen> {
             ///Bottom navbar
             // Container(child: tabs[_currentIndex]),
             Expanded(
-              child: StreamBuilder<dynamic>(
-                stream: provider!.getLists(),
+              child: FutureBuilder<dynamic>(
+                future: provider!.getLists(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Center(
                       child: Text('Error while loading data from the server'),
                     );
                   } else if (snapshot.hasData) {
-                    if (snapshot.data['data']['glists'].isEmpty) {
+                    if (snapshot.data['data']['glists'].isEmpty &&
+                        snapshot.data['data']['listcontributers'].isEmpty) {
                       return Center(
                         child: Text(LocaleKeys.no_data_found.tr()),
                       );
                     }
-                    return ListView.builder(
-                      itemBuilder: (context, index) {
-                        return customCard(
-                          snapshot.data['data']['glists'][index],
-                          index,
-                        );
-                      },
-                      itemCount: snapshot.data['data']['glists'].length,
+                    return Column(
+                      children: [
+                        Expanded(
+                          flex: snapshot.data['data']['listcontributers']
+                                      .isEmpty ||
+                                  snapshot.data['data']['listcontributers']
+                                          .length ==
+                                      2
+                              ? 2
+                              : 2,
+                          child: ListView.builder(
+                            itemBuilder: (context, index) {
+                              return customCard(
+                                snapshot.data['data']['glists'][index],
+                                index,
+                              );
+                            },
+                            itemCount: snapshot.data['data']['glists'].length,
+                          ),
+                        ),
+                        if (snapshot
+                            .data['data']['listcontributers'].isNotEmpty)
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 12),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Contributor Lists',
+                              textScaleFactor: 1.5,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        if (snapshot
+                            .data['data']['listcontributers'].isNotEmpty)
+                          Expanded(
+                            flex: snapshot.data['data']['listcontributers']
+                                        .isEmpty ||
+                                    snapshot.data['data']['listcontributers']
+                                            .length <
+                                        2
+                                ? 1
+                                : 2,
+                            child: ListView.builder(
+                              itemBuilder: (context, index) {
+                                return customCard2(
+                                  snapshot.data['data']['listcontributers']
+                                      [index],
+                                  index,
+                                );
+                              },
+                              itemCount: snapshot
+                                  .data['data']['listcontributers'].length,
+                            ),
+                          ),
+                        if (snapshot.data['data']['listcontributers'].isEmpty ||
+                            snapshot.data['data']['listcontributers'].length ==
+                                2)
+                          Spacer(flex: 2),
+                      ],
                     );
                   } else {
                     return Center(
@@ -833,14 +638,15 @@ class _HomeScreenState extends State<HomeScreen> {
     data['list_item'].isEmpty
         ? isEmptyList.value = false
         : isEmptyList.value = true;
-    print(data['list_item'].length);
+    print('List items: ${data['glist']}');
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (ctx) => ListLabel(
+            builder: (ctx) => ItemsScreen(
               listId: data['id'].toString(),
-              totoalPrice: data['item_price'] ?? '0',
+              listName: data['name'],
+              // totoalPrice: data['item_price'] ?? '0',
             ),
           ),
         );
@@ -916,6 +722,93 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           trailing: Text(
+            data['list_item'].length == 0
+                ? 'PKR 0'
+                : 'PKR ${provider!.grandTotal[data['name']]}',
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 14.0,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget customCard2(dynamic data, int index) {
+    print(data['list_item'].length);
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) => ItemsScreen(
+              listId: data['id'].toString(),
+              listName: data['name'],
+              // totoalPrice: data['item_price'] ?? '0',
+            ),
+          ),
+        );
+      },
+      child: Card(
+        elevation: 3.0,
+        child: ListTile(
+          leading: Consumer<ListProvider>(
+            builder: (context, myType, child) {
+              return ValueListenableBuilder(
+                valueListenable: title,
+                builder: (BuildContext context, dynamic value, Widget? child) {
+                  return title.value == 'Delete'
+                      ? Checkbox(
+                          value: myType.myDataList[index].isChecked,
+                          onChanged: (value) {
+                            myType.toggleItem(data['id']);
+                          })
+                      : SizedBox();
+                },
+              );
+            },
+          ),
+          minLeadingWidth: 0,
+          title: Row(
+            children: [
+              Text(
+                data['name'],
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18.0,
+                ),
+              ),
+              SizedBox(width: 10),
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return _showPopupMenu3(
+                          isEditing: true,
+                          listId: data['id'].toString(),
+                          listName: data['name'],
+                        );
+                      });
+                },
+                child: Container(
+                  height: 25,
+                  width: 25,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.green),
+                  child: Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                    size: 15,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          subtitle: Text('Contributor'),
+          trailing: Text(
             'PKR ${data['item_price'] == null ? 0.00 : data['item_price']}',
             style: TextStyle(
               fontWeight: FontWeight.w400,
@@ -927,6 +820,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
+  
 
 /*
 ValueListenableBuilder(
